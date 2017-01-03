@@ -33,18 +33,14 @@ void DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, MatrixXd &
 		}
 	}
 	nContain = nContain.array() - 1;
-
 	VectorXd nPenalty = nContain.array().exp().pow(lambda);
 
 	VectorXd qualityTerm = getQualityTerm(detectionWeights, nPenalty, alpha, beta);
-	cout << "qualityTerm: " << endl;
-	cout << qualityTerm << endl;
-
 	MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea, mu);
-	cout << "similarityTerm: " << endl;
-	cout << similarityTerm << endl;
-	//cout << "nPenalty:" << endl;
-	//cout << nPenalty << endl;
+
+
+
+	exit( EXIT_FAILURE );
 }
 
 VectorXd DPP::getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty, double alpha, double beta){
@@ -60,7 +56,11 @@ VectorXd DPP::getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty, dou
 
 MatrixXd DPP::getSimilarityTerm(MatrixXd &featureValues, MatrixXd &intersectionArea, MatrixXd &sqrtArea, double mu){
 	MatrixXd Ss = intersectionArea.array() / sqrtArea.array();
-	MatrixXd Sc = featureValues.array() * featureValues.adjoint().array();
+	MatrixXd Sc = featureValues * featureValues.adjoint();
 	MatrixXd S = mu * Ss.array() + (1 - mu) * Sc.array();
 	return S;
+}
+
+void DPP::solve(VectorXd qualityTerm, MatrixXd similarityTerm, double epsilon){
+	
 }

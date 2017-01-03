@@ -1,6 +1,7 @@
 #ifndef DPP_H
 #define DPP_H
 
+#include <stdlib.h>
 #include <opencv2/imgproc.hpp>
 #include <Eigen/Core>
 #include <iostream>
@@ -18,7 +19,7 @@ public:
 private:
 	VectorXd getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty, double alpha, double beta);
 	MatrixXd getSimilarityTerm(MatrixXd &featureValues, MatrixXd &intersectionArea, MatrixXd &sqrtArea, double mu);
-
+	void solve(VectorXd qualityTerm, MatrixXd similarityTerm, double epsilon)
 };
 
 #endif

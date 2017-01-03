@@ -28,7 +28,7 @@ void MultiTargetTracking::run()
 		double alpha = 0.9, lambda = 1.1, beta = 0.1, mu = 0.8, epsilon = 0.1;
 		this->dpp.run(hogDetections, detectionWeights, hogFeatures, alpha, lambda, beta, mu, epsilon);
 
-		for (unsigned int j = 0; j < gt.size(); ++j)
+		/*for (unsigned int j = 0; j < gt.size(); ++j)
 		{
 			rectangle(currentFrame, gt.at(j).bbox, Scalar(0,255,0), 1, LINE_AA);
 		}
@@ -36,7 +36,7 @@ void MultiTargetTracking::run()
 		//cout << "groundtruth size: " << gt.size() << "\t";
 		
 		imshow("MTT", currentFrame);
-		waitKey(1);
+		waitKey(1);*/
 	}
 }
 
