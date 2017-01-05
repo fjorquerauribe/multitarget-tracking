@@ -35,15 +35,25 @@ void DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, MatrixXd &
 	nContain = nContain.array() - 1;
 	VectorXd nPenalty = nContain.array().exp().pow(lambda);
 
+	//cout << "qt" << endl;
 	VectorXd qualityTerm = getQualityTerm(detectionWeights, nPenalty, alpha, beta);
+	
+	//cout << "st" << endl;
 	MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea, mu);
-
-
-
-	exit( EXIT_FAILURE );
+	
+	//cout << "solve" << endl;
+	solve(qualityTerm, similarityTerm, epsilon);
+	
+	//cout << "end" << endl;
+	//exit( EXIT_FAILURE );
 }
 
 VectorXd DPP::getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty, double alpha, double beta){
+	/*** 
+	 ***	Get quality term 
+	 ***	q = alpha * s + beta
+	 ***/
+
 	VectorXd qt = detectionWeights.cwiseProduct(nPenalty);
 	//double maxQt = qt.maxCoeff();
 	qt = qt.array() / qt.maxCoeff();
@@ -55,12 +65,42 @@ VectorXd DPP::getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty, dou
 }
 
 MatrixXd DPP::getSimilarityTerm(MatrixXd &featureValues, MatrixXd &intersectionArea, MatrixXd &sqrtArea, double mu){
+	/****
+	 ****	Get similarity term
+	 ****	S = w * S^c + (1 - w) * S^s
+	 ****/
+
 	MatrixXd Ss = intersectionArea.array() / sqrtArea.array();
 	MatrixXd Sc = featureValues * featureValues.adjoint();
 	MatrixXd S = mu * Ss.array() + (1 - mu) * Sc.array();
 	return S;
 }
 
-void DPP::solve(VectorXd qualityTerm, MatrixXd similarityTerm, double epsilon){
-	
+void DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double epsilon){
+	VectorXd remained = VectorXd::LinSpaced(qualityTerm.size(), 1, qualityTerm.size());
+	int oldObj, selected, top, prodQ;
+	oldObj = qualityTerm.maxCoeff(&selected);
+	top = selected;
+	MatrixXd oldS(1,1); oldS << 1;
+	prodQ = oldObj;
+
+	while(true){
+		int maxObj_ = 0;
+		copy( remained.data() + selected + 1, remained.data() + remained.size(), remained.data() + selected ); // delete select item
+		MatrixXd newS = MatrixXd::Identity( oldS.rows() + 1, oldS.cols() + 1 );
+		newS.block(0,0, oldS.rows(), oldS.cols()) << oldS;
+		VectorXd S_top(similarityTerm.row(top).size());
+		S_top << similarityTerm.row(top);
+
+		break;
+
+		for (int i = 0; i < remained.size(); ++i)
+		{
+			/* code */
+		}
+	}
 }
+
+
+
+

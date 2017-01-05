@@ -55,8 +55,6 @@ void ImageGenerator::readGroundTruth(){
 		Target target;
 		Rect bbox;
 		
-		//cout << "line: " << line << endl;
-
 		int pos1 = 0;
 		int pos2 = line.find(" ");
 		int frameNumber = stoi(line.substr(pos1,pos2)) - 1;
@@ -65,35 +63,21 @@ void ImageGenerator::readGroundTruth(){
 		pos2 = line.find(" ",pos1 + 1);
 		bbox.x = stod(line.substr(pos1 + 1,pos2-pos1-1));
 
-		//cout << "bbox.x: " << bbox.x << endl;
-		//cout << "pos1: " << pos1 << "\tpos2: " << pos2 << endl;
-		
 		pos1 = pos2;
 		pos2 = line.find(" ",pos1 + 1);
 		bbox.y = stod(line.substr(pos1 + 1,pos2-pos1-1));
-
-		//cout << "bbox.y: " << bbox.y << endl;
-		//cout << "pos1: " << pos1 << "\tpos2: " << pos2 << endl;
 
 		pos1 = pos2;
 		pos2 = line.find(" ",pos1 + 1);
 		bbox.width = stod(line.substr(pos1 + 1,pos2-pos1-1));
 
-		//cout << "bbox.width: " << bbox.width << endl;
-		//cout << "pos1: " << pos1 << "\tpos2: " << pos2 << endl;
-
 		pos1 = pos2;
 		pos2 = line.find(" ",pos1 + 1);
 		bbox.height = stod(line.substr(pos1 + 1,pos2-pos1-1));
 
-		//cout << "bbox.height: " << bbox.height << endl;
-		//cout << "pos1: " << pos1 << "\tpos2: " << pos2 << endl;
-
-		//cout << "DatasetSize: " << getDatasetSize() << endl;
 		target.bbox = bbox;
 		this->groundTruth[frameNumber].push_back(target);
 	}
-	//cout << "groundTruth size: " << this->groundTruth.size() << endl;
 }
 
 unsigned int ImageGenerator::getDatasetSize(){

@@ -19,7 +19,7 @@ public:
 private:
 	VectorXd getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty, double alpha, double beta);
 	MatrixXd getSimilarityTerm(MatrixXd &featureValues, MatrixXd &intersectionArea, MatrixXd &sqrtArea, double mu);
-	void solve(VectorXd qualityTerm, MatrixXd similarityTerm, double epsilon)
+	void solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double epsilon);
 };
 
 #endif
