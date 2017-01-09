@@ -72,6 +72,6 @@ MatrixXd HOGDetector::getFeatureValues()
 }
 
 // hay que normalizar
-VectorXd HOGDetector::getWeightDetections(){
+VectorXd HOGDetector::getDetectionWeights(){
 	return this->foundWeights;
 }

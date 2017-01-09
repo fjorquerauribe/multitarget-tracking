@@ -18,7 +18,7 @@ public:
 	void draw();
 	//vector<Rect> getDetections();
 	MatrixXd getFeatureValues();
-	VectorXd getWeightDetections();
+	VectorXd getDetectionWeights();
 
 private:
 	HOGDescriptor hog;

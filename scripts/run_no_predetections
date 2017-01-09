@@ -1,0 +1,1 @@
+./mtt -img ../PETS/0.jpg -gt ../PETS/groundtruth.txt
