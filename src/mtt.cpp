@@ -6,17 +6,18 @@ const bool CNN_FEATURES = true;
 
 MultiTargetTracking::MultiTargetTracking(){}
 
-MultiTargetTracking::MultiTargetTracking(string _firstFrameFileName, string _groundTruthFileName)
+MultiTargetTracking::MultiTargetTracking(string _firstFrameFileName, string _groundTruthFileName, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
 	this->hogDetector = HOGDetector();
 	this->dpp = DPP();
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName);
+	this->npart = _npart;
 	initialized = true;
 }
 
-MultiTargetTracking::MultiTargetTracking(string _firstFrameFileName, string _groundTruthFileName, string _firstCNNFeaturesFile, string _firstPreDetectionFile)
+MultiTargetTracking::MultiTargetTracking(string _firstFrameFileName, string _groundTruthFileName, string _firstCNNFeaturesFile, string _firstPreDetectionFile, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
@@ -27,6 +28,7 @@ MultiTargetTracking::MultiTargetTracking(string _firstFrameFileName, string _gro
 	this->dpp = DPP();
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName);
 	this->cnnReader = CNNReader(this->firstCNNFeaturesFile, this->firstPreDetectionFile);
+	this->npart = _npart;
 	initialized = true;
 }
 
@@ -35,7 +37,10 @@ void MultiTargetTracking::run()
 	//ImageGenerator generator(this->firstFrameFileName, this->groundTruthFileName);
 	//CNNReader cnnReader(_firstCNNFeaturesFile, _firstPreDetectionFile);
 
+	//namedWindow("MTT", WINDOW_KEEPRATIO);
 	namedWindow("MTT");
+	particle_filter filter(this->npart);
+
 	for (unsigned int i = 0; i < generator.getDatasetSize(); ++i)
 	{
 		Mat currentFrame = generator.getFrame(i);
@@ -60,30 +65,46 @@ void MultiTargetTracking::run()
 
 		double alpha = 0.9, beta = 1.1, lambda = -0.1, mu = 0.8, epsilon = 0.1;
 		vector<Rect> detections = this->dpp.run(preDetections, detectionWeights, features, alpha, lambda, beta, mu, epsilon);
-		
+
+		cout << "--------------------------" << endl;
+		cout << "groundtruth number: " << gt.size() << endl;
+		cout << "detections number: " << detections.size() << endl;
+		if (!filter.is_initialized())
+		{
+			filter.initialize(currentFrame, detections);
+		}
+		else
+		{
+			filter.predict();
+			filter.update(currentFrame, detections);
+			vector<Rect> estimates = filter.estimate(currentFrame, true);
+
+			//filter.draw_particles(currentFrame, Scalar(0, 255, 255));
+			cout << "estimate number: " << estimates.size() << endl;
+		}
+
 		for (size_t j = 0; j < detections.size(); ++j)
 		{
 			rectangle(currentFrame, detections.at(j), Scalar(0,255,0), 1, LINE_AA);
 		}
-		imshow("MTT", currentFrame);
-		waitKey(1);
 		/*for (unsigned int j = 0; j < gt.size(); ++j)
 		{
 			rectangle(currentFrame, gt.at(j).bbox, Scalar(0,255,0), 1, LINE_AA);
-		}
-		this->hogDetector.draw();
-		//cout << "groundtruth size: " << gt.size() << "\t";
-		
+		}*/
+
 		imshow("MTT", currentFrame);
-		waitKey(1);*/
+		waitKey(1);
+		
+		
 	}
 }
 
 int main(int argc, char const *argv[])
 {
 	string _firstFrameFileName, _gtFileName, _firstCNNFeaturesFile, _firstPreDetectionFile;
+	int _npart;
 	if(CNN_FEATURES){
-		if(argc != 9)
+		if(argc != 11)
 		{
 			cout << "Incorrect input list" << endl;
 			cout << "exiting..." << endl;
@@ -132,12 +153,22 @@ int main(int argc, char const *argv[])
 		  		cout << "exiting..." << endl;
 		  		return EXIT_FAILURE;
 		  	}
-		  	MultiTargetTracking tracker(_firstFrameFileName, _gtFileName, _firstCNNFeaturesFile, _firstPreDetectionFile);
+		  	if (strcmp(argv[9], "-npart") == 0)
+		  	{
+		  		_npart = atoi(argv[10]);
+		  	}
+		  	else
+		  	{
+		  		cout << "No number particles given" << endl;
+		  		cout << "exiting..." << endl;
+		  		return EXIT_FAILURE;
+		  	}
+		  	MultiTargetTracking tracker(_firstFrameFileName, _gtFileName, _firstCNNFeaturesFile, _firstPreDetectionFile, _npart);
 		  	tracker.run();
 		}
 	}
 	else{
-		if(argc != 5)
+		if(argc != 7)
 		{
 			cout << "Incorrect input list" << endl;
 			cout << "exiting..." << endl;
@@ -165,7 +196,17 @@ int main(int argc, char const *argv[])
 		  		cout << "exiting..." << endl;
 		  		return EXIT_FAILURE;
 		  	}
-		  	MultiTargetTracking tracker(_firstFrameFileName, _gtFileName);
+		  	if (strcmp(argv[5], "-npart") == 0)
+		  	{
+		  		_npart = atoi(argv[6]);
+		  	}
+		  	else
+		  	{
+		  		cout << "No number particles given" << endl;
+		  		cout << "exiting..." << endl;
+		  		return EXIT_FAILURE;
+		  	}
+		  	MultiTargetTracking tracker(_firstFrameFileName, _gtFileName, _npart);
 		  	tracker.run();
 		}
 	}

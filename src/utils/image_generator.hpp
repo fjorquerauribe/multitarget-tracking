@@ -27,7 +27,7 @@ public:
 	vector<Target> getGroundTruth(unsigned int frameIndex);
 
 private:
-	unsigned int frameId;
+	//unsigned int frameId;
 	vector<Mat> images;
 	vector<vector<Target>> groundTruth;
 	string frameFileName, groundTruthFileName;

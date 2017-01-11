@@ -35,8 +35,6 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 	}
 	nContain = nContain.array() - 1;
 	VectorXd nPenalty = nContain.array().exp().pow(lambda);
-
-
 	
 	//cout << "qt" << endl;
 	VectorXd qualityTerm = getQualityTerm(detectionWeights, nPenalty, alpha, beta);
@@ -54,10 +52,7 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 	{
 		respDPP.push_back(preDetections.at(top.at(i)));
 	}
-	/*for (size_t i = 0; i < top.size(); ++i)
-	{
-		cout << top.at(i) << endl;
-	}*/
+	
 	return respDPP;
 	
 }
@@ -101,20 +96,16 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 	MatrixXd oldS = MatrixXd::Identity(1,1);
 	prodQ = oldObj;
 
-	int z = 0;
+	//int z = 0;
 
 	while(true){
 		double maxObj_ = 0;
 		copy( remained.data() + selected + 1, remained.data() + remained.size(), remained.data() + selected ); // delete selected item
 		remained.conservativeResize(remained.size() - 1);
 
-		//cout << "flag1" << "\tz: " << z << endl;
-
 		MatrixXd newS = MatrixXd::Identity( oldS.rows() + 1, oldS.cols() + 1 );
 		MatrixXd maxS( oldS.rows() + 1, oldS.cols() + 1 );
 		newS.block(0,0, oldS.rows(), oldS.cols()) << oldS;
-
-		//cout << "flag2" << "\tz: " << z << endl;
 
 		MatrixXd S_top(top.size(), similarityTerm.cols());
 		for (size_t i = 0; i < top.size(); ++i)
@@ -122,8 +113,6 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 			//S_top.row(i) << similarityTerm.row(i);
 			S_top.row(i) << similarityTerm.row(top.at(i));
 		}
-
-		//cout << "flag3" << "\tz: " << z << endl;
 
 		for (int i = 0; i < remained.size(); ++i)
 		{
