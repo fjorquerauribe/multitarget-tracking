@@ -15,25 +15,26 @@ using namespace cv;
 typedef struct{
 	int label;
 	Rect bbox;
-}Target;
+} Target;
 
 class ImageGenerator{
-
 public:
-	ImageGenerator();
-	ImageGenerator(string _firstFrameFileName, string _groundTruthFileName);
-	unsigned int getDatasetSize();
-	Mat getFrame(unsigned int frameIndex);
-	vector<Target> getGroundTruth(unsigned int frameIndex);
-
+  ImageGenerator();
+  ImageGenerator(string _firstFrameFilename, string _groundTruthFile, string _detectionsFile);
+  bool hasEnded();
+  void moveNext();
+  Mat getFrame(int frame_num);
+  vector<Rect> getDetections(int frame_num);
+  vector<Target> getGroundTruth(int frame_num);
+  int getDatasetSize();
 private:
-	//unsigned int frameId;
-	vector<Mat> images;
-	vector<vector<Target>> groundTruth;
-	string frameFileName, groundTruthFileName;
-	void getNextFilename(string& fn);
-	void readGroundTruth();
-
+  void readDetections(string str);
+  void readGroundTruth(string str);
+  int frame_id;
+  void getNextFilename(string& filename);
+  vector<Mat> images;
+  vector< vector<Target> > ground_truth;
+  vector< vector<Rect> > detections;
 };
 
-#endif
+#endif // IMAGE_GENERATOR_H

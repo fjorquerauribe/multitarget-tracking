@@ -1,1 +1,0 @@
-./mtt -img ../PETS/0.jpg -gt ../PETS/groundtruth.txt -cnn ../pre-data/CNNfeatures/CNNfeature-0.txt -pd ../pre-data/preDetections/preDetection-0.txt -npart $1

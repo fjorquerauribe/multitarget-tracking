@@ -14,9 +14,15 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 		area(i) = bbox.width * bbox.height;
 		//cout << "bbox.width: " << bbox.width << "\tbbox.height: " << bbox.height << "\tarea: " << area(i) << endl;
 		
-		for (size_t j = 0; j < preDetections.size(); ++j)
-		{	Rect bbox2 = preDetections.at(j);
+		/*for (size_t j = 0; j < preDetections.size(); ++j)
+		{	
+			Rect bbox2 = preDetections.at(j);
 			intersectionArea(i,j) = double((bbox & bbox2).area());
+		}*/
+		for (size_t j = i; j < preDetections.size(); ++j)
+		{	
+			Rect bbox2 = preDetections.at(j);
+			intersectionArea(i,j) = intersectionArea(j,i) = double((bbox & bbox2).area());
 		}
 			
 	}
@@ -70,6 +76,8 @@ VectorXd DPP::getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty, dou
 	qt = qt.array().log() / log(10);
 	qt = alpha * qt.array() + beta;
 	qt = qt.array().square();
+	cout << "qualityTerm: " << endl;
+	cout << qt << endl;
 	return qt;
 }
 
@@ -95,8 +103,6 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 	top.push_back(selected);
 	MatrixXd oldS = MatrixXd::Identity(1,1);
 	prodQ = oldObj;
-
-	//int z = 0;
 
 	while(true){
 		double maxObj_ = 0;
@@ -127,6 +133,8 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 			newS.block(0, newS.cols() - 1, newS.rows() - 1, 1) << tmp;
 			newS.block(newS.rows() - 1, 0, 1, newS.cols() - 1) << tmp.transpose();
 
+
+			//cout << "determinant: " << newS.determinant() << endl;
 			double obj_ = qualityTerm(remained(i)) * newS.determinant();
 			
 			if (obj_ > maxObj_)
@@ -138,11 +146,7 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 
 		}
 
-		//cout << "flag4" << "\tz: " << z << endl;
-
 		double maxObj = prodQ * maxObj_ ;
-
-		
 
 		if ( (maxObj / oldObj) > (1 + epsilon) )
 		{
@@ -154,9 +158,6 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 		else{
 			break;
 		}
-
-		//cout << "flag5" << "\tz: " << z << endl;
-
 	}
 
 	return top;

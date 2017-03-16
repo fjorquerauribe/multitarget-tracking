@@ -1,5 +1,5 @@
-#ifndef PARTICLE_FILTER
-#define PARTICLE_FILTER
+#ifndef PHD_PARTICLE_FILTER
+#define PHD_PARTICLE_FILTER
 
 
 #include <opencv2/core.hpp>
@@ -43,18 +43,18 @@ typedef struct particle {
     
 } particle;
 
-class particle_filter {
+class PHDParticleFilter {
 public:
     int n_particles;
     vector<particle> states;
     vector<double> weights;
-   ~particle_filter();
-    particle_filter(int _n_particles);
-    particle_filter();
+   ~PHDParticleFilter();
+    PHDParticleFilter(int _n_particles);
+    PHDParticleFilter();
     void initialize(Mat& current_frame, vector<Rect> detections);
     void update(Mat& image, vector<Rect> detections);
     void auxiliary(Mat& image, vector<Rect> detections);
-    vector<Rect> estimate(Mat& image,bool draw);
+    vector<Rect> estimate(Mat& image, bool draw);
     void predict();
     void resample();
     void draw_particles(Mat& image, Scalar color);
@@ -65,10 +65,10 @@ protected:
     vector<VectorXd> theta_x;
     vector<VectorXd> theta_y;
     bool initialized;
-    normal_distribution<double> position_random_walk,velocity_random_walk,scale_random_walk;
-    Size im_size;
-    int max_height,max_width,min_height,min_width;
-    int max_x,max_y,min_x,min_y;
+    normal_distribution<double> position_random_walk, velocity_random_walk, scale_random_walk;
+    Size img_size;
+    int max_height, max_width, min_height, min_width;
+    int max_x, max_y, min_x, min_y;
     int particles_batch;
     vector<Target> tracks;
 };

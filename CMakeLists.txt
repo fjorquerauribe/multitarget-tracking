@@ -17,5 +17,5 @@ include_directories( "src/likelihood/" )
 include_directories( "src/models/" )
 include_directories( "src/features/" )
 
-add_executable( mtt src/mtt.cpp src/utils/image_generator.cpp src/detectors/hog_detector.cpp src/dpp.cpp src/utils/cnn_reader.cpp src/features/haar.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/particle_filter.cpp src/em.cpp)
+add_executable( mtt src/mtt.cpp src/utils/image_generator.cpp src/detectors/hog_detector.cpp src/dpp.cpp src/features/haar.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp)
 target_link_libraries( mtt ${OpenCV_LIBS} -lpthread)

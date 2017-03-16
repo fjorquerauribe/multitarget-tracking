@@ -1,62 +1,38 @@
 #include "mtt.hpp"
 
-#ifndef PARAMS
-const bool CNN_FEATURES = true;	
-#endif
-
 MultiTargetTracking::MultiTargetTracking(){}
 
-MultiTargetTracking::MultiTargetTracking(string _firstFrameFileName, string _groundTruthFileName, int _npart)
+MultiTargetTracking::MultiTargetTracking(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
+	this->preDetectionFile = _preDetectionFile;
 	this->npart = _npart;
 
 	this->dpp = DPP();
-	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName);
+	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
 	this->hogDetector = HOGDetector();
 
 	initialized = true;
 }
 
-MultiTargetTracking::MultiTargetTracking(string _firstFrameFileName, string _groundTruthFileName, string _firstCNNFeaturesFile, string _firstPreDetectionFile, int _npart)
-{
-	this->firstFrameFileName = _firstFrameFileName;
-	this->groundTruthFileName = _groundTruthFileName;
-	this->firstCNNFeaturesFile = _firstCNNFeaturesFile;
-	this->firstPreDetectionFile = _firstPreDetectionFile;
-	this->npart = _npart;
-
-	this->dpp = DPP();
-	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName);
-	this->cnnReader = CNNReader(this->firstCNNFeaturesFile, this->firstPreDetectionFile);
-	
-	initialized = true;
-}
-
 void MultiTargetTracking::run()
 {
-	namedWindow("MTT");
-	particle_filter filter(this->npart);
+	namedWindow("MTT", WINDOW_NORMAL);
+	//resizeWindow("MTT", 400, 400);
+	PHDParticleFilter filter(this->npart);
 
-	for (unsigned int i = 0; i < generator.getDatasetSize(); ++i)
+	for (unsigned int i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
-		Mat currentFrame = generator.getFrame(i);
-		vector<Target> gt = generator.getGroundTruth(i);
+		Mat currentFrame = this->generator.getFrame(i);
+		vector<Target> gt = this->generator.getGroundTruth(i);
 
 		MatrixXd features; vector<Rect> preDetections; VectorXd detectionWeights;
-
-		if(CNN_FEATURES){
-			features = this->cnnReader.getFeatureValues();
-			preDetections = this->cnnReader.getPreDetections();
-			detectionWeights = this->cnnReader.getDetectionWeights();
-		}
-		else{
-			preDetections = this->hogDetector.detect(currentFrame);
-			features = this->hogDetector.getFeatureValues();
-			detectionWeights = this->hogDetector.getDetectionWeights();
-		}
-
+	
+		preDetections = this->hogDetector.detect(currentFrame);
+		features = this->hogDetector.getFeatureValues();
+		detectionWeights = this->hogDetector.getDetectionWeights();
+	
 		/*cout << "features size: " << features.rows() << "," << features.cols() << endl;
 		cout << "preDetections size: " << preDetections.size() << endl;
 		cout << "detectionWeights size: " << detectionWeights.size() << endl;*/
@@ -99,114 +75,57 @@ void MultiTargetTracking::run()
 
 int main(int argc, char const *argv[])
 {
-	string _firstFrameFileName, _gtFileName, _firstCNNFeaturesFile, _firstPreDetectionFile;
+	string _firstFrameFileName, _gtFileName, _preDetectionFile;
 	int _npart;
-	if(CNN_FEATURES){
-		if(argc != 11)
-		{
-			cout << "Incorrect input list" << endl;
-			cout << "exiting..." << endl;
-			return EXIT_FAILURE;
-		}
-		else
-		{
-		  	if(strcmp(argv[1], "-img") == 0)
-		  	{
-		    	_firstFrameFileName = argv[2];
-		  	}
-		  	else
-		  	{
-		  		cout << "No images given" << endl;
-		  		cout << "exiting..." << endl;
-		  		return EXIT_FAILURE;
-		  	}
-		  	if(strcmp(argv[3], "-gt") == 0)
-		  	{
-		    	_gtFileName = argv[4];
-		  	}
-		  	else
-		  	{
-		  		cout << "No ground truth given" << endl;
-		  		cout << "exiting..." << endl;
-		  		return EXIT_FAILURE;
-		  	}
-
-		  	if(strcmp(argv[5], "-cnn") == 0)
-		  	{
-		    	_firstCNNFeaturesFile = argv[6];
-		  	}
-		  	else
-		  	{
-		  		cout << "No CNN path given" << endl;
-		  		cout << "exiting..." << endl;
-		  		return EXIT_FAILURE;
-		  	}
-		  	if(strcmp(argv[7], "-pd") == 0)
-		  	{
-		    	_firstPreDetectionFile = argv[8];
-		  	}
-		  	else
-		  	{
-		  		cout << "No preDetections path given" << endl;
-		  		cout << "exiting..." << endl;
-		  		return EXIT_FAILURE;
-		  	}
-		  	if (strcmp(argv[9], "-npart") == 0)
-		  	{
-		  		_npart = atoi(argv[10]);
-		  	}
-		  	else
-		  	{
-		  		cout << "No number particles given" << endl;
-		  		cout << "exiting..." << endl;
-		  		return EXIT_FAILURE;
-		  	}
-		  	MultiTargetTracking tracker(_firstFrameFileName, _gtFileName, _firstCNNFeaturesFile, _firstPreDetectionFile, _npart);
-		  	tracker.run();
-		}
+	if(argc != 9)
+	{
+		cout << "Incorrect input list" << endl;
+		cout << "exiting..." << endl;
+		return EXIT_FAILURE;
 	}
-	else{
-		if(argc != 7)
-		{
-			cout << "Incorrect input list" << endl;
-			cout << "exiting..." << endl;
-			return EXIT_FAILURE;
-		}
-		else
-		{
-		  	if(strcmp(argv[1], "-img") == 0)
-		  	{
-		    	_firstFrameFileName = argv[2];
-		  	}
-		  	else
-		  	{
-		  		cout << "No images given" << endl;
-		  		cout << "exiting..." << endl;
-		  		return EXIT_FAILURE;
-		  	}
-		  	if(strcmp(argv[3], "-gt") == 0)
-		  	{
-		    	_gtFileName = argv[4];
-		  	}
-		  	else
-		  	{
-		  		cout << "No ground truth given" << endl;
-		  		cout << "exiting..." << endl;
-		  		return EXIT_FAILURE;
-		  	}
-		  	if (strcmp(argv[5], "-npart") == 0)
-		  	{
-		  		_npart = atoi(argv[6]);
-		  	}
-		  	else
-		  	{
-		  		cout << "No number particles given" << endl;
-		  		cout << "exiting..." << endl;
-		  		return EXIT_FAILURE;
-		  	}
-		  	MultiTargetTracking tracker(_firstFrameFileName, _gtFileName, _npart);
-		  	tracker.run();
-		}
+	else
+	{
+	  	if(strcmp(argv[1], "-img") == 0)
+	  	{
+	    	_firstFrameFileName = argv[2];
+	  	}
+	  	else
+	  	{
+	  		cout << "No images given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if(strcmp(argv[3], "-gt") == 0)
+	  	{
+	    	_gtFileName = argv[4];
+	  	}
+	  	else
+	  	{
+	  		cout << "No ground truth given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if(strcmp(argv[5], "-det") == 0)
+	  	{
+	    	_preDetectionFile = argv[6];
+	  	}
+	  	else
+	  	{
+	  		cout << "No ground truth given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if (strcmp(argv[7], "-npart") == 0)
+	  	{
+	  		_npart = atoi(argv[8]);
+	  	}
+	  	else
+	  	{
+	  		cout << "No number particles given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	MultiTargetTracking tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _npart);
+	  	tracker.run();
 	}
-	
 }

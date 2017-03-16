@@ -6,11 +6,10 @@
 #include <cstdlib>
 
 #include "utils/image_generator.hpp"
-#include "utils/cnn_reader.hpp"
 #include "detectors/hog_detector.hpp"
 #include "dpp.hpp"
 
-#include "models/particle_filter.hpp"
+#include "models/phd_particle_filter.hpp"
 
 using namespace std;
 using namespace cv;
@@ -19,18 +18,16 @@ class MultiTargetTracking
 {
 public:
 	MultiTargetTracking();
-	MultiTargetTracking(string _firstFrameFileName, string _groundTruthFileName, int _npart);
-	MultiTargetTracking(string _firstFrameFileName, string _gtFileName, string _firstCNNFeaturesFile, string _firstPreDetectionFile, int _npart);
+	MultiTargetTracking(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile, int _npart);
 	void run();
 private:
 	//int numFrames;
-	string firstFrameFileName, groundTruthFileName, firstCNNFeaturesFile, firstPreDetectionFile;
+	string firstFrameFileName, groundTruthFileName, preDetectionFile;
 	int npart;
 	bool initialized;
 	HOGDetector hogDetector;
 	DPP dpp;
 	ImageGenerator generator;
-	CNNReader cnnReader;
 };
 
 #endif
