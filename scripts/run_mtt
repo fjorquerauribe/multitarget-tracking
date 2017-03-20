@@ -1,1 +1,0 @@
-../build/mtt -img ../../../../Datasets/MOT16/train/MOT16-$1/img1/000001.jpg -gt ../../../../Datasets/MOT16/train/MOT16-$1/gt/gt.txt -det ../../../../Datasets/MOT16/train/MOT16-$1/det.txt -npart $2

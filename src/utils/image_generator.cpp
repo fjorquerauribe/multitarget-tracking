@@ -26,7 +26,7 @@ ImageGenerator::ImageGenerator(string _firstFrameFilename, string _groundTruthFi
   }
   readDetections(_detectionsFile);
   readGroundTruth(_groundTruthFile);
-  cout << "images: " << getDatasetSize() << ", detections:" << this->detections.size() << ", ground truth:" << this->detections.size() << endl;
+  //cout << "images: " << getDatasetSize() << ", detections:" << this->detections.size() << ", ground truth:" << this->detections.size() << endl;
 }
 
 Mat ImageGenerator::getFrame(int frame_num){

@@ -1,24 +1,21 @@
-#include "mtt.hpp"
+#include "mtt_phd_pf.hpp"
 
-MultiTargetTracking::MultiTargetTracking(){}
+MultiTargetTrackingPHDFilter::MultiTargetTrackingPHDFilter(){}
 
-MultiTargetTracking::MultiTargetTracking(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile, int _npart)
+MultiTargetTrackingPHDFilter::MultiTargetTrackingPHDFilter(string _firstFrameFileName, 
+	string _groundTruthFileName, string _preDetectionFile, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
 	this->preDetectionFile = _preDetectionFile;
 	this->npart = _npart;
 
-	this->dpp = DPP();
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
-	this->hogDetector = HOGDetector();
-
-	initialized = true;
 }
 
-void MultiTargetTracking::run()
+void MultiTargetTrackingPHDFilter::run()
 {
-	namedWindow("MTT", WINDOW_NORMAL);
+	namedWindow("MTT");
 	//resizeWindow("MTT", 400, 400);
 	PHDParticleFilter filter(this->npart);
 
@@ -28,48 +25,39 @@ void MultiTargetTracking::run()
 		vector<Target> gt = this->generator.getGroundTruth(i);
 
 		MatrixXd features; vector<Rect> preDetections; VectorXd detectionWeights;
-	
-		preDetections = this->hogDetector.detect(currentFrame);
-		features = this->hogDetector.getFeatureValues();
-		detectionWeights = this->hogDetector.getDetectionWeights();
-	
+		preDetections = this->generator.getDetections(i);
 		/*cout << "features size: " << features.rows() << "," << features.cols() << endl;
 		cout << "preDetections size: " << preDetections.size() << endl;
 		cout << "detectionWeights size: " << detectionWeights.size() << endl;*/
-
-		double alpha = 0.9, beta = 1.1, lambda = -0.1, mu = 0.8, epsilon = 0.1;
-		vector<Rect> detections = this->dpp.run(preDetections, detectionWeights, features, alpha, lambda, beta, mu, epsilon);
-
+		
 		cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
-		cout << "detections number: " << detections.size() << endl;
-		
+		cout << "preDetections number: " << preDetections.size() << endl;
+
 		if (!filter.is_initialized())
 		{
-			filter.initialize(currentFrame, detections);
+			cout << "filter is not initialized!!!" << endl;
+			filter.initialize(currentFrame, preDetections);
 		}
 		else
 		{
 			filter.predict();
-			filter.update(currentFrame, detections);
+			filter.update(currentFrame, preDetections);
 			vector<Rect> estimates = filter.estimate(currentFrame, true);
 			filter.draw_particles(currentFrame, Scalar(0, 255, 255));
 			cout << "estimate number: " << estimates.size() << endl;
 		}
 
-		for (size_t j = 0; j < detections.size(); ++j)
+		for (size_t j = 0; j < preDetections.size(); ++j)
 		{
-			rectangle(currentFrame, detections.at(j), Scalar(0,255,0), 1, LINE_AA);
+			rectangle(currentFrame, preDetections.at(j), Scalar(0,255,0), 1, LINE_AA);
 		}
 		/*for (unsigned int j = 0; j < gt.size(); ++j)
 		{
 			rectangle(currentFrame, gt.at(j).bbox, Scalar(0,255,0), 1, LINE_AA);
-		}*/		
-		
+		}*/
 		imshow("MTT", currentFrame);
 		waitKey(1);
-		
-		
 	}
 }
 
@@ -121,11 +109,11 @@ int main(int argc, char const *argv[])
 	  	}
 	  	else
 	  	{
-	  		cout << "No number particles given" << endl;
+	  		cout << "No particles number given" << endl;
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	MultiTargetTracking tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _npart);
+	  	MultiTargetTrackingPHDFilter tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _npart);
 	  	tracker.run();
 	}
 }

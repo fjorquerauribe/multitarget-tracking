@@ -7,30 +7,30 @@ EM::EM(MatrixXd &_data, int n_components){
 	dim = _data.cols();
 	data = _data;
 	data_mean = element.getMean();
-	resp=MatrixXd::Zero(rows,components);
+	resp = MatrixXd::Zero(rows,components);
 	covs.reserve(components);
 	means.reserve(components);
 	pi.reserve(components);
 	data_cov = element.getCov();
-	for(int i=0;i<components;i++){
+	for(int i = 0; i < components; i++){
 		pi.push_back(1./components);				// Uniform prior of p(k)
 		covs.push_back(data_cov);
-		means.push_back(data_mean+10*VectorXd::Random(dim));
+		means.push_back(data_mean + 10 * VectorXd::Random(dim));
 	}
 }
 
 double EM::estep(){
-	resp=MatrixXd::Zero(rows,components);
+	resp = MatrixXd::Zero(rows, components);
 	loglike = 0;
-	for(int n=0;n<rows;n++) {
-		for (int i=0;i<components;i++){
-			double logdet=log(covs[i].determinant());
+	for(int n = 0; n < rows; n++) {
+		for (int i = 0; i < components; i++){
+			double logdet = log(covs[i].determinant());
 			if (!isfinite(logdet)) {
-				covs[i]=data_cov;
+				covs[i] = data_cov;
 				break;
 			}
 			if (means[i].hasNaN()) {
-				means[i]=data_mean+10*VectorXd::Random(dim);
+				means[i] = data_mean + 10 * VectorXd::Random(dim);
 				break;
 			}
 			LLT<MatrixXd> chol(covs[i]);
@@ -40,15 +40,15 @@ double EM::estep(){
 	        tmp1 -= means[i];
 	        MatrixXd tmp2 = tmp1.transpose() * cov_inverse;
 	        tmp2 = tmp2 * tmp1;
-	        resp(n,i) =log(pi[i]) -0.5 * tmp2(0,0) - (dim/2) * log(2*M_PI) -(0.5) * logdet;
+	        resp(n,i) = log(pi[i]) -0.5 * tmp2(0,0) - (dim/2) * log(2*M_PI) -(0.5) * logdet;
     	}
     	double sumexp=0.0;
-    	double max_value=resp.row(n).maxCoeff();
-        for (int i=0; i<components; i++) {
-        	sumexp+=exp(resp(n,i)-max_value);
+    	double max_value = resp.row(n).maxCoeff();
+        for (int i = 0; i < components; i++) {
+        	sumexp += exp(resp(n,i) - max_value);
         }
-        double norm_const=max_value+log(sumexp);
-        resp.row(n)=(resp.row(n).array()-norm_const).exp().matrix();
+        double norm_const = max_value + log(sumexp);
+        resp.row(n) = (resp.row(n).array() - norm_const).exp().matrix();
         loglike += norm_const;
 	}
 	return loglike;
@@ -60,26 +60,26 @@ vector<VectorXd> EM::getMeans(){
 
 void EM::mstep(){
 	//double wgt,sum;
-	for(int i=0;i<components;i++){
-		double wgt=0.0;
-		VectorXd vec_sum=RowVectorXd::Zero(dim);
-		for(int n=0;n<rows;n++){
+	for(int i = 0; i < components; i++){
+		double wgt = 0.0;
+		VectorXd vec_sum = RowVectorXd::Zero(dim);
+		for(int n = 0; n < rows; n++){
 			wgt += resp(n,i);
-			vec_sum+=resp(n,i)*data.row(n).transpose();
+			vec_sum += resp(n,i) * data.row(n).transpose();
 		}
 		pi[i] = wgt/rows;
-		means[i]=vec_sum;
-		means[i]/=wgt;
+		means[i] = vec_sum;
+		means[i] /= wgt;
 		//MatrixXd centered = data.rowwise() - means[i].transpose();
 		//for(int n=0;n<centered.rows();n++){
 		//	centered.row(n)*=resp(n,i);
 		//}
     	//covs[i] = (centered.adjoint() * centered) / wgt;
-		for(int m=0;m<dim;m++){
-			double sum=0.0;
-			for(int j=0;j<dim;j++){
-				for(int n=0;n<rows;n++){
-					sum += resp(n,i) * (data(n,m)-means[i](m))*(data(n,j)-means[i](j));
+		for(int m = 0; m < dim; m++){
+			double sum = 0.0;
+			for(int j = 0; j < dim; j++){
+				for(int n = 0; n < rows; n++){
+					sum += resp(n,i) * (data(n,m) - means[i](m)) * (data(n,j) - means[i](j));
 				}
 				covs[i](m,j) = sum/wgt;
 			}
@@ -90,7 +90,7 @@ void EM::mstep(){
 double EM::fit(int n_iter){
 	double result = 0.;
 	double oldresult;
-	for(int i=0;i<n_iter;i++){
+	for(int i = 0; i < n_iter; i++){
 		oldresult = result;
 		result = estep();
 		mstep();
