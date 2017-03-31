@@ -26,7 +26,7 @@ ImageGenerator::ImageGenerator(string _firstFrameFilename, string _groundTruthFi
   }
   readDetections(_detectionsFile);
   readGroundTruth(_groundTruthFile);
-  //cout << "images: " << getDatasetSize() << ", detections:" << this->detections.size() << ", ground truth:" << this->detections.size() << endl;
+  //cout << "images: " << getDatasetSize() << ", detections:" << this->detections.size() << ", ground truth:" << this->ground_truth.size() << endl;
 }
 
 Mat ImageGenerator::getFrame(int frame_num){
@@ -137,6 +137,6 @@ void ImageGenerator::readGroundTruth(string gtFilename){
     rect.width = coords[2];
     rect.height = coords[3];
     target.bbox = rect;
-    ground_truth[frame_num].push_back(target);  
+    ground_truth[frame_num].push_back(target);
   }
 }

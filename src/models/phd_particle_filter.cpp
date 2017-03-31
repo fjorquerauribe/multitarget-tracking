@@ -202,7 +202,7 @@ void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0,255,2
 
 void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
 {
-    cout << "states size: " << this->states.size() << endl;
+    //cout << "states size: " << this->states.size() << endl;
     if(detections.size() > 0){
         vector<double> tmp_weights;
         MatrixXd cov = POSITION_LIKELIHOOD_STD * POSITION_LIKELIHOOD_STD * MatrixXd::Identity(4, 4);
@@ -242,10 +242,10 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
         for (size_t i = 0; i < this->weights.size(); ++i)
         {
             double weight = this->weights[i];
-            cout << weight << ",";
+            //cout << weight << ",";
             tmp_weights.push_back(weight * (1 - DETECTION_RATE) + psi.row(i).sum()/ (1.6e-4 * 20.0));
         }
-        cout << endl;
+        //cout << endl;
 
         /*for (int i = 0; i < detections.size(); ++i)
         {

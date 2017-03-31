@@ -16,10 +16,12 @@ MultiTargetTrackingPHDFilter::MultiTargetTrackingPHDFilter(string _firstFrameFil
 void MultiTargetTrackingPHDFilter::run()
 {
 	namedWindow("MTT");
+	RNG rng( 0xFFFFFFFF );
+	map<int,Scalar> color;
 	//resizeWindow("MTT", 400, 400);
 	PHDParticleFilter filter(this->npart);
 
-	for (unsigned int i = 0; i < this->generator.getDatasetSize(); ++i)
+	for (int i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
@@ -44,20 +46,25 @@ void MultiTargetTrackingPHDFilter::run()
 			filter.predict();
 			filter.update(currentFrame, preDetections);
 			vector<Rect> estimates = filter.estimate(currentFrame, true);
-			filter.draw_particles(currentFrame, Scalar(0, 255, 255));
+			//filter.draw_particles(currentFrame, Scalar(0, 255, 255));
 			cout << "estimate number: " << estimates.size() << endl;
 		}
 
 		for (size_t j = 0; j < preDetections.size(); ++j)
 		{
-			rectangle(currentFrame, preDetections.at(j), Scalar(0,255,0), 1, LINE_AA);
+			rectangle(currentFrame, preDetections.at(j), Scalar(0,255,0), 2, LINE_AA);
 		}
-		/*for (unsigned int j = 0; j < gt.size(); ++j)
+		for (unsigned int j = 0; j < gt.size(); ++j)
 		{
-			rectangle(currentFrame, gt.at(j).bbox, Scalar(0,255,0), 1, LINE_AA);
-		}*/
+			if ( color.find(gt.at(j).label) == color.end() ) {
+              int icolor = (unsigned) rng;
+              Scalar new_color=Scalar( icolor&255, (icolor>>8)&255, (icolor>>16)&255 );
+              color.insert (pair<int,Scalar>(gt.at(j).label,  new_color));
+            }
+            rectangle( currentFrame, gt.at(j).bbox, color.at(gt.at(j).label), 2, 1 );
+		}
 		imshow("MTT", currentFrame);
-		waitKey(1);
+		waitKey(300);
 	}
 }
 
