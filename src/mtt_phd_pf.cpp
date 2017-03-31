@@ -38,7 +38,6 @@ void MultiTargetTrackingPHDFilter::run()
 
 		if (!filter.is_initialized())
 		{
-			cout << "filter is not initialized!!!" << endl;
 			filter.initialize(currentFrame, preDetections);
 		}
 		else
