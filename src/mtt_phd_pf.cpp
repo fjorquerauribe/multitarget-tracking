@@ -39,6 +39,7 @@ void MultiTargetTrackingPHDFilter::run()
 		if (!filter.is_initialized())
 		{
 			filter.initialize(currentFrame, preDetections);
+			filter.draw_particles(currentFrame, Scalar(0, 255, 255));
 		}
 		else
 		{
@@ -53,7 +54,7 @@ void MultiTargetTrackingPHDFilter::run()
 		{
 			rectangle(currentFrame, preDetections.at(j), Scalar(0,255,0), 2, LINE_AA);
 		}
-		for (unsigned int j = 0; j < gt.size(); ++j)
+		/*for (unsigned int j = 0; j < gt.size(); ++j)
 		{
 			if ( color.find(gt.at(j).label) == color.end() ) {
               int icolor = (unsigned) rng;
@@ -61,9 +62,9 @@ void MultiTargetTrackingPHDFilter::run()
               color.insert (pair<int,Scalar>(gt.at(j).label,  new_color));
             }
             rectangle( currentFrame, gt.at(j).bbox, color.at(gt.at(j).label), 2, 1 );
-		}
+		}*/
 		imshow("MTT", currentFrame);
-		waitKey(300);
+		waitKey(1);
 	}
 }
 
