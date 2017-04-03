@@ -61,8 +61,8 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
     normal_distribution<double> scale_random_height(0.0,theta_x.at(1)(1));
     this->states.clear();
     this->weights.clear();
+    this->particles_batch = (int)this->n_particles/detections.size();
     double weight = (double)detections.size()/this->n_particles;
-    this->particles_batch = this->n_particles/(int)detections.size();
     int remaining_batch = this->n_particles % (int)detections.size();
     
     for(unsigned int j = 0; j < detections.size(); j++){
@@ -164,9 +164,12 @@ void PHDParticleFilter::predict(){
                 tmp_weights.push_back(this->weights.at(i));
             }
         }
+        double lambda_birth = this->img_size.area() * BIRTH_RATE;
+        poisson_distribution<int> birth_num(lambda_birth);
+        int J_k = birth_num(this->generator);    
         if(this->birth_model.size()>0){
             for (unsigned int j = 0; j < this->birth_model.size(); j++){
-            for (int k = 0; k < particles_batch; k++){
+            for (int k = 0; k < this->particles_batch; k++){
                 particle state;
                 state.width = this->birth_model[j].width+ scale_random_width(this->generator);
                 state.height = this->birth_model[j].height+ scale_random_height(this->generator);
@@ -174,7 +177,7 @@ void PHDParticleFilter::predict(){
                 state.y = this->birth_model[j].y+ position_random_y(this->generator);;
                 Rect box(state.x, state.y, state.width, state.height);
                 tmp_new_states.push_back(state);
-                tmp_weights.push_back((double)1.0f/this->birth_model.size());
+                tmp_weights.push_back((double)J_k/this->particles_batch);
             }
             }   
         }
@@ -262,7 +265,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             tmp_weights.push_back((1 - DETECTION_RATE)*weight + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         this->weights.swap(tmp_weights);
-        resample();
+        //resample();
         Scalar phd_estimate = sum(this->weights);
         cout << "Updated target number : "<< (int)phd_estimate[0] << endl;  
         tmp_weights.clear();
@@ -299,17 +302,18 @@ void PHDParticleFilter::resample(){
     Scalar sum_squared_weights = sum(squared_normalized_weights);
     //double marginal_likelihood=norm_const-log(n_particles); 
     Scalar phd_estimate = sum(this->weights);
+    int N_k=(int)phd_estimate[0];
     double ESS=(1.0f/sum_squared_weights[0]);
     cout << "ESS:"<< ESS << endl;
     if(isless(ESS,(float)THRESHOLD)){
         vector<particle> new_states;
-        for (int i=0; i<L_k; i++) {
+        for (int i=0; i<(this->particles_batch*N_k); i++) {
             double uni_rand = unif_rnd(this->generator);
             vector<double>::iterator pos = lower_bound(cumulative_sum.begin(), cumulative_sum.end(), uni_rand);
             int ipos = distance(cumulative_sum.begin(), pos);
             particle state = this->states[ipos];
             new_states.push_back(state);
-            this->weights.at(i)=double((int)phd_estimate[0])/L_k;
+            this->weights.at(i)=(double)N_k/L_k;
         }
         this->states.swap(new_states);
     }
@@ -321,38 +325,42 @@ vector<Rect> PHDParticleFilter::estimate(Mat& image, bool draw = false){
     vector<Target> new_tracks;
     Scalar phd_estimate = sum(this->weights);
     int num_targets = (int)phd_estimate[0];
-    MatrixXd data((int)this->states.size(),4);
-    for (unsigned int j = 0; j < this->states.size(); j++){
-        data.row(j) << this->states[j].x, this->states[j].y, this->states[j].width, this->states[j].height;
-    }
-    EM mixture(data, num_targets);
-    MatrixXd cost_matrix = MatrixXd::Zero(num_targets, this->tracks.size());
-    mixture.fit(10);
-    vector<VectorXd> eigen_estimates = mixture.getMeans();
     vector<Rect> estimates;
-    for(unsigned int k = 0; k < eigen_estimates.size(); k++){
-        VectorXd vec = eigen_estimates[k];
-        for(unsigned int n = 0; n < this->tracks.size(); n++){
-            VectorXd eigen_track;
-            eigen_track << this->tracks[n].bbox.x, this->tracks[n].bbox.y, this->tracks[n].bbox.width, this->tracks[n].bbox.height;
+    if(num_targets>0)
+    {
+        MatrixXd data((int)this->states.size(),4);
+        for (unsigned int j = 0; j < this->states.size(); j++){
+            data.row(j) << this->states[j].x, this->states[j].y, this->states[j].width, this->states[j].height;
         }
-        Point pt1,pt2;
-        pt1.x=cvRound(vec(0));
-        pt1.y=cvRound(vec(1));
-        float _width=cvRound(vec(2));
-        float _height=cvRound(vec(3));
-        pt2.x=cvRound(pt1.x+_width);
-        pt2.y=cvRound(pt1.y+_height); 
-        if(vec[0]<this->img_size.width && vec[0]>=0 && vec[1]<this->img_size.height && vec[1]>=0){
-               if(draw) rectangle( image, pt1,pt2, Scalar(0,0,255), 2, LINE_AA );
-            Rect estimate=Rect(pt1.x,pt1.y,_width,_height);
-            estimates.push_back(estimate);
-            //Target target;
-            //target.bbox=estimate;
-            //target.label=k;
-            //this->tracks.push_back(target);
+        EM mixture(data, num_targets);
+        MatrixXd cost_matrix = MatrixXd::Zero(num_targets, this->tracks.size());
+        mixture.fit(10);
+        vector<VectorXd> eigen_estimates = mixture.getMeans();
+        for(unsigned int k = 0; k < eigen_estimates.size(); k++){
+            VectorXd vec = eigen_estimates[k];
+            for(unsigned int n = 0; n < this->tracks.size(); n++){
+                VectorXd eigen_track;
+                eigen_track << this->tracks[n].bbox.x, this->tracks[n].bbox.y, this->tracks[n].bbox.width, this->tracks[n].bbox.height;
+            }
+            Point pt1,pt2;
+            pt1.x=cvRound(vec(0));
+            pt1.y=cvRound(vec(1));
+            float _width=cvRound(vec(2));
+            float _height=cvRound(vec(3));
+            pt2.x=cvRound(pt1.x+_width);
+            pt2.y=cvRound(pt1.y+_height); 
+            if(vec[0]<this->img_size.width && vec[0]>=0 && vec[1]<this->img_size.height && vec[1]>=0){
+                   if(draw) rectangle( image, pt1,pt2, Scalar(0,0,255), 2, LINE_AA );
+                Rect estimate=Rect(pt1.x,pt1.y,_width,_height);
+                estimates.push_back(estimate);
+                //Target target;
+                //target.bbox=estimate;
+                //target.label=k;
+                //this->tracks.push_back(target);
+            }
         }
     }
+    
     return estimates;
 }
 
