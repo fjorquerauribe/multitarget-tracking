@@ -70,6 +70,7 @@ protected:
     int max_x, max_y, min_x, min_y;
     int particles_batch;
     vector<Target> tracks;
+    vector<Rect> birth_model;
 };
 
 #endif

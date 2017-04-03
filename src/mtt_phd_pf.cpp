@@ -39,14 +39,14 @@ void MultiTargetTrackingPHDFilter::run()
 		if (!filter.is_initialized())
 		{
 			filter.initialize(currentFrame, preDetections);
-			filter.draw_particles(currentFrame, Scalar(0, 255, 255));
+			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, preDetections);
-			vector<Rect> estimates = filter.estimate(currentFrame, true);
-			//filter.draw_particles(currentFrame, Scalar(0, 255, 255));
+			vector<Rect> estimates = filter.estimate(currentFrame, false);
+			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			cout << "estimate number: " << estimates.size() << endl;
 		}
 
@@ -64,7 +64,7 @@ void MultiTargetTrackingPHDFilter::run()
             rectangle( currentFrame, gt.at(j).bbox, color.at(gt.at(j).label), 2, 1 );
 		}*/
 		imshow("MTT", currentFrame);
-		waitKey(1);
+		waitKey(0);
 	}
 }
 
