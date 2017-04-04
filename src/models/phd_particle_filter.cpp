@@ -8,11 +8,11 @@
 #ifndef PARAMS
 const float POS_STD = 3.0;
 const float SCALE_STD = 3.0;
-const float THRESHOLD = 100;
+const float THRESHOLD = 20;
 const float SURVIVAL_RATE = 0.9;
-const float CLUTTER_RATE = 1.0;
+const float CLUTTER_RATE = 1.0e-6;
 const float BIRTH_RATE = 5e-6;
-const float DETECTION_RATE = 0.9;
+const float DETECTION_RATE = 0.7;
 const float POSITION_LIKELIHOOD_STD = 30.0;
 #endif 
 
@@ -61,9 +61,8 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
     normal_distribution<double> scale_random_height(0.0,theta_x.at(1)(1));
     this->states.clear();
     this->weights.clear();
-    this->particles_batch = (int)this->n_particles/detections.size();
-    double weight = (double)detections.size()/this->n_particles;
-    int remaining_batch = this->n_particles % (int)detections.size();
+    this->particles_batch = (int)this->n_particles;
+    double weight = (double)1.0f/this->n_particles;
     
     for(unsigned int j = 0; j < detections.size(); j++){
         this->max_width = MAX(detections[j].width, this->max_width);
@@ -111,7 +110,7 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
     } */   
     this->initialized = true;
     Scalar phd_estimate = sum(this->weights);
-    cout << "initial estimated number : "<< (int)phd_estimate[0] << endl; 
+    cout << "initial estimated number : "<< cvRound(phd_estimate[0]) << endl; 
 }
 
 void PHDParticleFilter::predict(){
@@ -177,7 +176,7 @@ void PHDParticleFilter::predict(){
                 state.y = this->birth_model[j].y+ position_random_y(this->generator);;
                 Rect box(state.x, state.y, state.width, state.height);
                 tmp_new_states.push_back(state);
-                tmp_weights.push_back((double)J_k/this->particles_batch);
+                tmp_weights.push_back((double)J_k/(this->birth_model.size()*this->particles_batch));
             }
             }   
         }
@@ -203,7 +202,7 @@ void PHDParticleFilter::predict(){
         Scalar phd_estimate = sum(this->weights);
         tmp_new_states = vector<particle>();
         tmp_weights = vector<double>();
-        cout << "predicted target number : "<< (int)phd_estimate[0] << endl; 
+        cout << "predicted target number : "<< cvRound(phd_estimate[0]) << endl; 
         //cout << "predicted birth number : "<< J_k << endl; 
     }
 }
@@ -224,7 +223,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
 {
     //cout << "states size: " << this->states.size() << endl;
     if(detections.size() > 0){
-        this->birth_model.clear();
+        //this->birth_model.clear();
         vector<double> tmp_weights;
         MatrixXd cov = POSITION_LIKELIHOOD_STD * POSITION_LIKELIHOOD_STD * MatrixXd::Identity(4, 4);
         //cout << "detections : " << detections.size() << endl;
@@ -248,7 +247,6 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
         MatrixXd psi(this->states.size(), detections.size());
         for (unsigned int i = 0; i < states.size(); ++i)
         {
-            //this->weights[i] = 1;
             particle state = this->states[i];
             VectorXd mean(4);
             mean << state.x, state.y, state.width, state.height;
@@ -265,9 +263,10 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             tmp_weights.push_back((1 - DETECTION_RATE)*weight + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         this->weights.swap(tmp_weights);
-        //resample();
+        resample();
         Scalar phd_estimate = sum(this->weights);
-        cout << "Updated target number : "<< (int)phd_estimate[0] << endl;  
+        cout << "Updated target number : "<< cvRound(phd_estimate[0]) << endl;  
+        cout << "Particle Size : "<< this->states.size() << endl;  
         tmp_weights.clear();
     }
 }
@@ -306,16 +305,20 @@ void PHDParticleFilter::resample(){
     double ESS=(1.0f/sum_squared_weights[0]);
     cout << "ESS:"<< ESS << endl;
     if(isless(ESS,(float)THRESHOLD)){
-        vector<particle> new_states;
+        vector<particle> tmp_new_states;
+        vector<double> tmp_weights;
         for (int i=0; i<(this->particles_batch*N_k); i++) {
             double uni_rand = unif_rnd(this->generator);
             vector<double>::iterator pos = lower_bound(cumulative_sum.begin(), cumulative_sum.end(), uni_rand);
             int ipos = distance(cumulative_sum.begin(), pos);
             particle state = this->states[ipos];
-            new_states.push_back(state);
-            this->weights.at(i)=(double)N_k/L_k;
+            tmp_new_states.push_back(state);
+            tmp_weights.push_back((double)1.0/this->particles_batch);
         }
-        this->states.swap(new_states);
+        this->states.swap(tmp_new_states);
+        this->weights.swap(tmp_weights);
+        tmp_new_states = vector<particle>();
+        tmp_weights = vector<double>();
     }
     cumulative_sum.clear();
     squared_normalized_weights.clear();
@@ -324,7 +327,7 @@ void PHDParticleFilter::resample(){
 vector<Rect> PHDParticleFilter::estimate(Mat& image, bool draw = false){
     vector<Target> new_tracks;
     Scalar phd_estimate = sum(this->weights);
-    int num_targets = (int)phd_estimate[0];
+    int num_targets = cvRound(phd_estimate[0]);
     vector<Rect> estimates;
     if(num_targets>0)
     {
@@ -334,7 +337,7 @@ vector<Rect> PHDParticleFilter::estimate(Mat& image, bool draw = false){
         }
         EM mixture(data, num_targets);
         MatrixXd cost_matrix = MatrixXd::Zero(num_targets, this->tracks.size());
-        mixture.fit(10);
+        mixture.fit(100);
         vector<VectorXd> eigen_estimates = mixture.getMeans();
         for(unsigned int k = 0; k < eigen_estimates.size(); k++){
             VectorXd vec = eigen_estimates[k];

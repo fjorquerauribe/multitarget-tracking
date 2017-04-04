@@ -15,7 +15,7 @@ EM::EM(MatrixXd &_data, int n_components){
 	for(int i = 0; i < components; i++){
 		pi.push_back(1./components);				// Uniform prior of p(k)
 		covs.push_back(data_cov);
-		means.push_back(data_mean + 100 * VectorXd::Random(dim));
+		means.push_back(data_mean + 10 * VectorXd::Random(dim));
 	}
 }
 
