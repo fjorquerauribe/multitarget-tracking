@@ -4,12 +4,13 @@
 #include <time.h>
 #include <iostream>
 #include <cstdlib>
-
+#include <opencv2/opencv.hpp>
 #include "utils/image_generator.hpp"
 #include "models/phd_particle_filter.hpp"
 
 using namespace std;
 using namespace cv;
+
 
 class MultiTargetTrackingPHDFilter
 {

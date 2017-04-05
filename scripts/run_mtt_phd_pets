@@ -1,0 +1,1 @@
+../build/mtt_phd_pets -img /Users/felipe/Documents/data/PETS/0.jpg -gt /Users/felipe/Documents/data/PETS/groundtruth.txt -npart $1

@@ -6,7 +6,6 @@
 #include <opencv2/highgui.hpp>
 #include <Eigen/Dense>
 #include <opencv2/core/eigen.hpp>
-#include "../features/haar.hpp"
 #include "../likelihood/gaussian.hpp"
 #include "../likelihood/multivariate_gaussian.hpp"
 #include "../utils/image_generator.hpp"

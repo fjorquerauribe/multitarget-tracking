@@ -6,6 +6,26 @@ using namespace cv;
 ImageGenerator::ImageGenerator(){
 }
 
+ImageGenerator::ImageGenerator(string _firstFrameFilename, string _groundTruthFile){
+  this->frame_id = 0;
+  string FrameFilename, gtFilename;
+  FrameFilename = _firstFrameFilename;
+  gtFilename = _groundTruthFile;
+  Mat current_frame = imread(FrameFilename);
+  this->images.push_back(current_frame);
+  while(1){
+    getNextFilename(FrameFilename, "pets");
+    current_frame = imread(FrameFilename );
+    if(current_frame.empty()){
+      break;
+    }
+    else{
+      this->images.push_back(current_frame);
+    }
+  }
+  readGroundTruth(_groundTruthFile, "pets");
+  //cout << "images: " << getDatasetSize() << ", ground truth:" << this->ground_truth.size() << endl;
+}
 
 ImageGenerator::ImageGenerator(string _firstFrameFilename, string _groundTruthFile, string _detectionsFile){
   this->frame_id = 0;
@@ -16,7 +36,7 @@ ImageGenerator::ImageGenerator(string _firstFrameFilename, string _groundTruthFi
   this->images.push_back(current_frame);
   while(1){
     getNextFilename(FrameFilename);
-    current_frame = imread(FrameFilename );
+    current_frame = imread(FrameFilename);
     if(current_frame.empty()){
       break;
     }
@@ -59,7 +79,8 @@ int ImageGenerator::getDatasetSize(){
   return (int) this->images.size();
 }
 
-void ImageGenerator::getNextFilename(string& fn){
+void ImageGenerator::getNextFilename(string& fn, string dataset){
+  
     size_t index = fn.find_last_of("/");
     if(index == string::npos) {
         index = fn.find_last_of("\\");
@@ -74,7 +95,12 @@ void ImageGenerator::getNextFilename(string& fn){
     iss >> frameNumber;
     ostringstream oss;
     oss << (frameNumber + 1);
-    string zeros ("0000000");
+    //string zeros("0000000");
+    string zeros("");
+    if (!dataset.compare("mot")){
+      zeros = "0000000";
+    }
+     
     string nextFrameNumberString = oss.str();
     string nextFrameFilename = prefix + zeros.substr(0, zeros.length() - 1 - nextFrameNumberString.length()) + nextFrameNumberString + suffix;
     fn.assign(nextFrameFilename);
@@ -109,34 +135,62 @@ void ImageGenerator::readDetections(string detFilename){
   }
 }
 
-void ImageGenerator::readGroundTruth(string gtFilename){
+void ImageGenerator::readGroundTruth(string gtFilename, string dataset){
   ifstream gt_file(gtFilename.c_str(), ios::in);
   string line;
   ground_truth.resize(getDatasetSize());
   vector<double> coords(4,0);
   int frame_num;
-  while (getline(gt_file, line)) {
-    Target target; 
-    Rect rect;
-    size_t pos2 = line.find(",");
-    size_t pos1 = 0;
-    frame_num = stoi(line.substr(pos1, pos2)) - 1;
-    pos1 = pos2;
-    pos2 = line.find(",",pos1 + 1);
-    target.label = stoi(line.substr(pos1 + 1, pos2 - pos1 - 1));   
-    pos1 = pos2;
-    pos2 = line.find(",", pos1 + 1);
-    coords[0] = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
-    for(int j = 1; j < 4; j++){
+  if (!dataset.compare("mot"))
+  {
+    while (getline(gt_file, line)) {
+      Target target; 
+      Rect rect;
+      size_t pos2 = line.find(",");
+      size_t pos1 = 0;
+      frame_num = stoi(line.substr(pos1, pos2)) - 1;
+      pos1 = pos2;
+      pos2 = line.find(",",pos1 + 1);
+      target.label = stoi(line.substr(pos1 + 1, pos2 - pos1 - 1));   
       pos1 = pos2;
       pos2 = line.find(",", pos1 + 1);
-      coords[j] = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));  
+      coords[0] = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
+      for(int j = 1; j < 4; j++){
+        pos1 = pos2;
+        pos2 = line.find(",", pos1 + 1);
+        coords[j] = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));  
+      }
+      rect.x = coords[0];
+      rect.y = coords[1];
+      rect.width = coords[2];
+      rect.height = coords[3];
+      target.bbox = rect;
+      ground_truth[frame_num].push_back(target);
     }
-    rect.x = coords[0];
-    rect.y = coords[1];
-    rect.width = coords[2];
-    rect.height = coords[3];
-    target.bbox = rect;
-    ground_truth[frame_num].push_back(target);
   }
+  else{
+    while (getline(gt_file, line)) {
+      Target target; 
+      Rect rect;
+      size_t pos2 = line.find(" ");
+      size_t pos1 = 0;
+      frame_num = stoi(line.substr(pos1, pos2)) - 1;
+      
+      for(int j = 0; j < 4; j++){
+        pos1 = pos2;
+        pos2 = line.find(" ", pos1 + 1);
+        coords[j] = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
+      }
+
+      rect.x = coords[0];
+      rect.y = coords[1];
+      rect.width = coords[2];
+      rect.height = coords[3];
+
+      target.bbox = rect;
+      target.label = -1;
+      ground_truth[frame_num].push_back(target);
+    }
+  }
+  
 }

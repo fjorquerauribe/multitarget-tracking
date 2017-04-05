@@ -20,6 +20,7 @@ typedef struct{
 class ImageGenerator{
 public:
   ImageGenerator();
+  ImageGenerator(string _firstFrameFilename, string _groundTruthFile);
   ImageGenerator(string _firstFrameFilename, string _groundTruthFile, string _detectionsFile);
   bool hasEnded();
   void moveNext();
@@ -29,9 +30,9 @@ public:
   int getDatasetSize();
 private:
   void readDetections(string str);
-  void readGroundTruth(string str);
+  void readGroundTruth(string str, string dataset = "mot");
   int frame_id;
-  void getNextFilename(string& filename);
+  void getNextFilename(string& filename, string dataset = "mot");
   vector<Mat> images;
   vector< vector<Target> > ground_truth;
   vector< vector<Rect> > detections;

@@ -168,16 +168,16 @@ void PHDParticleFilter::predict(){
         int J_k = birth_num(this->generator);    
         if(this->birth_model.size()>0){
             for (unsigned int j = 0; j < this->birth_model.size(); j++){
-            for (int k = 0; k < this->particles_batch; k++){
-                particle state;
-                state.width = this->birth_model[j].width+ scale_random_width(this->generator);
-                state.height = this->birth_model[j].height+ scale_random_height(this->generator);
-                state.x = this->birth_model[j].x+ position_random_x(this->generator);;
-                state.y = this->birth_model[j].y+ position_random_y(this->generator);;
-                Rect box(state.x, state.y, state.width, state.height);
-                tmp_new_states.push_back(state);
-                tmp_weights.push_back((double)J_k/(this->birth_model.size()*this->particles_batch));
-            }
+                for (int k = 0; k < this->particles_batch; k++){
+                    particle state;
+                    state.width = this->birth_model[j].width+ scale_random_width(this->generator);
+                    state.height = this->birth_model[j].height+ scale_random_height(this->generator);
+                    state.x = this->birth_model[j].x+ position_random_x(this->generator);;
+                    state.y = this->birth_model[j].y+ position_random_y(this->generator);;
+                    Rect box(state.x, state.y, state.width, state.height);
+                    tmp_new_states.push_back(state);
+                    tmp_weights.push_back((double)J_k/(this->birth_model.size()*this->particles_batch));
+                }
             }   
         }
         /*else{
@@ -200,8 +200,8 @@ void PHDParticleFilter::predict(){
         this->states.swap(tmp_new_states);
         this->weights.swap(tmp_weights);
         Scalar phd_estimate = sum(this->weights);
-        tmp_new_states = vector<particle>();
-        tmp_weights = vector<double>();
+        tmp_new_states.clear();// = vector<particle>();
+        tmp_weights.clear();// = vector<double>();
         cout << "predicted target number : "<< cvRound(phd_estimate[0]) << endl; 
         //cout << "predicted birth number : "<< J_k << endl; 
     }
@@ -263,7 +263,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             tmp_weights.push_back((1 - DETECTION_RATE)*weight + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         this->weights.swap(tmp_weights);
-        resample();
+        //resample();
         Scalar phd_estimate = sum(this->weights);
         cout << "Updated target number : "<< cvRound(phd_estimate[0]) << endl;  
         cout << "Particle Size : "<< this->states.size() << endl;  
@@ -337,7 +337,7 @@ vector<Rect> PHDParticleFilter::estimate(Mat& image, bool draw = false){
         }
         EM mixture(data, num_targets);
         MatrixXd cost_matrix = MatrixXd::Zero(num_targets, this->tracks.size());
-        mixture.fit(100);
+        mixture.fit(10);
         vector<VectorXd> eigen_estimates = mixture.getMeans();
         for(unsigned int k = 0; k < eigen_estimates.size(); k++){
             VectorXd vec = eigen_estimates[k];

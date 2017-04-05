@@ -1,4 +1,4 @@
-#include "mtt_phd_pf.hpp"
+#include "test_phd.hpp"
 
 MultiTargetTrackingPHDFilter::MultiTargetTrackingPHDFilter(){}
 
@@ -9,7 +9,6 @@ MultiTargetTrackingPHDFilter::MultiTargetTrackingPHDFilter(string _firstFrameFil
 	this->groundTruthFileName = _groundTruthFileName;
 	this->preDetectionFile = _preDetectionFile;
 	this->npart = _npart;
-
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
 }
 
@@ -38,6 +37,7 @@ void MultiTargetTrackingPHDFilter::run()
 
 		if (!filter.is_initialized())
 		{
+			
 			filter.initialize(currentFrame, preDetections);
 			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			vector<Rect> estimates = filter.estimate(currentFrame, true);
@@ -107,7 +107,7 @@ int main(int argc, char const *argv[])
 	  	}
 	  	else
 	  	{
-	  		cout << "No ground truth given" << endl;
+	  		cout << "No detections file given" << endl;
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}

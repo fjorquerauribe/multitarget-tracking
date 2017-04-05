@@ -1,4 +1,4 @@
-#include "mtt_dpp.hpp"
+#include "test_dpp.hpp"
 
 MultiTargetTrackingDPP::MultiTargetTrackingDPP(){}
 
@@ -12,7 +12,6 @@ MultiTargetTrackingDPP::MultiTargetTrackingDPP(string _firstFrameFileName, strin
 	this->dpp = DPP();
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
 	this->hogDetector = HOGDetector();
-
 }
 
 void MultiTargetTrackingDPP::run()
@@ -111,7 +110,7 @@ int main(int argc, char const *argv[])
 	  	}
 	  	else
 	  	{
-	  		cout << "No ground truth given" << endl;
+	  		cout << "No detections file given" << endl;
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
