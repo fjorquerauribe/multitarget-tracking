@@ -1,7 +1,7 @@
 #include "hog_detector.hpp"
 
 #ifndef PARAMS
-const double GROUP_THRESHOLD = 2.0;
+const double GROUP_THRESHOLD = 1.0;
 const double HIT_THRESHOLD = 0.2;
 #endif 
 
