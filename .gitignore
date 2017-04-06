@@ -2,3 +2,4 @@ build/
 PETS/
 pre-data/
 *.backup
+backups/

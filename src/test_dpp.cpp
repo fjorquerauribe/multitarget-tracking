@@ -36,8 +36,7 @@ void MultiTargetTrackingDPP::run()
 		cout << "preDetections size: " << preDetections.size() << endl;
 		cout << "detectionWeights size: " << detectionWeights.size() << endl;*/
 
-		double alpha = 0.9, beta = 1.1, lambda = -0.1, mu = 0.8, epsilon = 0.1;
-		vector<Rect> detections = this->dpp.run(preDetections, detectionWeights, features, alpha, lambda, beta, mu, epsilon);
+		vector<Rect> detections = this->dpp.run(preDetections, detectionWeights, features);
 
 		cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
