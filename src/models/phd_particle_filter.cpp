@@ -266,7 +266,6 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
         resample();
         Scalar phd_estimate = sum(this->weights);
         cout << "Updated target number : "<< cvRound(phd_estimate[0]) << endl;  
-        cout << "Particle Size : "<< this->states.size() << endl;  
         tmp_weights.clear();
     }
 }
@@ -304,7 +303,6 @@ void PHDParticleFilter::resample(){
     Scalar phd_estimate = sum(this->weights);
     int N_k=min(cvRound(this->particles_batch*phd_estimate[0]),500);
     double ESS=(1.0f/sum_squared_weights[0]);
-    cout << "ESS:"<< ESS << endl;
     if(isless(ESS,(float)THRESHOLD)){
         vector<particle> tmp_new_states;
         vector<double> tmp_weights;

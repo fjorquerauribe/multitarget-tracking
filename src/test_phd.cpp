@@ -46,7 +46,7 @@ void MultiTargetTrackingPHDFilter::run()
 		{
 			filter.predict();
 			filter.update(currentFrame, preDetections);
-			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
+			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			vector<Rect> estimates = filter.estimate(currentFrame, true);
 			cout << "estimate number: " << estimates.size() << endl;
 		}
@@ -65,7 +65,7 @@ void MultiTargetTrackingPHDFilter::run()
             rectangle( currentFrame, gt.at(j).bbox, color.at(gt.at(j).label), 2, 1 );
 		}*/
 		imshow("MTT", currentFrame);
-		waitKey(0);
+		waitKey(1);
 	}
 }
 

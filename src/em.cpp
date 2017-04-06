@@ -1,6 +1,6 @@
 #include "em.hpp"
 
-EM::EM(MatrixXd &_data, int n_components){
+EM::EM(MatrixXd &_data, int n_components,bool _diag){
 	MVNGaussian element(_data);
 	components = n_components; 
 	rows = _data.rows();							// No. of data
@@ -11,12 +11,18 @@ EM::EM(MatrixXd &_data, int n_components){
 	covs.reserve(components);
 	means.reserve(components);
 	pi.reserve(components);
-	data_cov = element.getCov();
+	if(diag){
+		data_cov=10 * MatrixXd::Identity(dim,dim);	
+	}
+	else{
+		data_cov = element.getCov();
+	}
 	for(int i = 0; i < components; i++){
 		pi.push_back(1./components);				// Uniform prior of p(k)
 		covs.push_back(data_cov);
 		means.push_back(data_mean + 10 * VectorXd::Random(dim));
 	}
+	diag=_diag;
 }
 
 double EM::estep(){
@@ -70,18 +76,15 @@ void EM::mstep(){
 		pi[i] = wgt/rows;
 		means[i] = vec_sum;
 		means[i] /= wgt;
-		//MatrixXd centered = data.rowwise() - means[i].transpose();
-		//for(int n=0;n<centered.rows();n++){
-		//	centered.row(n)*=resp(n,i);
-		//}
-    	//covs[i] = (centered.adjoint() * centered) / wgt;
-		for(int m = 0; m < dim; m++){
-			double sum = 0.0;
-			for(int j = 0; j < dim; j++){
-				for(int n = 0; n < rows; n++){
-					sum += resp(n,i) * (data(n,m) - means[i](m)) * (data(n,j) - means[i](j));
+		if(!this->diag){
+			for(int m = 0; m < dim; m++){
+				double sum = 0.0;
+				for(int j = 0; j < dim; j++){
+					for(int n = 0; n < rows; n++){
+						sum += resp(n,i) * (data(n,m) - means[i](m)) * (data(n,j) - means[i](j));
+					}
+					covs[i](m,j) = sum/wgt;
 				}
-				covs[i](m,j) = sum/wgt;
 			}
 		}
 	}

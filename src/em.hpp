@@ -16,7 +16,7 @@ using namespace std;
 
 class EM {
 	public:
-		EM(MatrixXd &data,int n_components);
+		EM(MatrixXd &data,int n_components,bool diag=true);
 		double estep();
 		void mstep();
 		double fit(int n_iter);
@@ -30,6 +30,7 @@ class EM {
 		MatrixXd data, resp;
 		VectorXd data_mean;
 		MatrixXd data_cov;
+		bool diag;
 };
 
 
