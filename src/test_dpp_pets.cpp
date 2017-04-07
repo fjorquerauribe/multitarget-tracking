@@ -16,6 +16,7 @@ MultiTargetTrackingDPPPets::MultiTargetTrackingDPPPets(string _firstFrameFileNam
 void MultiTargetTrackingDPPPets::run()
 {
 	namedWindow("MTT");
+	//namedWindow("MTT", WINDOW_OPENGL);
 	//resizeWindow("MTT", 400, 400);
 	PHDParticleFilter filter(this->npart);
 
@@ -27,37 +28,38 @@ void MultiTargetTrackingDPPPets::run()
 		MatrixXd features; vector<Rect> preDetections; VectorXd detectionWeights;
 	
 		preDetections = this->hogDetector.detect(currentFrame);
+		for (size_t j = 0; j < preDetections.size(); ++j)
+		{
+			rectangle(currentFrame, preDetections.at(j), Scalar(255,0,0), 2, LINE_AA);
+		}
+
 		features = this->hogDetector.getFeatureValues();
 		detectionWeights = this->hogDetector.getDetectionWeights();
-		//preDetections = this->generator.getDetections(i);
-
-		/*cout << "features size: " << features.rows() << "," << features.cols() << endl;
-		cout << "preDetections size: " << preDetections.size() << endl;
-		cout << "detectionWeights size: " << detectionWeights.size() << endl;*/
-
+		
 		vector<Rect> detections = this->dpp.run(preDetections, detectionWeights, features);
 
 		cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
+		cout << "preDetections number: " << preDetections.size() << endl;
 		cout << "detections number: " << detections.size() << endl;
 		
 		if (!filter.is_initialized())
 		{
 			filter.initialize(currentFrame, detections);
-			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
+			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, detections);
 			vector<Rect> estimates = filter.estimate(currentFrame, true);
-			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
+			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			cout << "estimate number: " << estimates.size() << endl;
 		}
 
 		for (size_t j = 0; j < detections.size(); ++j)
 		{
-			rectangle(currentFrame, detections.at(j), Scalar(0,255,0), 1, LINE_AA);
+			rectangle(currentFrame, detections.at(j), Scalar(0,255,0), 2, LINE_AA);
 		}
 		/*for (unsigned int j = 0; j < gt.size(); ++j)
 		{

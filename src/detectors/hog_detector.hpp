@@ -23,7 +23,7 @@ public:
 private:
 	HOGDescriptor hog;
 	vector<Rect> detections;
-	VectorXd foundWeights;
+	VectorXd weights;
 	Mat frame;
 };
 

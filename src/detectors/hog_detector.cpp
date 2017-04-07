@@ -1,8 +1,8 @@
 #include "hog_detector.hpp"
 
 #ifndef PARAMS
-const double GROUP_THRESHOLD = 1.0;
-const double HIT_THRESHOLD = 0.2;
+const double GROUP_THRESHOLD = 0.5;
+const double HIT_THRESHOLD = 0.1;
 #endif 
 
 HOGDetector::HOGDetector(){
@@ -15,18 +15,18 @@ vector<Rect> HOGDetector::detect(Mat &frame)
     // (and more false alarms, respectively), decrease the hitThreshold and
     // groupThreshold (set groupThreshold to 0 to turn off the grouping completely).
     this->detections.clear();
-    vector<double> foundWeights;
-	this->hog.detectMultiScale(frame, this->detections, foundWeights, HIT_THRESHOLD, Size(8,8), Size(32,32), 1.05, GROUP_THRESHOLD);
+    vector<double> weights;
+	this->hog.detectMultiScale(frame, this->detections, weights, HIT_THRESHOLD, Size(8,8), Size(32,32), 1.05, GROUP_THRESHOLD);
 	
 
-	// Cast foundWeights to Eigen Vector
-	double* ptr = &foundWeights[0];
-	this->foundWeights = Eigen::Map<Eigen::VectorXd>(ptr, foundWeights.size());
+	// Cast weights to Eigen Vector
+	double* ptr = &weights[0];
+	this->weights = Eigen::Map<Eigen::VectorXd>(ptr, weights.size());
 
 
-	/*cout << "foundWeights size: " << this->foundWeights.size() << endl;
+	/*cout << "weights size: " << this->weights.size() << endl;
 	cout << "detections size: " << this->detections.size() << endl;
-	cout << "foundWeights: " << this->foundWeights << endl;*/
+	cout << "weights: " << this->weights << endl;*/
 
 	this->frame = frame;
 	return this->detections;
@@ -72,11 +72,15 @@ MatrixXd HOGDetector::getFeatureValues()
 			}
 		}
 	}
-
+	
+	hogFeatures.normalize();
+	
 	return hogFeatures;
 }
 
-// hay que normalizar
 VectorXd HOGDetector::getDetectionWeights(){
-	return this->foundWeights;
+	/*double sum_weights = this->weights.sum();
+	this->weights = this->weights / sum_weights;*/
+	this->weights.normalize();
+	return this->weights;
 }

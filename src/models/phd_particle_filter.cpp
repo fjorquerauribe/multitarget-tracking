@@ -223,7 +223,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
 {
     //cout << "states size: " << this->states.size() << endl;
     if(detections.size() > 0){
-        //this->birth_model.clear();
+        this->birth_model.clear();
         vector<double> tmp_weights;
         MatrixXd cov = POSITION_LIKELIHOOD_STD * POSITION_LIKELIHOOD_STD * MatrixXd::Identity(4, 4);
         //cout << "detections : " << detections.size() << endl;
@@ -256,11 +256,11 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             psi.row(i) = DETECTION_RATE * weight * gaussian.log_likelihood(observations).array().exp();
         }
         VectorXd tau = VectorXd::Zero(detections.size());
-        tau = clutter_prob+psi.colwise().sum().array();
+        tau = clutter_prob + psi.colwise().sum().array();
         for (size_t i = 0; i < this->weights.size(); ++i)
         {
             double weight = this->weights[i];
-            tmp_weights.push_back((1 - DETECTION_RATE)*weight + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
+            tmp_weights.push_back((1 - DETECTION_RATE) * weight + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         this->weights.swap(tmp_weights);
         resample();
@@ -271,7 +271,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
 }
 
 void PHDParticleFilter::resample(){
-    cout << "resample!" << endl;
+    //cout << "resample!" << endl;
     int L_k = this->states.size();
     vector<double> cumulative_sum(L_k);
     vector<double> normalized_weights(L_k);
@@ -316,8 +316,8 @@ void PHDParticleFilter::resample(){
         }
         this->states.swap(tmp_new_states);
         this->weights.swap(tmp_weights);
-        tmp_new_states = vector<particle>();
-        tmp_weights = vector<double>();
+        tmp_new_states.clear();//= vector<particle>();
+        tmp_weights.clear();// = vector<double>();
     }
     cumulative_sum.clear();
     squared_normalized_weights.clear();
@@ -328,9 +328,9 @@ vector<Rect> PHDParticleFilter::estimate(Mat& image, bool draw = false){
     Scalar phd_estimate = sum(this->weights);
     int num_targets = cvRound(phd_estimate[0]);
     vector<Rect> estimates;
-    if(num_targets>0)
+    if(num_targets > 0)
     {
-        MatrixXd data((int)this->states.size(),4);
+        MatrixXd data((int)this->states.size(), 4);
         for (unsigned int j = 0; j < this->states.size(); j++){
             data.row(j) << this->states[j].x, this->states[j].y, this->states[j].width, this->states[j].height;
         }
@@ -349,11 +349,11 @@ vector<Rect> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             pt1.y=cvRound(vec(1));
             float _width=cvRound(vec(2));
             float _height=cvRound(vec(3));
-            pt2.x=cvRound(pt1.x+_width);
-            pt2.y=cvRound(pt1.y+_height); 
-            if(vec[0]<this->img_size.width && vec[0]>=0 && vec[1]<this->img_size.height && vec[1]>=0){
+            pt2.x=cvRound(pt1.x + _width);
+            pt2.y=cvRound(pt1.y + _height); 
+            if((vec[0] < this->img_size.width) && (vec[0] >= 0) && (vec[1] < this->img_size.height) && (vec[1] >= 0)){
                    if(draw) rectangle( image, pt1,pt2, Scalar(0,0,255), 2, LINE_AA );
-                Rect estimate=Rect(pt1.x,pt1.y,_width,_height);
+                Rect estimate = Rect(pt1.x, pt1.y, _width, _height);
                 estimates.push_back(estimate);
                 //Target target;
                 //target.bbox=estimate;
@@ -362,7 +362,7 @@ vector<Rect> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             }
         }
     }
-    
+
     return estimates;
 }
 
