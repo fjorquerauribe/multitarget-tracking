@@ -40,14 +40,14 @@ void MultiTargetTrackingPHDFilter::run()
 			
 			filter.initialize(currentFrame, preDetections);
 			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
-			vector<Rect> estimates = filter.estimate(currentFrame, true);
+			vector<Target> estimates = filter.estimate(currentFrame, true);
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, preDetections);
 			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
-			vector<Rect> estimates = filter.estimate(currentFrame, true);
+			vector<Target> estimates = filter.estimate(currentFrame, true);
 			cout << "estimate number: " << estimates.size() << endl;
 		}
 

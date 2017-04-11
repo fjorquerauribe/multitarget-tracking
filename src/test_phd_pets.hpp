@@ -9,6 +9,7 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "detectors/hog_detector.hpp"
 #include "utils/image_generator.hpp"
+#include "utils/utils.hpp"
 #include "models/phd_particle_filter.hpp"
 
 using namespace std;

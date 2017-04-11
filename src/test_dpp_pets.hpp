@@ -6,6 +6,7 @@
 #include <cstdlib>
 
 #include "utils/image_generator.hpp"
+#include "utils/utils.hpp"
 #include "detectors/hog_detector.hpp"
 #include "dpp.hpp"
 

@@ -51,6 +51,7 @@ PHDParticleFilter::PHDParticleFilter(int _n_particles) {
     this->min_x = 1e6;
     this->min_y = 1e6;
     this->initialized = false;
+    this->rng(12345);
 }
 
 void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) {
@@ -98,7 +99,17 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
     uniform_int_distribution<int> random_y(this->min_y, this->max_y);
     uniform_int_distribution<int> random_w(this->min_width, this->max_width);
     uniform_int_distribution<int> random_h(this->min_height, this->max_height);
-    /*for (int i = 0; i < remaining_batch; i++){
+
+    for (int i = 0; i < detections.size(); ++i)
+    {
+        Target target;
+        target.bbox = detections.at(i);
+        target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
+        rectangle(current_frame, target.bbox, target.color, 2, LINE_AA);
+        this->tracks.push_back(target);
+    }
+
+    /*for(int i = 0; i < remaining_batch; i++){
         particle state;
         state.width = random_w(this->generator);
         state.height = random_h(this->generator);
@@ -107,7 +118,7 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
         state.scale = 1.0;
         this->states.push_back(state);
         this->weights.push_back(1/100.f);
-    } */   
+    }*/   
     this->initialized = true;
     Scalar phd_estimate = sum(this->weights);
     cout << "initial estimated number : "<< cvRound(phd_estimate[0]) << endl; 
@@ -323,14 +334,13 @@ void PHDParticleFilter::resample(){
     squared_normalized_weights.clear();
 }
 
-vector<Rect> PHDParticleFilter::estimate(Mat& image, bool draw = false){
-    vector<Target> new_tracks;
+vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
     Scalar phd_estimate = sum(this->weights);
     int num_targets = cvRound(phd_estimate[0]);
-    vector<Rect> estimates;
+    vector<Target> new_tracks;
     if(num_targets > 0)
     {
-        MatrixXd data((int)this->states.size(), 4);
+        /*MatrixXd data((int)this->states.size(), 4);
         for (unsigned int j = 0; j < this->states.size(); j++){
             data.row(j) << this->states[j].x, this->states[j].y, this->states[j].width, this->states[j].height;
         }
@@ -344,15 +354,15 @@ vector<Rect> PHDParticleFilter::estimate(Mat& image, bool draw = false){
                 VectorXd eigen_track;
                 eigen_track << this->tracks[n].bbox.x, this->tracks[n].bbox.y, this->tracks[n].bbox.width, this->tracks[n].bbox.height;
             }
-            Point pt1,pt2;
-            pt1.x=cvRound(vec(0));
-            pt1.y=cvRound(vec(1));
-            float _width=cvRound(vec(2));
-            float _height=cvRound(vec(3));
-            pt2.x=cvRound(pt1.x + _width);
-            pt2.y=cvRound(pt1.y + _height); 
+            Point pt1, pt2;
+            pt1.x = cvRound(vec(0));
+            pt1.y = cvRound(vec(1));
+            float _width = cvRound(vec(2));
+            float _height = cvRound(vec(3));
+            pt2.x = cvRound(pt1.x + _width);
+            pt2.y = cvRound(pt1.y + _height); 
             if((vec[0] < this->img_size.width) && (vec[0] >= 0) && (vec[1] < this->img_size.height) && (vec[1] >= 0)){
-                   if(draw) rectangle( image, pt1,pt2, Scalar(0,0,255), 2, LINE_AA );
+                   if(draw) rectangle( image, pt1, pt2, Scalar(0,0,255), 2, LINE_AA );
                 Rect estimate = Rect(pt1.x, pt1.y, _width, _height);
                 estimates.push_back(estimate);
                 //Target target;
@@ -360,10 +370,83 @@ vector<Rect> PHDParticleFilter::estimate(Mat& image, bool draw = false){
                 //target.label=k;
                 //this->tracks.push_back(target);
             }
+        }*/
+
+        /********************** EM opencv **********************/
+        Mat data, labels, emMeans;
+        data = Mat::zeros((int)this->states.size(),4, CV_64F);
+        for (unsigned int j = 0; j < this->states.size(); j++){
+            data.at<double>(j,0) = this->states[j].x;
+            data.at<double>(j,1) = this->states[j].y;
+            data.at<double>(j,2) = this->states[j].width;
+            data.at<double>(j,3) = this->states[j].height;
+        }
+
+        Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
+        em_model->setClustersNumber(num_targets);
+        em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
+        //em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 1000, 0.1));
+        em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 1000, 0.1));
+        em_model->trainEM(data, noArray(), labels, noArray());
+        emMeans = em_model->getMeans();
+        for (int i = 0; i < emMeans.rows; ++i)
+        {
+            Target target;
+            target.bbox = Rect(emMeans.at<double>(i,0), emMeans.at<double>(i,1), emMeans.at<double>(i,2), emMeans.at<double>(i,3));
+            target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
+            new_tracks.push_back(target);
+        }
+        
+        /*******************************************************/
+        
+        if (this->tracks.size() > 0)
+        {
+            hungarian_problem_t p;
+            int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
+            hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);
+            //int matrix_size = hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);
+            /*fprintf(stderr, "assignment matrix has now a size %d rows and %d columns.\n\n",  matrix_size,matrix_size);
+            fprintf(stderr, "cost-matrix:");
+            hungarian_print_costmatrix(&p);*/
+            hungarian_solve(&p);
+            /*fprintf(stderr, "assignment:");
+            hungarian_print_assignment(&p);*/
+            for (int i = 0; i < this->tracks.size(); ++i)
+            {
+                for (int j = 0; j < new_tracks.size(); ++j)
+                {
+                    if (p.assignment[i][j] == HUNGARIAN_ASSIGNED)
+                    {
+                        //cout << i << "->" << j << endl;
+                        new_tracks.at(j).color = this->tracks.at(i).color;
+                        break;
+                    }
+                }
+            }
+            this->tracks.swap(new_tracks);
+            new_tracks.clear();
+        }
+        else
+        {
+            for (int i = 0; i < new_tracks.size(); ++i)
+            {
+                Target target;
+                target.bbox = new_tracks.at(i).bbox;
+                target.color = Scalar(rng.uniform(0,255), rng.uniform(0,255), rng.uniform(0,255));
+                this->tracks.push_back(target);
+            }
+        }
+
+        if (draw)
+        {
+            for (int i = 0; i < this->tracks.size(); ++i)
+            {
+                rectangle(image, this->tracks.at(i).bbox, this->tracks.at(i).color, 2, LINE_AA);
+            }
         }
     }
 
-    return estimates;
+    return this->tracks;
 }
 
 /*void PHDParticleFilter::auxiliary(Mat& image, vector<Rect> detections)

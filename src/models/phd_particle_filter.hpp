@@ -6,10 +6,15 @@
 #include <opencv2/highgui.hpp>
 #include <Eigen/Dense>
 #include <opencv2/core/eigen.hpp>
+
+#include "opencv2/ml.hpp"
+
 #include "../likelihood/gaussian.hpp"
 #include "../likelihood/multivariate_gaussian.hpp"
 #include "../utils/image_generator.hpp"
+#include "../utils/utils.hpp"
 #include "../em.hpp"
+#include "hungarian.h"
 #include <time.h>
 #include <float.h>
 #include <vector>
@@ -51,7 +56,7 @@ public:
     PHDParticleFilter();
     void initialize(Mat& current_frame, vector<Rect> detections);
     void update(Mat& image, vector<Rect> detections);
-    vector<Rect> estimate(Mat& image, bool draw);
+    vector<Target> estimate(Mat& image, bool draw);
     void predict();
     void resample();
     void draw_particles(Mat& image, Scalar color);
@@ -70,6 +75,7 @@ protected:
     int particles_batch;
     vector<Target> tracks;
     vector<Rect> birth_model;
+    RNG rng;
 };
 
 #endif

@@ -50,7 +50,7 @@ void MultiTargetTrackingDPP::run()
 		{
 			filter.predict();
 			filter.update(currentFrame, detections);
-			vector<Rect> estimates = filter.estimate(currentFrame, true);
+			vector<Target> estimates = filter.estimate(currentFrame, true);
 			filter.draw_particles(currentFrame, Scalar(0, 255, 255));
 			cout << "estimate number: " << estimates.size() << endl;
 		}

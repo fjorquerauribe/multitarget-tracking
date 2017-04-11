@@ -8,14 +8,10 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/video.hpp>
+#include <utils.hpp>
 
 using namespace std;
 using namespace cv;
-
-typedef struct{
-	int label;
-	Rect bbox;
-} Target;
 
 class ImageGenerator{
 public:
