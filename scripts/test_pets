@@ -1,0 +1,19 @@
+#!/bin/bash
+declare -a group_threshold="1 2 3"
+declare -a hit_threshold="0.0 0.2 0.4 0.6 0.8 1.0"
+
+for g in $group_threshold
+do
+	for h in $hit_threshold
+	do
+		echo "frame,x,y,width,height" | tee output-phd-$g-$h.txt && /bin/bash $PWD/../build/start_phd_pets $g $h 100 | tee -a output-phd-$g-$h.txt
+	done
+done
+
+for g in $group_threshold
+do
+	for h in $hit_threshold
+	do
+		/bin/bash $PWD/../build/start_dpp_pets $g $h 100 | tee -a output-dpp-$g-$h.txt
+	done
+done
