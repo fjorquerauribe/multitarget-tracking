@@ -19,7 +19,8 @@ class MultiTargetTrackingPHDFilterPets
 {
 public:
 	MultiTargetTrackingPHDFilterPets();
-	MultiTargetTrackingPHDFilterPets(string _firstFrameFileName, string _groundTruthFileName, int _npart);
+	MultiTargetTrackingPHDFilterPets(string _firstFrameFileName, string _groundTruthFileName, 
+		double group_threshold, double hit_threshold, int _npart);
 	void run();
 private:
 	//int numFrames;

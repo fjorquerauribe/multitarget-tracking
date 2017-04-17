@@ -1,12 +1,15 @@
 #include "hog_detector.hpp"
 
-#ifndef PARAMS
+/*#ifndef PARAMS
 const double GROUP_THRESHOLD = 0.5;
 const double HIT_THRESHOLD = 0.1;
-#endif 
+#endif*/
+HOGDetector::HOGDetector(){}
 
-HOGDetector::HOGDetector(){
+HOGDetector::HOGDetector(double group_threshold, double hit_threshold){
 	this->hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());
+	this->group_threshold = group_threshold;
+	this->hit_threshold = hit_threshold;
 }
 
 vector<Rect> HOGDetector::detect(Mat &frame)
@@ -16,7 +19,7 @@ vector<Rect> HOGDetector::detect(Mat &frame)
     // groupThreshold (set groupThreshold to 0 to turn off the grouping completely).
     this->detections.clear();
     vector<double> weights;
-	this->hog.detectMultiScale(frame, this->detections, weights, HIT_THRESHOLD, Size(8,8), Size(32,32), 1.05, GROUP_THRESHOLD);
+	this->hog.detectMultiScale(frame, this->detections, weights, this->hit_threshold, Size(8,8), Size(32,32), 1.05, this->group_threshold);
 	
 
 	// Cast weights to Eigen Vector

@@ -14,6 +14,7 @@ class HOGDetector
 {
 public:
 	HOGDetector();
+	HOGDetector(double group_threshold, double hit_threshold);
 	vector<Rect> detect(Mat &frame);
 	void draw();
 	//vector<Rect> getDetections();
@@ -25,6 +26,7 @@ private:
 	vector<Rect> detections;
 	VectorXd weights;
 	Mat frame;
+	double group_threshold, hit_threshold;
 };
 
 #endif

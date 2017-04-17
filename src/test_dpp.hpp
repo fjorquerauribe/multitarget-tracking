@@ -19,7 +19,8 @@ class MultiTargetTrackingDPP
 {
 public:
 	MultiTargetTrackingDPP();
-	MultiTargetTrackingDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile, int _npart);
+	MultiTargetTrackingDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile,
+		double group_threshold, double hit_threshold, int _npart);
 	void run();
 private:
 	//int numFrames;

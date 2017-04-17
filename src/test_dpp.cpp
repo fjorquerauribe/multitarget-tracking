@@ -2,7 +2,8 @@
 
 MultiTargetTrackingDPP::MultiTargetTrackingDPP(){}
 
-MultiTargetTrackingDPP::MultiTargetTrackingDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile, int _npart)
+MultiTargetTrackingDPP::MultiTargetTrackingDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile,
+	double group_threshold, double hit_threshold, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
@@ -11,7 +12,7 @@ MultiTargetTrackingDPP::MultiTargetTrackingDPP(string _firstFrameFileName, strin
 
 	this->dpp = DPP();
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
-	this->hogDetector = HOGDetector();
+	this->hogDetector = HOGDetector(group_threshold, hit_threshold);
 }
 
 void MultiTargetTrackingDPP::run()
@@ -74,8 +75,9 @@ void MultiTargetTrackingDPP::run()
 int main(int argc, char const *argv[])
 {
 	string _firstFrameFileName, _gtFileName, _preDetectionFile;
+	double _group_threshold, _hit_threshold;
 	int _npart;
-	if(argc != 9)
+	if(argc != 13)
 	{
 		cout << "Incorrect input list" << endl;
 		cout << "exiting..." << endl;
@@ -113,9 +115,29 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	if (strcmp(argv[7], "-npart") == 0)
+	  	if(strcmp(argv[7], "-gp_t") == 0)
 	  	{
-	  		_npart = atoi(argv[8]);
+	    	_group_threshold = stod(argv[8]);
+	  	}
+	  	else
+	  	{
+	  		cout << "No group threshold given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if(strcmp(argv[9], "-hit_t") == 0)
+	  	{
+	    	_hit_threshold = stod(argv[10]);
+	  	}
+	  	else
+	  	{
+	  		cout << "No hit threshold given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if (strcmp(argv[11], "-npart") == 0)
+	  	{
+	  		_npart = atoi(argv[12]);
 	  	}
 	  	else
 	  	{
@@ -123,7 +145,7 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	MultiTargetTrackingDPP tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _npart);
+	  	MultiTargetTrackingDPP tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _group_threshold, _hit_threshold, _npart);
 	  	tracker.run();
 	}
 }

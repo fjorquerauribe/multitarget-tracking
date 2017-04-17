@@ -2,7 +2,8 @@
 
 MultiTargetTrackingDPPPets::MultiTargetTrackingDPPPets(){}
 
-MultiTargetTrackingDPPPets::MultiTargetTrackingDPPPets(string _firstFrameFileName, string _groundTruthFileName, int _npart)
+MultiTargetTrackingDPPPets::MultiTargetTrackingDPPPets(string _firstFrameFileName, string _groundTruthFileName,
+	double group_threshold, double hit_threshold, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
@@ -10,7 +11,7 @@ MultiTargetTrackingDPPPets::MultiTargetTrackingDPPPets(string _firstFrameFileNam
 
 	this->dpp = DPP();
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName);
-	this->hogDetector = HOGDetector();
+	this->hogDetector = HOGDetector(group_threshold, hit_threshold);
 }
 
 void MultiTargetTrackingDPPPets::run()
@@ -72,8 +73,9 @@ void MultiTargetTrackingDPPPets::run()
 int main(int argc, char const *argv[])
 {
 	string _firstFrameFileName, _groundTruthFileName;
+	double _group_threshold, _hit_threshold;
 	int _npart;
-	if(argc != 7)
+	if(argc != 11)
 	{
 		cout << "Incorrect input list" << endl;
 		cout << "exiting..." << endl;
@@ -101,9 +103,29 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	if (strcmp(argv[5], "-npart") == 0)
+	  	if(strcmp(argv[5], "-gp_t") == 0)
 	  	{
-	  		_npart = atoi(argv[6]);
+	    	_group_threshold = stod(argv[6]);
+	  	}
+	  	else
+	  	{
+	  		cout << "No group threshold given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if(strcmp(argv[7], "-hit_t") == 0)
+	  	{
+	    	_hit_threshold = stod(argv[8]);
+	  	}
+	  	else
+	  	{
+	  		cout << "No hit threshold given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if (strcmp(argv[9], "-npart") == 0)
+	  	{
+	  		_npart = atoi(argv[10]);
 	  	}
 	  	else
 	  	{
@@ -111,7 +133,7 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	MultiTargetTrackingDPPPets tracker(_firstFrameFileName, _groundTruthFileName, _npart);
+	  	MultiTargetTrackingDPPPets tracker(_firstFrameFileName, _groundTruthFileName, _group_threshold, _hit_threshold, _npart);
 	  	tracker.run();
 	}
 }
