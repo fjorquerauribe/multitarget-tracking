@@ -31,9 +31,9 @@ void MultiTargetTrackingPHDFilter::run()
 		cout << "preDetections size: " << preDetections.size() << endl;
 		cout << "detectionWeights size: " << detectionWeights.size() << endl;*/
 		
-		cout << "--------------------------" << endl;
+		/*cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
-		cout << "preDetections number: " << preDetections.size() << endl;
+		cout << "preDetections number: " << preDetections.size() << endl;*/
 
 		if (!filter.is_initialized())
 		{
@@ -48,7 +48,7 @@ void MultiTargetTrackingPHDFilter::run()
 			filter.update(currentFrame, preDetections);
 			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			vector<Target> estimates = filter.estimate(currentFrame, true);
-			cout << "estimate number: " << estimates.size() << endl;
+			//cout << "estimate number: " << estimates.size() << endl;
 		}
 
 		for (size_t j = 0; j < preDetections.size(); ++j)

@@ -121,7 +121,7 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
     }*/   
     this->initialized = true;
     Scalar phd_estimate = sum(this->weights);
-    cout << "initial estimated number : "<< cvRound(phd_estimate[0]) << endl; 
+    //cout << "initial estimated number : "<< cvRound(phd_estimate[0]) << endl; 
 }
 
 void PHDParticleFilter::predict(){
@@ -213,7 +213,7 @@ void PHDParticleFilter::predict(){
         Scalar phd_estimate = sum(this->weights);
         tmp_new_states.clear();// = vector<particle>();
         tmp_weights.clear();// = vector<double>();
-        cout << "predicted target number : "<< cvRound(phd_estimate[0]) << endl; 
+        //cout << "predicted target number : "<< cvRound(phd_estimate[0]) << endl; 
         //cout << "predicted birth number : "<< J_k << endl; 
     }
 }
@@ -256,27 +256,25 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
         }
 
         MatrixXd psi(this->states.size(), detections.size());
-        for (unsigned int i = 0; i < states.size(); ++i)
+        for (unsigned int i = 0; i < this->states.size(); ++i)
         {
             particle state = this->states[i];
             VectorXd mean(4);
             mean << state.x, state.y, state.width, state.height;
             MatrixXd cov = POSITION_LIKELIHOOD_STD * POSITION_LIKELIHOOD_STD * MatrixXd::Identity(4, 4);
             MVNGaussian gaussian(mean, cov);
-            double weight = this->weights[i];
-            psi.row(i) = DETECTION_RATE * weight * gaussian.log_likelihood(observations).array().exp();
+            psi.row(i) = DETECTION_RATE * this->weights[i] * gaussian.log_likelihood(observations).array().exp();
         }
         VectorXd tau = VectorXd::Zero(detections.size());
         tau = clutter_prob + psi.colwise().sum().array();
         for (size_t i = 0; i < this->weights.size(); ++i)
         {
-            double weight = this->weights[i];
-            tmp_weights.push_back((1 - DETECTION_RATE) * weight + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
+            tmp_weights.push_back((1 - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         this->weights.swap(tmp_weights);
         resample();
         Scalar phd_estimate = sum(this->weights);
-        cout << "Updated target number : "<< cvRound(phd_estimate[0]) << endl;  
+        //cout << "Updated target number : "<< cvRound(phd_estimate[0]) << endl;  
         tmp_weights.clear();
     }
 }
@@ -312,12 +310,12 @@ void PHDParticleFilter::resample(){
     }
     Scalar sum_squared_weights = sum(squared_normalized_weights);
     Scalar phd_estimate = sum(this->weights);
-    int N_k=min(cvRound(this->particles_batch*phd_estimate[0]),500);
+    int N_k=min(cvRound(this->particles_batch * phd_estimate[0]), 500);
     double ESS=(1.0f/sum_squared_weights[0]);
     if(isless(ESS,(float)THRESHOLD)){
         vector<particle> tmp_new_states;
         vector<double> tmp_weights;
-        for (int i=0; i<N_k; i++) {
+        for (int i = 0; i < N_k; i++) {
             double uni_rand = unif_rnd(this->generator);
             vector<double>::iterator pos = lower_bound(cumulative_sum.begin(), cumulative_sum.end(), uni_rand);
             int ipos = distance(cumulative_sum.begin(), pos);
@@ -381,7 +379,6 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             data.at<double>(j,2) = this->states[j].width;
             data.at<double>(j,3) = this->states[j].height;
         }
-
         Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
         em_model->setClustersNumber(num_targets);
         em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
@@ -396,7 +393,6 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
             new_tracks.push_back(target);
         }
-        
         /*******************************************************/
         
         if (this->tracks.size() > 0)
@@ -404,13 +400,7 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             hungarian_problem_t p;
             int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
             hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);
-            //int matrix_size = hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);
-            /*fprintf(stderr, "assignment matrix has now a size %d rows and %d columns.\n\n",  matrix_size,matrix_size);
-            fprintf(stderr, "cost-matrix:");
-            hungarian_print_costmatrix(&p);*/
             hungarian_solve(&p);
-            /*fprintf(stderr, "assignment:");
-            hungarian_print_assignment(&p);*/
             for (int i = 0; i < this->tracks.size(); ++i)
             {
                 for (int j = 0; j < new_tracks.size(); ++j)

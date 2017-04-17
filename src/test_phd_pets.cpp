@@ -31,22 +31,22 @@ void MultiTargetTrackingPHDFilterPets::run()
 	
 		preDetections = this->hogDetector.detect(currentFrame);
 		
-		cout << "--------------------------" << endl;
+		/*cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
-		cout << "preDetections number: " << preDetections.size() << endl;
-		
+		cout << "preDetections number: " << preDetections.size() << endl;*/
+		vector<Target> estimates;
 		if (!filter.is_initialized())
 		{
 			filter.initialize(currentFrame, preDetections);
 			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
-			vector<Target> estimates = filter.estimate(currentFrame, true);
+			estimates = filter.estimate(currentFrame, true);
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, preDetections);
 			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
-			vector<Target> estimates = filter.estimate(currentFrame, true);
+			estimates = filter.estimate(currentFrame, true);
 		}
 
 		for (size_t j = 0; j < preDetections.size(); ++j)
@@ -54,6 +54,11 @@ void MultiTargetTrackingPHDFilterPets::run()
 			rectangle(currentFrame, preDetections.at(j), Scalar(0,255,0), 2, LINE_AA);
 		}
 		
+		for (int j = 0; j < estimates.size(); ++j)
+		{
+			cout << i << "," << estimates.at(j).bbox.x << "," << estimates.at(j).bbox.y << "," << 
+			estimates.at(j).bbox.width << "," << estimates.at(j).bbox.height << endl;
+		}
 		
 		imshow("MTT", currentFrame);
 		waitKey(1);

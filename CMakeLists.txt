@@ -22,11 +22,11 @@ include_directories( "src/libs/libhungarian/" )
 #add_executable( mtt_dpp src/test_dpp.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/detectors/hog_detector.cpp src/dpp.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
 #target_link_libraries( mtt_dpp ${OpenCV_LIBS} -lpthread)
 
-add_executable( mtt_dpp_pets src/test_dpp_pets.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/detectors/hog_detector.cpp src/dpp.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
-target_link_libraries( mtt_dpp_pets ${OpenCV_LIBS} -lpthread)
-
 #add_executable( mtt_phd src/test_phd.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/features/haar.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
 #target_link_libraries( mtt_phd ${OpenCV_LIBS} -lpthread)
 
-#add_executable( mtt_phd_pets src/test_phd_pets.cpp src/detectors/hog_detector.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
-#target_link_libraries( mtt_phd_pets ${OpenCV_LIBS} -lpthread)
+add_executable( mtt_dpp_pets src/test_dpp_pets.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/detectors/hog_detector.cpp src/dpp.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
+target_link_libraries( mtt_dpp_pets ${OpenCV_LIBS} -lpthread)
+
+add_executable( mtt_phd_pets src/test_phd_pets.cpp src/detectors/hog_detector.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
+target_link_libraries( mtt_phd_pets ${OpenCV_LIBS} -lpthread)

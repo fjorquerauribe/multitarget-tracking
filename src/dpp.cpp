@@ -1,7 +1,7 @@
 #include "dpp.hpp"
 
 #ifndef PARAMS
-const double ALPHA = 0.9;
+const double ALPHA = 1.0; //0.9
 const double LAMBDA = -0.1;
 const double BETA = 1.1;
 const double MU = 0.7;
@@ -61,7 +61,7 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 VectorXd DPP::getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty){
 	/*** 
 	 ***	Get quality term 
-	 ***	q = alpha * log(1 + s) + beta
+	 ***	qt = alpha * log(1 + s) + beta
 	 ***/
 
 	VectorXd qt = detectionWeights.cwiseProduct(nPenalty);
@@ -70,6 +70,7 @@ VectorXd DPP::getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty){
 	qt = qt.array().log() / log(10);
 	qt = ALPHA * qt.array() + BETA;
 	qt = qt.array().square();
+	//VectorXd qt = ALPHA * detectionWeights.array() + (1 - ALPHA) * nPenalty.array();
 	
 	return qt;
 }
