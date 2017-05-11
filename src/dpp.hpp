@@ -16,12 +16,12 @@ class DPP
 {
 public:
 	DPP();
-	vector<Rect> run(vector<Rect> preDetections, VectorXd &detectionWeights, MatrixXd &featureValues);
+	vector<Rect> run(vector<Rect> preDetections, VectorXd &detectionWeights, MatrixXd &featureValues, double epsilon = 0.1, double mu = 0.7, double lambda = 0.1);
 
 private:
 	VectorXd getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty);
-	MatrixXd getSimilarityTerm(MatrixXd &featureValues, MatrixXd &intersectionArea, MatrixXd &sqrtArea);
-	vector<int> solve(VectorXd &qualityTerm, MatrixXd &similarityTerm);
+	MatrixXd getSimilarityTerm(MatrixXd &featureValues, MatrixXd &intersectionArea, MatrixXd &sqrtArea, double mu);
+	vector<int> solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double epsilon);
 };
 
 #endif

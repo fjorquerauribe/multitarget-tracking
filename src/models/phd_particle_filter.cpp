@@ -120,7 +120,7 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
         this->weights.push_back(1/100.f);
     }*/   
     this->initialized = true;
-    Scalar phd_estimate = sum(this->weights);
+    //Scalar phd_estimate = sum(this->weights);
     //cout << "initial estimated number : "<< cvRound(phd_estimate[0]) << endl; 
 }
 
@@ -158,7 +158,6 @@ void PHDParticleFilter::predict(){
                 && _width > 0 
                 && _height > 0 
                 && unif(this->generator) < SURVIVAL_RATE){
-                //&& unif(generator)<SURVIVAL_RATE
                 state.x_p = state.x;
                 state.y_p = state.y;
                 state.width_p = state.width;
@@ -171,25 +170,25 @@ void PHDParticleFilter::predict(){
                 state.scale = 2 * state.scale - state.scale_p + scale_random_width(this->generator);
                 Rect box(state.x, state.y, state.width, state.height);
                 tmp_new_states.push_back(state);
-                tmp_weights.push_back(SURVIVAL_RATE*this->weights.at(i));
+                tmp_weights.push_back(SURVIVAL_RATE * this->weights.at(i));
             }
         }
         double lambda_birth = this->img_size.area() * BIRTH_RATE;
         //poisson_distribution<int> birth_num(lambda_birth);
         //int J_k = birth_num(this->generator);    
-        if(this->birth_model.size()>0){
+        if(this->birth_model.size() > 0){
             for (unsigned int j = 0; j < this->birth_model.size(); j++){
                 for (int k = 0; k < this->particles_batch; k++){
                     particle state;
-                    state.width = this->birth_model[j].width+ scale_random_width(this->generator);
-                    state.height = this->birth_model[j].height+ scale_random_height(this->generator);
-                    state.x = this->birth_model[j].x+ position_random_x(this->generator);;
-                    state.y = this->birth_model[j].y+ position_random_y(this->generator);;
+                    state.width = this->birth_model[j].width + scale_random_width(this->generator);
+                    state.height = this->birth_model[j].height + scale_random_height(this->generator);
+                    state.x = this->birth_model[j].x + position_random_x(this->generator);
+                    state.y = this->birth_model[j].y + position_random_y(this->generator);
                     Rect box(state.x, state.y, state.width, state.height);
                     tmp_new_states.push_back(state);
-                    tmp_weights.push_back((double)lambda_birth/(this->birth_model.size()*this->particles_batch));
+                    tmp_weights.push_back((double)lambda_birth/(this->birth_model.size() * this->particles_batch));
                 }
-            }   
+            }
         }
         /*else{
             double lambda_birth = this->img_size.area() * BIRTH_RATE;
@@ -210,7 +209,7 @@ void PHDParticleFilter::predict(){
         }*/
         this->states.swap(tmp_new_states);
         this->weights.swap(tmp_weights);
-        Scalar phd_estimate = sum(this->weights);
+        //Scalar phd_estimate = sum(this->weights);
         tmp_new_states.clear();// = vector<particle>();
         tmp_weights.clear();// = vector<double>();
         //cout << "predicted target number : "<< cvRound(phd_estimate[0]) << endl; 
@@ -238,7 +237,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
         vector<double> tmp_weights;
         MatrixXd cov = POSITION_LIKELIHOOD_STD * POSITION_LIKELIHOOD_STD * MatrixXd::Identity(4, 4);
         //cout << "detections : " << detections.size() << endl;
-        MatrixXd observations = MatrixXd::Zero(detections.size(),4);
+        MatrixXd observations = MatrixXd::Zero(detections.size(), 4);
         
         double clutter_prob = (double)CLUTTER_RATE/this->img_size.area();
         
@@ -269,11 +268,11 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
         tau = clutter_prob + psi.colwise().sum().array();
         for (size_t i = 0; i < this->weights.size(); ++i)
         {
-            tmp_weights.push_back((1 - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
+            tmp_weights.push_back((1.0f - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         this->weights.swap(tmp_weights);
         resample();
-        Scalar phd_estimate = sum(this->weights);
+        //Scalar phd_estimate = sum(this->weights);
         //cout << "Updated target number : "<< cvRound(phd_estimate[0]) << endl;  
         tmp_weights.clear();
     }
@@ -288,7 +287,7 @@ void PHDParticleFilter::resample(){
     vector<double> squared_normalized_weights(L_k);
     uniform_real_distribution<double> unif_rnd(0.0,1.0); 
     for (int i = 0; i < L_k; i++) {
-        log_weights[i]= log(this->weights[i]);
+        log_weights[i] = log(this->weights[i]);
     }
     double logsumexp = 0.0;
     double max_value = *max_element(log_weights.begin(), log_weights.end());
@@ -310,9 +309,9 @@ void PHDParticleFilter::resample(){
     }
     Scalar sum_squared_weights = sum(squared_normalized_weights);
     Scalar phd_estimate = sum(this->weights);
-    int N_k=min(cvRound(this->particles_batch * phd_estimate[0]), 500);
-    double ESS=(1.0f/sum_squared_weights[0]);
-    if(isless(ESS,(float)THRESHOLD)){
+    int N_k = min(cvRound(this->particles_batch * phd_estimate[0]), 500);
+    double ESS = (1.0f/sum_squared_weights[0]);
+    if(isless(ESS, (float)THRESHOLD)){
         vector<particle> tmp_new_states;
         vector<double> tmp_weights;
         for (int i = 0; i < N_k; i++) {
@@ -343,15 +342,10 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             data.row(j) << this->states[j].x, this->states[j].y, this->states[j].width, this->states[j].height;
         }
         EM mixture(data, num_targets);
-        MatrixXd cost_matrix = MatrixXd::Zero(num_targets, this->tracks.size());
         mixture.fit(10);
         vector<VectorXd> eigen_estimates = mixture.getMeans();
         for(unsigned int k = 0; k < eigen_estimates.size(); k++){
             VectorXd vec = eigen_estimates[k];
-            for(unsigned int n = 0; n < this->tracks.size(); n++){
-                VectorXd eigen_track;
-                eigen_track << this->tracks[n].bbox.x, this->tracks[n].bbox.y, this->tracks[n].bbox.width, this->tracks[n].bbox.height;
-            }
             Point pt1, pt2;
             pt1.x = cvRound(vec(0));
             pt1.y = cvRound(vec(1));
@@ -360,17 +354,15 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             pt2.x = cvRound(pt1.x + _width);
             pt2.y = cvRound(pt1.y + _height); 
             if((vec[0] < this->img_size.width) && (vec[0] >= 0) && (vec[1] < this->img_size.height) && (vec[1] >= 0)){
-                   if(draw) rectangle( image, pt1, pt2, Scalar(0,0,255), 2, LINE_AA );
+                   //if(draw) rectangle( image, pt1, pt2, Scalar(0,0,255), 2, LINE_AA );
                 Rect estimate = Rect(pt1.x, pt1.y, _width, _height);
-                estimates.push_back(estimate);
-                //Target target;
-                //target.bbox=estimate;
-                //target.label=k;
-                //this->tracks.push_back(target);
+                Target target;
+                target.bbox = estimate;
+                target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
+                new_tracks.push_back(target);
             }
         }*/
-
-        /********************** EM opencv **********************/
+        /********************** opencv EM **********************/
         Mat data, labels, emMeans;
         data = Mat::zeros((int)this->states.size(),4, CV_64F);
         for (unsigned int j = 0; j < this->states.size(); j++){
@@ -383,7 +375,7 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
         em_model->setClustersNumber(num_targets);
         em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
         //em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 1000, 0.1));
-        em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 1000, 0.1));
+        em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 10, 0.1));
         em_model->trainEM(data, noArray(), labels, noArray());
         emMeans = em_model->getMeans();
         for (int i = 0; i < emMeans.rows; ++i)

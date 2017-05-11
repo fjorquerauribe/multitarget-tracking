@@ -3,21 +3,23 @@
 MultiTargetTrackingDPPPets::MultiTargetTrackingDPPPets(){}
 
 MultiTargetTrackingDPPPets::MultiTargetTrackingDPPPets(string _firstFrameFileName, string _groundTruthFileName,
-	double group_threshold, double hit_threshold, int _npart)
+	double _epsilon, double _mu, double _lambda, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
 	this->npart = _npart;
-
-	this->dpp = DPP();
+	this->epsilon = _epsilon;
+	this->mu = _mu;
+	this->lambda = _lambda;
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName);
-	this->hogDetector = HOGDetector(group_threshold, hit_threshold);
 }
 
 void MultiTargetTrackingDPPPets::run()
 {
 	namedWindow("MTT");
 	PHDParticleFilter filter(this->npart);
+	HOGDetector hogDetector = HOGDetector(0, 0.0);
+	DPP dpp = DPP();
 
 	for (unsigned int i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
@@ -26,12 +28,12 @@ void MultiTargetTrackingDPPPets::run()
 
 		MatrixXd features; vector<Rect> preDetections; VectorXd detectionWeights;
 	
-		preDetections = this->hogDetector.detect(currentFrame);
-		features = this->hogDetector.getFeatureValues();
-		detectionWeights = this->hogDetector.getDetectionWeights();
+		preDetections = hogDetector.detect(currentFrame);
+		features = hogDetector.getFeatureValues();
+		detectionWeights = hogDetector.getDetectionWeights();
 		
 		
-		vector<Rect> detections = this->dpp.run(preDetections, detectionWeights, features);
+		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
 
 		/*cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
@@ -41,15 +43,15 @@ void MultiTargetTrackingDPPPets::run()
 		if (!filter.is_initialized())
 		{
 			filter.initialize(currentFrame, detections);
-			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
+			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			estimates = filter.estimate(currentFrame, true);
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, detections);
+			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			estimates = filter.estimate(currentFrame, true);
-			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			//cout << "estimate number: " << estimates.size() << endl;
 		}
 		
@@ -73,9 +75,9 @@ void MultiTargetTrackingDPPPets::run()
 int main(int argc, char const *argv[])
 {
 	string _firstFrameFileName, _groundTruthFileName;
-	double _group_threshold, _hit_threshold;
 	int _npart;
-	if(argc != 11)
+	double _epsilon, _mu, _lambda;
+	if(argc != 13)
 	{
 		cout << "Incorrect input list" << endl;
 		cout << "exiting..." << endl;
@@ -103,29 +105,39 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	if(strcmp(argv[5], "-gp_t") == 0)
+	  	if(strcmp(argv[5], "-epsilon") == 0)
 	  	{
-	    	_group_threshold = stod(argv[6]);
+	    	_epsilon = stod(argv[6]);
 	  	}
 	  	else
 	  	{
-	  		cout << "No group threshold given" << endl;
+	  		cout << "No epsilon given" << endl;
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	if(strcmp(argv[7], "-hit_t") == 0)
+	  	if(strcmp(argv[7], "-mu") == 0)
 	  	{
-	    	_hit_threshold = stod(argv[8]);
+	    	_mu = stod(argv[8]);
 	  	}
 	  	else
 	  	{
-	  		cout << "No hit threshold given" << endl;
+	  		cout << "No mu given" << endl;
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	if (strcmp(argv[9], "-npart") == 0)
+	  	if(strcmp(argv[9], "-lambda") == 0)
 	  	{
-	  		_npart = atoi(argv[10]);
+	    	_lambda = stod(argv[10]);
+	  	}
+	  	else
+	  	{
+	  		cout << "No lambda given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if (strcmp(argv[11], "-npart") == 0)
+	  	{
+	  		_npart = atoi(argv[12]);
 	  	}
 	  	else
 	  	{
@@ -133,7 +145,7 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	MultiTargetTrackingDPPPets tracker(_firstFrameFileName, _groundTruthFileName, _group_threshold, _hit_threshold, _npart);
+	  	MultiTargetTrackingDPPPets tracker(_firstFrameFileName, _groundTruthFileName, _epsilon, _mu, _lambda, _npart);
 	  	tracker.run();
 	}
 }

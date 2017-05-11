@@ -38,10 +38,10 @@ extern "C" {
 
 
 typedef struct {
-  int num_rows;
-  int num_cols;
-  int** cost;
-  int** assignment;
+	int num_rows;
+	int num_cols;
+	int** cost;
+	int** assignment;
 } hungarian_problem_t;
 
 /** This method initialize the hungarian_problem structure and init

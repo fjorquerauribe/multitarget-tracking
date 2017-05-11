@@ -1,1 +1,0 @@
-../build/mtt_dpp_pets -img PETS/0.jpg -gt PETS/groundtruth.txt -gp_t $1 -hit_t $2 -npart $3

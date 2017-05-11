@@ -16,12 +16,14 @@ using namespace std;
 
 class EM {
 	public:
-		EM(MatrixXd &data,int n_components,bool diag=true);
+		EM(MatrixXd &data,int n_components,bool _diag=true);
 		double estep();
 		void mstep();
 		double fit(int n_iter);
 		vector<VectorXd> getMeans();	
 	private:
+		VectorXd random_generator(int dim);
+		double random_uniform();
 		int rows, components, dim;
 		double loglike;
 		vector<VectorXd> means;

@@ -20,13 +20,12 @@ class MultiTargetTrackingDPPPets
 public:
 	MultiTargetTrackingDPPPets();
 	MultiTargetTrackingDPPPets(string _firstFrameFileName, string _groundTruthFileName,
-		double group_threshold, double hit_threshold, int _npart);
+		double _epsilon, double _mu, double _lambda, int _npart);
 	void run();
 private:
 	string firstFrameFileName, groundTruthFileName;
 	int npart;
-	HOGDetector hogDetector;
-	DPP dpp;
+	double epsilon, mu, lambda;
 	ImageGenerator generator;
 };
 

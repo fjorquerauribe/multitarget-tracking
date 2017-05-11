@@ -1,0 +1,1 @@
+../build/mtt_dpp -img MOT16/train/MOT16-$1/img1/000001.jpg -gt MOT16/train/MOT16-$1/gt/gt.txt -det MOT16/train/MOT16-$1/det/det.txt -epsilon $2 -mu $3 -lambda $4 -npart $5

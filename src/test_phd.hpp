@@ -1,5 +1,5 @@
-#ifndef MTT_PHD_PF
-#define MTT_PHD_PF
+#ifndef MTT_PHD_PF_H
+#define MTT_PHD_PF_H
 
 #include <time.h>
 #include <iostream>

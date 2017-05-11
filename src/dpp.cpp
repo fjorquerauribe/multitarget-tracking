@@ -1,16 +1,16 @@
 #include "dpp.hpp"
 
 #ifndef PARAMS
-const double ALPHA = 1.0; //0.9
-const double LAMBDA = -0.1;
+const double ALPHA = 0.9; //0.9
+//const double LAMBDA = 0.1;
 const double BETA = 1.1;
-const double MU = 0.7;
-const double EPSILON = 0.1;
+//const double MU = 0.7;
+//const double EPSILON = 0.1;
 #endif
 
 DPP::DPP(){}
 
-vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, MatrixXd &featureValues)
+vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, MatrixXd &featureValues, double epsilon, double mu, double lambda)
 {
 	VectorXd area(preDetections.size());
 	MatrixXd intersectionArea(preDetections.size(), preDetections.size());
@@ -40,11 +40,11 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 		}
 	}
 	nContain = nContain.array() - 1;
-	VectorXd nPenalty = nContain.array().exp().pow(LAMBDA);
+	VectorXd nPenalty = nContain.array().exp().pow(lambda);
 	
 	VectorXd qualityTerm = getQualityTerm(detectionWeights, nPenalty);
-	MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea);
-	vector<int> top = solve(qualityTerm, similarityTerm);
+	MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea, mu);
+	vector<int> top = solve(qualityTerm, similarityTerm, epsilon);
 
 	/*MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea);
 	vector<int> top = solve(detectionWeights, similarityTerm);*/
@@ -70,25 +70,23 @@ VectorXd DPP::getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty){
 	qt = qt.array().log() / log(10);
 	qt = ALPHA * qt.array() + BETA;
 	qt = qt.array().square();
-	//VectorXd qt = ALPHA * detectionWeights.array() + (1 - ALPHA) * nPenalty.array();
 	
 	return qt;
 }
 
-MatrixXd DPP::getSimilarityTerm(MatrixXd &featureValues, MatrixXd &intersectionArea, MatrixXd &sqrtArea){
+MatrixXd DPP::getSimilarityTerm(MatrixXd &featureValues, MatrixXd &intersectionArea, MatrixXd &sqrtArea, double mu){
 	/****
 	 ****	Get similarity term
-	 ****	S = w * S^c + (1 - w) * S^s
+	 ****	S = w * Sc + (1 - w) * Ss
 	 ****/
 
 	MatrixXd Ss = intersectionArea.array() / sqrtArea.array();
 	MatrixXd Sc = featureValues * featureValues.adjoint();
-	//MatrixXd Sc = featureValues * featureValues.transpose();
-	MatrixXd S = MU * Ss.array() + (1 - MU) * Sc.array();
+	MatrixXd S = mu * Ss.array() + (1 - mu) * Sc.array();
 	return S;
 }
 
-vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm){
+vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double epsilon){
 	VectorXi remained = VectorXi::LinSpaced(qualityTerm.size(), 0, qualityTerm.size() - 1);
 	int selected;
 	double oldObj, prodQ;
@@ -127,7 +125,6 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm){
 
 			newS.block(0, newS.cols() - 1, newS.rows() - 1, 1) << tmp;
 			newS.block(newS.rows() - 1, 0, 1, newS.cols() - 1) << tmp.transpose();
-			//cout << "determinant: " << newS.determinant() << endl;
 			double obj_ = qualityTerm(remained(i)) * newS.determinant();
 			
 			if (obj_ > maxObj_)
@@ -139,9 +136,9 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm){
 		}
 
 		double maxObj = prodQ * maxObj_ ;
-		//cout << "maxObj/oldObj:" << (maxObj / oldObj) << ", epsilon:" << EPSILON << endl;
-		if ( (maxObj / oldObj) > (1 + EPSILON) )
-		//if ( (maxObj / oldObj) > EPSILON )
+		cout << "maxObj/oldObj:" << (maxObj / oldObj) << ", epsilon:" << (1 + epsilon) << endl;
+		if ( (maxObj / oldObj) > (1 + epsilon) )
+		//if ( (maxObj / oldObj) > epsilon )
 		{
 			top.push_back(remained(selected));
 			oldObj = maxObj;

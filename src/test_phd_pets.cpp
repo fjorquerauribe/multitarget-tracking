@@ -3,13 +3,14 @@
 MultiTargetTrackingPHDFilterPets::MultiTargetTrackingPHDFilterPets(){}
 
 MultiTargetTrackingPHDFilterPets::MultiTargetTrackingPHDFilterPets(string _firstFrameFileName, 
-	string _groundTruthFileName, double group_threshold, double hit_threshold, int _npart)
+	string _groundTruthFileName, int _group_threshold, double _hit_threshold, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
 	this->npart = _npart;
+	this->group_threshold = _group_threshold;
+	this->hit_threshold = _hit_threshold;
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName);
-	this->hogDetector = HOGDetector(group_threshold, hit_threshold);
 }
 
 void MultiTargetTrackingPHDFilterPets::run()
@@ -19,7 +20,7 @@ void MultiTargetTrackingPHDFilterPets::run()
 	map<int,Scalar> color;
 	//resizeWindow("MTT", 400, 400);
 	PHDParticleFilter filter(this->npart);
-
+	HOGDetector hogDetector = HOGDetector(this->group_threshold, this->hit_threshold);
 	Mat currentFrame;
 
 	for (int i = 0; i < this->generator.getDatasetSize(); ++i)
@@ -29,8 +30,7 @@ void MultiTargetTrackingPHDFilterPets::run()
 
 		vector<Rect> preDetections;
 	
-		preDetections = this->hogDetector.detect(currentFrame);
-		
+		preDetections = hogDetector.detect(currentFrame);
 		/*cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
 		cout << "preDetections number: " << preDetections.size() << endl;*/

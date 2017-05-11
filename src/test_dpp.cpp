@@ -3,16 +3,16 @@
 MultiTargetTrackingDPP::MultiTargetTrackingDPP(){}
 
 MultiTargetTrackingDPP::MultiTargetTrackingDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile,
-	double group_threshold, double hit_threshold, int _npart)
+	double _epsilon, double _mu, double _lambda, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
 	this->preDetectionFile = _preDetectionFile;
 	this->npart = _npart;
-
-	this->dpp = DPP();
+	this->epsilon = _epsilon;
+	this->mu = _mu;
+	this->lambda = _lambda;
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
-	this->hogDetector = HOGDetector(group_threshold, hit_threshold);
 }
 
 void MultiTargetTrackingDPP::run()
@@ -20,6 +20,8 @@ void MultiTargetTrackingDPP::run()
 	namedWindow("MTT", WINDOW_NORMAL);
 	//resizeWindow("MTT", 400, 400);
 	PHDParticleFilter filter(this->npart);
+	HOGDetector hogDetector = HOGDetector(0, 0.0);
+	DPP dpp = DPP();
 
 	for (unsigned int i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
@@ -28,16 +30,16 @@ void MultiTargetTrackingDPP::run()
 
 		MatrixXd features; vector<Rect> preDetections; VectorXd detectionWeights;
 	
-		preDetections = this->hogDetector.detect(currentFrame);
-		features = this->hogDetector.getFeatureValues();
-		detectionWeights = this->hogDetector.getDetectionWeights();
+		preDetections = hogDetector.detect(currentFrame);
+		features = hogDetector.getFeatureValues();
+		detectionWeights = hogDetector.getDetectionWeights();
 		//preDetections = this->generator.getDetections(i);
 
 		/*cout << "features size: " << features.rows() << "," << features.cols() << endl;
 		cout << "preDetections size: " << preDetections.size() << endl;
 		cout << "detectionWeights size: " << detectionWeights.size() << endl;*/
 
-		vector<Rect> detections = this->dpp.run(preDetections, detectionWeights, features);
+		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
 
 		cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
@@ -75,9 +77,9 @@ void MultiTargetTrackingDPP::run()
 int main(int argc, char const *argv[])
 {
 	string _firstFrameFileName, _gtFileName, _preDetectionFile;
-	double _group_threshold, _hit_threshold;
 	int _npart;
-	if(argc != 13)
+	double _epsilon, _mu, _lambda;
+	if(argc != 15)
 	{
 		cout << "Incorrect input list" << endl;
 		cout << "exiting..." << endl;
@@ -115,29 +117,39 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	if(strcmp(argv[7], "-gp_t") == 0)
+	  	if(strcmp(argv[7], "-epsilon") == 0)
 	  	{
-	    	_group_threshold = stod(argv[8]);
+	    	_epsilon = stod(argv[8]);
 	  	}
 	  	else
 	  	{
-	  		cout << "No group threshold given" << endl;
+	  		cout << "No epsilon given" << endl;
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	if(strcmp(argv[9], "-hit_t") == 0)
+	  	if(strcmp(argv[9], "-mu") == 0)
 	  	{
-	    	_hit_threshold = stod(argv[10]);
+	    	_mu = stod(argv[10]);
 	  	}
 	  	else
 	  	{
-	  		cout << "No hit threshold given" << endl;
+	  		cout << "No mu given" << endl;
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	if (strcmp(argv[11], "-npart") == 0)
+	  	if(strcmp(argv[11], "-lambda") == 0)
 	  	{
-	  		_npart = atoi(argv[12]);
+	    	_lambda = stod(argv[12]);
+	  	}
+	  	else
+	  	{
+	  		cout << "No lambda given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if (strcmp(argv[13], "-npart") == 0)
+	  	{
+	  		_npart = atoi(argv[14]);
 	  	}
 	  	else
 	  	{
@@ -145,7 +157,7 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	MultiTargetTrackingDPP tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _group_threshold, _hit_threshold, _npart);
+	  	MultiTargetTrackingDPP tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _epsilon, _mu, _lambda, _npart);
 	  	tracker.run();
 	}
 }

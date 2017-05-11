@@ -1,5 +1,5 @@
-#ifndef MTT_PHD_PETS
-#define MTT_PHD_PETS
+#ifndef MTT_PHD_PETS_H
+#define MTT_PHD_PETS_H
 
 #include <time.h>
 #include <iostream>
@@ -20,13 +20,13 @@ class MultiTargetTrackingPHDFilterPets
 public:
 	MultiTargetTrackingPHDFilterPets();
 	MultiTargetTrackingPHDFilterPets(string _firstFrameFileName, string _groundTruthFileName, 
-		double group_threshold, double hit_threshold, int _npart);
+		int _group_threshold, double _hit_threshold, int _npart);
 	void run();
 private:
 	//int numFrames;
 	string firstFrameFileName, groundTruthFileName;
-	HOGDetector hogDetector;
-	int npart;
+	int npart, group_threshold;
+	double hit_threshold;
 	ImageGenerator generator;
 };
 

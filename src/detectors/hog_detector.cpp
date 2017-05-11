@@ -1,12 +1,12 @@
 #include "hog_detector.hpp"
 
 /*#ifndef PARAMS
-const double GROUP_THRESHOLD = 0.5;
+const int GROUP_THRESHOLD = 0.5;
 const double HIT_THRESHOLD = 0.1;
 #endif*/
 HOGDetector::HOGDetector(){}
 
-HOGDetector::HOGDetector(double group_threshold, double hit_threshold){
+HOGDetector::HOGDetector(int group_threshold, double hit_threshold){
 	this->hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector());
 	this->group_threshold = group_threshold;
 	this->hit_threshold = hit_threshold;
@@ -26,11 +26,6 @@ vector<Rect> HOGDetector::detect(Mat &frame)
 	double* ptr = &weights[0];
 	this->weights = Eigen::Map<Eigen::VectorXd>(ptr, weights.size());
 
-
-	/*cout << "weights size: " << this->weights.size() << endl;
-	cout << "detections size: " << this->detections.size() << endl;
-	cout << "weights: " << this->weights << endl;*/
-
 	this->frame = frame;
 	return this->detections;
 }
@@ -49,7 +44,6 @@ void HOGDetector::draw()
         r.height = cvRound(r.height*0.8);
         rectangle(this->frame, r.tl(), r.br(), cv::Scalar(255,0,0), 3);
     }
-    //cout << "detections size: " << this->detections.size() << endl;
 }
 
 MatrixXd HOGDetector::getFeatureValues()
@@ -70,7 +64,6 @@ MatrixXd HOGDetector::getFeatureValues()
 			this->hog.compute(subImage, features, Size(0,0), Size(0,0));
 			for (size_t j = 0; j < features.size(); ++j)
 			{
-				//cout << "i:" << i << "\tj:" << j << "\tfeatures size:" << features.size() << endl;
 				hogFeatures(i,j) = features.at(j);
 			}
 		}
@@ -82,8 +75,6 @@ MatrixXd HOGDetector::getFeatureValues()
 }
 
 VectorXd HOGDetector::getDetectionWeights(){
-	/*double sum_weights = this->weights.sum();
-	this->weights = this->weights / sum_weights;*/
 	this->weights.normalize();
 	return this->weights;
 }
