@@ -16,23 +16,19 @@ MultiTargetTrackingDPPPets::MultiTargetTrackingDPPPets(string _firstFrameFileNam
 
 void MultiTargetTrackingDPPPets::run()
 {
-	namedWindow("MTT");
+	//namedWindow("MTT");
 	PHDParticleFilter filter(this->npart);
-	HOGDetector hogDetector = HOGDetector(0, 0.0);
+	CUDA_HOGDetector hogDetector = CUDA_HOGDetector(0, 0.0);
 	DPP dpp = DPP();
 
 	for (unsigned int i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
-		vector<Target> gt = this->generator.getGroundTruth(i);
-
+		vector<Target> gt = this->generator.getGroundTruth(i);		
 		MatrixXd features; vector<Rect> preDetections; VectorXd detectionWeights;
-	
 		preDetections = hogDetector.detect(currentFrame);
 		features = hogDetector.getFeatureValues();
 		detectionWeights = hogDetector.getDetectionWeights();
-		
-		
 		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
 
 		/*cout << "--------------------------" << endl;
@@ -43,14 +39,14 @@ void MultiTargetTrackingDPPPets::run()
 		if (!filter.is_initialized())
 		{
 			filter.initialize(currentFrame, detections);
-			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
+			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			estimates = filter.estimate(currentFrame, true);
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, detections);
-			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
+			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			estimates = filter.estimate(currentFrame, true);
 			//cout << "estimate number: " << estimates.size() << endl;
 		}
@@ -65,8 +61,8 @@ void MultiTargetTrackingDPPPets::run()
 			estimates.at(j).bbox.width << "," << estimates.at(j).bbox.height << endl;
 		}
 		
-		imshow("MTT", currentFrame);
-		waitKey(1);
+		//imshow("MTT", currentFrame);
+		//waitKey(1);
 		
 		
 	}

@@ -14,18 +14,11 @@ HOGDetector::HOGDetector(int group_threshold, double hit_threshold){
 
 vector<Rect> HOGDetector::detect(Mat &frame)
 {
-	// Run the detector with default parameters. to get a higher hit-rate
-    // (and more false alarms, respectively), decrease the hitThreshold and
-    // groupThreshold (set groupThreshold to 0 to turn off the grouping completely).
     this->detections.clear();
     vector<double> weights;
 	this->hog.detectMultiScale(frame, this->detections, weights, this->hit_threshold, Size(8,8), Size(32,32), 1.05, this->group_threshold);
-	
-
-	// Cast weights to Eigen Vector
 	double* ptr = &weights[0];
 	this->weights = Eigen::Map<Eigen::VectorXd>(ptr, weights.size());
-
 	this->frame = frame;
 	return this->detections;
 }

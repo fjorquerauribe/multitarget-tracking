@@ -8,6 +8,7 @@
 #include "utils/image_generator.hpp"
 #include "utils/utils.hpp"
 #include "detectors/hog_detector.hpp"
+#include "detectors/cuda_hog_detector.hpp"
 #include "dpp.hpp"
 
 #include "models/phd_particle_filter.hpp"
@@ -20,7 +21,7 @@ class MultiTargetTrackingDPPPets
 public:
 	MultiTargetTrackingDPPPets();
 	MultiTargetTrackingDPPPets(string _firstFrameFileName, string _groundTruthFileName,
-		double _epsilon, double _mu, double _lambda, int _npart);
+	double _epsilon, double _mu, double _lambda, int _npart);
 	void run();
 private:
 	string firstFrameFileName, groundTruthFileName;
