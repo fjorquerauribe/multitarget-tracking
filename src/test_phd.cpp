@@ -17,19 +17,20 @@ void MultiTargetTrackingPHDFilter::run()
 	namedWindow("MTT");
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
-	//resizeWindow("MTT", 400, 400);
 	PHDParticleFilter filter(this->npart);
+
+#ifdef WITH_CUDA
+	CUDA_HOGDetector hogDetector = CUDA_HOGDetector(0, 0.0);
+#else
+	HOGDetector hogDetector = HOGDetector(0, 0.0);
+#endif
 
 	for (int i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
 
-		MatrixXd features; vector<Rect> preDetections; VectorXd detectionWeights;
-		preDetections = this->generator.getDetections(i);
-		/*cout << "features size: " << features.rows() << "," << features.cols() << endl;
-		cout << "preDetections size: " << preDetections.size() << endl;
-		cout << "detectionWeights size: " << detectionWeights.size() << endl;*/
+		vector<Rect> preDetections = hogDetector.detect(currentFrame);
 		
 		/*cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
@@ -55,15 +56,7 @@ void MultiTargetTrackingPHDFilter::run()
 		{
 			rectangle(currentFrame, preDetections.at(j), Scalar(0,255,0), 2, LINE_AA);
 		}
-		/*for (unsigned int j = 0; j < gt.size(); ++j)
-		{
-			if ( color.find(gt.at(j).label) == color.end() ) {
-              int icolor = (unsigned) rng;
-              Scalar new_color=Scalar( icolor&255, (icolor>>8)&255, (icolor>>16)&255 );
-              color.insert (pair<int,Scalar>(gt.at(j).label,  new_color));
-            }
-            rectangle( currentFrame, gt.at(j).bbox, color.at(gt.at(j).label), 2, 1 );
-		}*/
+		
 		imshow("MTT", currentFrame);
 		waitKey(1);
 	}

@@ -7,10 +7,15 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include "detectors/hog_detector.hpp"
 #include "utils/image_generator.hpp"
 #include "utils/utils.hpp"
 #include "models/phd_particle_filter.hpp"
+
+#ifdef WITH_CUDA
+#include "detectors/cuda_hog_detector.hpp"
+#else
+#include "detectors/hog_detector.hpp"
+#endif
 
 using namespace std;
 using namespace cv;

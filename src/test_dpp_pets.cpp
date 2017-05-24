@@ -17,8 +17,13 @@ MultiTargetTrackingDPPPets::MultiTargetTrackingDPPPets(string _firstFrameFileNam
 void MultiTargetTrackingDPPPets::run()
 {
 	//namedWindow("MTT");
-	PHDParticleFilter filter(this->npart);
+#ifdef WITH_CUDA
 	CUDA_HOGDetector hogDetector = CUDA_HOGDetector(0, 0.0);
+#else
+	HOGDetector hogDetector = HOGDetector(0, 0.0);
+#endif
+
+	PHDParticleFilter filter(this->npart);
 	DPP dpp = DPP();
 
 	for (unsigned int i = 0; i < this->generator.getDatasetSize(); ++i)

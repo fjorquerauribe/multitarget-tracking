@@ -12,47 +12,51 @@ DPP::DPP(){}
 
 vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, MatrixXd &featureValues, double epsilon, double mu, double lambda)
 {
-	VectorXd area(preDetections.size());
-	MatrixXd intersectionArea(preDetections.size(), preDetections.size());
-
-	//cout << "preDetections size: " << preDetections.size() << endl;
-	for (size_t i = 0; i < preDetections.size(); ++i)
-	{
-		Rect bbox = preDetections.at(i);
-		area(i) = bbox.width * bbox.height;
-		for (size_t j = i; j < preDetections.size(); ++j)
-		{	
-			Rect bbox2 = preDetections.at(j);
-			intersectionArea(i,j) = intersectionArea(j,i) = double((bbox & bbox2).area());
-		}
-	}
-
-	MatrixXd sqrtArea = area.cwiseSqrt() * area.cwiseSqrt().adjoint();
-	MatrixXd rIntersectionArea = intersectionArea.array() / area.replicate(1, area.size()).adjoint().array();
-	VectorXd nContain = VectorXd::Zero(rIntersectionArea.rows());
-
-	for (int i = 0; i < rIntersectionArea.rows(); ++i)
-	{
-		for (int j = 0; j < rIntersectionArea.cols(); ++j)
-		{
-			if(rIntersectionArea(i,j) == 1)
-				nContain(i) += 1;
-		}
-	}
-	nContain = nContain.array() - 1;
-	VectorXd nPenalty = nContain.array().exp().pow(lambda);
-	
-	VectorXd qualityTerm = getQualityTerm(detectionWeights, nPenalty);
-	MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea, mu);
-	vector<int> top = solve(qualityTerm, similarityTerm, epsilon);
-
-	/*MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea);
-	vector<int> top = solve(detectionWeights, similarityTerm);*/
-
 	vector<Rect> respDPP;
-	for (int i = 0; i < top.size(); ++i)
-	{
-		respDPP.push_back(preDetections.at(top.at(i)));
+
+	if(preDetections.size() > 0){
+		VectorXd area(preDetections.size());
+		MatrixXd intersectionArea(preDetections.size(), preDetections.size());
+
+		//cout << "preDetections size: " << preDetections.size() << endl;
+		for (size_t i = 0; i < preDetections.size(); ++i)
+		{
+			Rect bbox = preDetections.at(i);
+			area(i) = bbox.width * bbox.height;
+			for (size_t j = i; j < preDetections.size(); ++j)
+			{	
+				Rect bbox2 = preDetections.at(j);
+				intersectionArea(i,j) = intersectionArea(j,i) = double((bbox & bbox2).area());
+			}
+		}
+
+		MatrixXd sqrtArea = area.cwiseSqrt() * area.cwiseSqrt().adjoint();
+		MatrixXd rIntersectionArea = intersectionArea.array() / area.replicate(1, area.size()).adjoint().array();
+		VectorXd nContain = VectorXd::Zero(rIntersectionArea.rows());
+
+		for (int i = 0; i < rIntersectionArea.rows(); ++i)
+		{
+			for (int j = 0; j < rIntersectionArea.cols(); ++j)
+			{
+				if(rIntersectionArea(i,j) == 1)
+					nContain(i) += 1;
+			}
+		}
+		nContain = nContain.array() - 1;
+		VectorXd nPenalty = nContain.array().exp().pow(lambda);
+		
+		VectorXd qualityTerm = getQualityTerm(detectionWeights, nPenalty);
+		MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea, mu);
+		vector<int> top = solve(qualityTerm, similarityTerm, epsilon);
+
+		/*MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea);
+		vector<int> top = solve(detectionWeights, similarityTerm);*/
+
+		
+		for (int i = 0; i < top.size(); ++i)
+		{
+			respDPP.push_back(preDetections.at(top.at(i)));
+		}
 	}
 	
 	return respDPP;

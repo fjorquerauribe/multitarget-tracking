@@ -20,7 +20,13 @@ void MultiTargetTrackingPHDFilterPets::run()
 	map<int,Scalar> color;
 	//resizeWindow("MTT", 400, 400);
 	PHDParticleFilter filter(this->npart);
+
+#ifdef WITH_CUDA
+	CUDA_HOGDetector hogDetector = CUDA_HOGDetector(this->group_threshold, this->hit_threshold;
+#else
 	HOGDetector hogDetector = HOGDetector(this->group_threshold, this->hit_threshold);
+#endif
+
 	Mat currentFrame;
 
 	for (int i = 0; i < this->generator.getDatasetSize(); ++i)
@@ -28,9 +34,7 @@ void MultiTargetTrackingPHDFilterPets::run()
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
 
-		vector<Rect> preDetections;
-	
-		preDetections = hogDetector.detect(currentFrame);
+		vector<Rect> preDetections = hogDetector.detect(currentFrame);
 		/*cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
 		cout << "preDetections number: " << preDetections.size() << endl;*/

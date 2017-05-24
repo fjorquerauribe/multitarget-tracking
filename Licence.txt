@@ -1,6 +1,7 @@
   This software is licensed under the Apache 2 license, quoted below.
   
   Copyright 2017 Felipe Jorquera Uribe <f.jorquera.uribe@gmail.com>
+  Copyright 2017 Sergio Hernández Álvarez <shernandez.ucm@gmail.com>
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
