@@ -26,7 +26,7 @@ void MultiTargetTrackingDPPPets::run()
 	PHDParticleFilter filter(this->npart);
 	DPP dpp = DPP();
 
-	for (unsigned int i = 0; i < this->generator.getDatasetSize(); ++i)
+	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);		

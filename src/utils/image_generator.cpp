@@ -75,8 +75,8 @@ void ImageGenerator::moveNext(){
   this->frame_id++;
 }
 
-int ImageGenerator::getDatasetSize(){
-  return (int) this->images.size();
+size_t ImageGenerator::getDatasetSize(){
+  return this->images.size();
 }
 
 void ImageGenerator::getNextFilename(string& fn, string dataset){

@@ -17,7 +17,7 @@ MultiTargetTrackingDPP::MultiTargetTrackingDPP(string _firstFrameFileName, strin
 
 void MultiTargetTrackingDPP::run()
 {
-	namedWindow("MTT", WINDOW_NORMAL);
+	//namedWindow("MTT", WINDOW_NORMAL);
 
 #ifdef WITH_CUDA
 	CUDA_HOGDetector hogDetector = CUDA_HOGDetector(0, 0.0);
@@ -29,7 +29,7 @@ void MultiTargetTrackingDPP::run()
 	PHDParticleFilter filter(this->npart);
 	DPP dpp = DPP();
 
-	for (unsigned int i = 0; i < this->generator.getDatasetSize(); ++i)
+	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
@@ -47,10 +47,10 @@ void MultiTargetTrackingDPP::run()
 
 		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
 
-		cout << "--------------------------" << endl;
+		/*cout << "--------------------------" << endl;
 		cout << "groundtruth number: " << gt.size() << endl;
-		cout << "detections number: " << detections.size() << endl;
-		
+		cout << "detections number: " << detections.size() << endl;*/
+		vector<Target> estimates;
 		if (!filter.is_initialized())
 		{
 			filter.initialize(currentFrame, detections);
@@ -59,22 +59,27 @@ void MultiTargetTrackingDPP::run()
 		{
 			filter.predict();
 			filter.update(currentFrame, detections);
-			vector<Target> estimates = filter.estimate(currentFrame, true);
+			estimates = filter.estimate(currentFrame, true);
 			filter.draw_particles(currentFrame, Scalar(0, 255, 255));
-			cout << "estimate number: " << estimates.size() << endl;
+			//cout << "estimate number: " << estimates.size() << endl;
 		}
 
-		for (size_t j = 0; j < detections.size(); ++j)
+		/*for (size_t j = 0; j < detections.size(); ++j)
 		{
 			rectangle(currentFrame, detections.at(j), Scalar(0,255,0), 1, LINE_AA);
 		}
-		/*for (unsigned int j = 0; j < gt.size(); ++j)
+		for (unsigned int j = 0; j < gt.size(); ++j)
 		{
 			rectangle(currentFrame, gt.at(j).bbox, Scalar(0,255,0), 1, LINE_AA);
-		}*/		
+		}*/
+		for (size_t j = 0; j < estimates.size(); ++j)
+		{
+			cout << i << "," << estimates.at(j).bbox.x << "," << estimates.at(j).bbox.y << "," << 
+			estimates.at(j).bbox.width << "," << estimates.at(j).bbox.height << endl;
+		}
 		
-		imshow("MTT", currentFrame);
-		waitKey(1);
+		/*imshow("MTT", currentFrame);
+		waitKey(1);*/
 		
 		
 	}

@@ -23,7 +23,7 @@ public:
   Mat getFrame(int frame_num);
   vector<Rect> getDetections(int frame_num);
   vector<Target> getGroundTruth(int frame_num);
-  int getDatasetSize();
+  size_t getDatasetSize();
 private:
   void readDetections(string str);
   void readGroundTruth(string str, string dataset = "mot");

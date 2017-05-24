@@ -29,7 +29,7 @@ void MultiTargetTrackingPHDFilterPets::run()
 
 	Mat currentFrame;
 
-	for (int i = 0; i < this->generator.getDatasetSize(); ++i)
+	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
 	{	
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
@@ -72,7 +72,8 @@ void MultiTargetTrackingPHDFilterPets::run()
 int main(int argc, char const *argv[])
 {
 	string _firstFrameFileName, _groundTruthFileName;
-	double _group_threshold, _hit_threshold;
+	int _group_threshold;
+	double _hit_threshold;
 	int _npart;
 	if(argc != 11)
 	{
@@ -104,7 +105,7 @@ int main(int argc, char const *argv[])
 	  	}
 	  	if(strcmp(argv[5], "-gp_t") == 0)
 	  	{
-	    	_group_threshold = stod(argv[6]);
+	    	_group_threshold = stoi(argv[6]);
 	  	}
 	  	else
 	  	{

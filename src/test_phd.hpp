@@ -22,12 +22,14 @@ class MultiTargetTrackingPHDFilter
 {
 public:
 	MultiTargetTrackingPHDFilter();
-	MultiTargetTrackingPHDFilter(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile, int _npart);
+	MultiTargetTrackingPHDFilter(string _firstFrameFileName, string _groundTruthFileName,
+	 string _preDetectionFile, int _group_threshold, double _hit_threshold, int _npart);
 	void run();
 private:
 	//int numFrames;
 	string firstFrameFileName, groundTruthFileName, preDetectionFile;
-	int npart;
+	int npart, group_threshold;
+	double hit_threshold;
 	ImageGenerator generator;
 };
 

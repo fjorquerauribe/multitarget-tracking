@@ -24,7 +24,7 @@ add_executable( mtt_dpp src/test_dpp.cpp src/utils/image_generator.cpp src/utils
 target_link_libraries( mtt_dpp ${OpenCV_LIBS} -lpthread)
 target_compile_definitions( mtt_dpp PRIVATE -DWITH_CUDA )
 
-add_executable( mtt_phd src/test_phd.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/features/haar.cpp src/detectors/cuda_hog_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
+add_executable( mtt_phd src/test_phd.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/detectors/cuda_hog_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
 target_link_libraries( mtt_phd ${OpenCV_LIBS} -lpthread)
 target_compile_definitions( mtt_phd PRIVATE -DWITH_CUDA )
 

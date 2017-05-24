@@ -240,7 +240,6 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
         MatrixXd observations = MatrixXd::Zero(detections.size(), 4);
         
         double clutter_prob = (double)CLUTTER_RATE/this->img_size.area();
-        
         for (unsigned int j = 0; j < detections.size(); j++){
             this->max_width = MAX(detections[j].width, this->max_width);
             this->max_height = MAX(detections[j].height, this->max_height);
@@ -253,7 +252,6 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             observations.row(j) << detections[j].x, detections[j].y, detections[j].width, detections[j].height;
             this->birth_model.push_back(detections[j]);
         }
-
         MatrixXd psi(this->states.size(), detections.size());
         for (unsigned int i = 0; i < this->states.size(); ++i)
         {
@@ -285,10 +283,11 @@ void PHDParticleFilter::resample(){
     vector<double> normalized_weights(L_k);
     vector<double> log_weights(L_k);
     vector<double> squared_normalized_weights(L_k);
-    uniform_real_distribution<double> unif_rnd(0.0,1.0); 
+    uniform_real_distribution<double> unif_rnd(0.0,1.0);
     for (int i = 0; i < L_k; i++) {
         log_weights[i] = log(this->weights[i]);
     }
+    //cout << "log_weights: " << log_weights.size() << endl;
     double logsumexp = 0.0;
     double max_value = *max_element(log_weights.begin(), log_weights.end());
     for (int i = 0; i < L_k; i++) {
@@ -298,7 +297,6 @@ void PHDParticleFilter::resample(){
     for (int i = 0; i < L_k; i++) {
         normalized_weights.at(i) = normalized_weights.at(i)/logsumexp;
     }
-    
     for (int i = 0; i < L_k; i++) {
         squared_normalized_weights.at(i) = normalized_weights.at(i) * normalized_weights.at(i);
         if (i == 0) {

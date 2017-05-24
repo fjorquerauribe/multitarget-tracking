@@ -1,0 +1,1 @@
+../build/mtt_phd -img MOT16/train/MOT16-$1/img1/000001.jpg -gt MOT16/train/MOT16-$1/gt/gt.txt -det MOT16/train/MOT16-$1/det/det.txt -gp_t $2 -hit_t $3 -npart $4
