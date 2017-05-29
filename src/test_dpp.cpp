@@ -41,9 +41,9 @@ void MultiTargetTrackingDPP::run()
 		detectionWeights = hogDetector.getDetectionWeights();
 		//preDetections = this->generator.getDetections(i);
 
-		/*cout << "features size: " << features.rows() << "," << features.cols() << endl;
+		cout << "features size: " << features.rows() << "," << features.cols() << endl;
 		cout << "preDetections size: " << preDetections.size() << endl;
-		cout << "detectionWeights size: " << detectionWeights.size() << endl;*/
+		cout << "detectionWeights size: " << detectionWeights.size() << endl;
 
 		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
 

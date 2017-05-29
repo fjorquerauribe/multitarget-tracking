@@ -34,9 +34,9 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 		MatrixXd rIntersectionArea = intersectionArea.array() / area.replicate(1, area.size()).adjoint().array();
 		VectorXd nContain = VectorXd::Zero(rIntersectionArea.rows());
 
-		for (int i = 0; i < rIntersectionArea.rows(); ++i)
+		for (unsigned int i = 0; i < rIntersectionArea.rows(); ++i)
 		{
-			for (int j = 0; j < rIntersectionArea.cols(); ++j)
+			for (unsigned int j = 0; j < rIntersectionArea.cols(); ++j)
 			{
 				if(rIntersectionArea(i,j) == 1)
 					nContain(i) += 1;
@@ -53,7 +53,7 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 		vector<int> top = solve(detectionWeights, similarityTerm);*/
 
 		
-		for (int i = 0; i < top.size(); ++i)
+		for (size_t i = 0; i < top.size(); ++i)
 		{
 			respDPP.push_back(preDetections.at(top.at(i)));
 		}
@@ -123,7 +123,7 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 			S_top.row(i) << similarityTerm.row(top.at(i));
 		}
 
-		for (int i = 0; i < remained.size(); ++i)
+		for (size_t i = 0; i < remained.size(); ++i)
 		{
 			VectorXd tmp = S_top.col(remained(i));
 

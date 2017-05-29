@@ -65,7 +65,7 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
     this->particles_batch = (int)this->n_particles;
     double weight = (double)1.0f/this->n_particles;
     
-    for(unsigned int j = 0; j < detections.size(); j++){
+    for(size_t j = 0; j < detections.size(); j++){
         this->max_width = MAX(detections[j].width, this->max_width);
         this->max_height = MAX(detections[j].height, this->max_height);
         this->min_width = MIN(detections[j].width, this->min_width);
@@ -100,7 +100,7 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
     uniform_int_distribution<int> random_w(this->min_width, this->max_width);
     uniform_int_distribution<int> random_h(this->min_height, this->max_height);
 
-    for (int i = 0; i < detections.size(); ++i)
+    for (size_t i = 0; i < detections.size(); ++i)
     {
         Target target;
         target.bbox = detections.at(i);
@@ -137,7 +137,7 @@ void PHDParticleFilter::predict(){
     if(this->initialized == true){
         vector<particle> tmp_new_states;
         vector<double> tmp_weights;
-        for (unsigned int i = 0; i < this->states.size(); i++){
+        for (size_t i = 0; i < this->states.size(); i++){
             particle state = this->states[i];
             float _x, _y, _width, _height;
             float _dx = position_random_x(this->generator);
@@ -177,7 +177,7 @@ void PHDParticleFilter::predict(){
         //poisson_distribution<int> birth_num(lambda_birth);
         //int J_k = birth_num(this->generator);    
         if(this->birth_model.size() > 0){
-            for (unsigned int j = 0; j < this->birth_model.size(); j++){
+            for (size_t j = 0; j < this->birth_model.size(); j++){
                 for (int k = 0; k < this->particles_batch; k++){
                     particle state;
                     state.width = this->birth_model[j].width + scale_random_width(this->generator);
@@ -218,7 +218,7 @@ void PHDParticleFilter::predict(){
 }
 
 void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0,255,255)){
-    for (unsigned int i = 0; i < this->states.size(); i++){
+    for (size_t i = 0; i < this->states.size(); i++){
         particle state = this->states[i];
         Point pt1, pt2;
         pt1.x = cvRound(state.x);
@@ -240,7 +240,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
         MatrixXd observations = MatrixXd::Zero(detections.size(), 4);
         
         double clutter_prob = (double)CLUTTER_RATE/this->img_size.area();
-        for (unsigned int j = 0; j < detections.size(); j++){
+        for (size_t j = 0; j < detections.size(); j++){
             this->max_width = MAX(detections[j].width, this->max_width);
             this->max_height = MAX(detections[j].height, this->max_height);
             this->min_width = MIN(detections[j].width, this->min_width);
@@ -253,7 +253,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             this->birth_model.push_back(detections[j]);
         }
         MatrixXd psi(this->states.size(), detections.size());
-        for (unsigned int i = 0; i < this->states.size(); ++i)
+        for (size_t i = 0; i < this->states.size(); ++i)
         {
             particle state = this->states[i];
             VectorXd mean(4);
@@ -363,13 +363,14 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
         /********************** opencv EM **********************/
         Mat data, labels, emMeans;
         data = Mat::zeros((int)this->states.size(),4, CV_64F);
-        for (unsigned int j = 0; j < this->states.size(); j++){
+        for (size_t j = 0; j < this->states.size(); j++){
             data.at<double>(j,0) = this->states[j].x;
             data.at<double>(j,1) = this->states[j].y;
             data.at<double>(j,2) = this->states[j].width;
             data.at<double>(j,3) = this->states[j].height;
         }
         Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
+        cout << "num_targets: " << num_targets << endl;
         em_model->setClustersNumber(num_targets);
         em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
         //em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 1000, 0.1));
@@ -391,9 +392,9 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
             hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);
             hungarian_solve(&p);
-            for (int i = 0; i < this->tracks.size(); ++i)
+            for (size_t i = 0; i < this->tracks.size(); ++i)
             {
-                for (int j = 0; j < new_tracks.size(); ++j)
+                for (size_t j = 0; j < new_tracks.size(); ++j)
                 {
                     if (p.assignment[i][j] == HUNGARIAN_ASSIGNED)
                     {
@@ -408,7 +409,7 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
         }
         else
         {
-            for (int i = 0; i < new_tracks.size(); ++i)
+            for (size_t i = 0; i < new_tracks.size(); ++i)
             {
                 Target target;
                 target.bbox = new_tracks.at(i).bbox;
@@ -419,7 +420,7 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
 
         if (draw)
         {
-            for (int i = 0; i < this->tracks.size(); ++i)
+            for (size_t i = 0; i < this->tracks.size(); ++i)
             {
                 rectangle(image, this->tracks.at(i).bbox, this->tracks.at(i).color, 2, LINE_AA);
             }
