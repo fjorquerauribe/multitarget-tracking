@@ -123,7 +123,7 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 			S_top.row(i) << similarityTerm.row(top.at(i));
 		}
 
-		for (size_t i = 0; i < remained.size(); ++i)
+		for (unsigned int i = 0; i < remained.size(); ++i)
 		{
 			VectorXd tmp = S_top.col(remained(i));
 

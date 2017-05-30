@@ -22,7 +22,7 @@ void MultiTargetTrackingPHDFilterPets::run()
 	PHDParticleFilter filter(this->npart);
 
 #ifdef WITH_CUDA
-	CUDA_HOGDetector hogDetector = CUDA_HOGDetector(this->group_threshold, this->hit_threshold;
+	CUDA_HOGDetector hogDetector = CUDA_HOGDetector(this->group_threshold, this->hit_threshold);
 #else
 	HOGDetector hogDetector = HOGDetector(this->group_threshold, this->hit_threshold);
 #endif
@@ -58,7 +58,7 @@ void MultiTargetTrackingPHDFilterPets::run()
 			rectangle(currentFrame, preDetections.at(j), Scalar(0,255,0), 2, LINE_AA);
 		}
 		
-		for (int j = 0; j < estimates.size(); ++j)
+		for (size_t j = 0; j < estimates.size(); ++j)
 		{
 			cout << i << "," << estimates.at(j).bbox.x << "," << estimates.at(j).bbox.y << "," << 
 			estimates.at(j).bbox.width << "," << estimates.at(j).bbox.height << endl;

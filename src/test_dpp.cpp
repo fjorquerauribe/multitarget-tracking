@@ -17,15 +17,16 @@ MultiTargetTrackingDPP::MultiTargetTrackingDPP(string _firstFrameFileName, strin
 
 void MultiTargetTrackingDPP::run()
 {
-	//namedWindow("MTT", WINDOW_NORMAL);
+	namedWindow("MTT", WINDOW_NORMAL);
 
 #ifdef WITH_CUDA
 	CUDA_HOGDetector hogDetector = CUDA_HOGDetector(0, 0.0);
+	hogDetector.loadPreTrainedModel();
 #else
 	HOGDetector hogDetector = HOGDetector(0, 0.0);
 #endif
 
-	//resizeWindow("MTT", 400, 400);
+	resizeWindow("MTT", 400, 400);
 	PHDParticleFilter filter(this->npart);
 	DPP dpp = DPP();
 
@@ -40,10 +41,6 @@ void MultiTargetTrackingDPP::run()
 		features = hogDetector.getFeatureValues();
 		detectionWeights = hogDetector.getDetectionWeights();
 		//preDetections = this->generator.getDetections(i);
-
-		cout << "features size: " << features.rows() << "," << features.cols() << endl;
-		cout << "preDetections size: " << preDetections.size() << endl;
-		cout << "detectionWeights size: " << detectionWeights.size() << endl;
 
 		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
 
@@ -60,7 +57,7 @@ void MultiTargetTrackingDPP::run()
 			filter.predict();
 			filter.update(currentFrame, detections);
 			estimates = filter.estimate(currentFrame, true);
-			filter.draw_particles(currentFrame, Scalar(0, 255, 255));
+			//filter.draw_particles(currentFrame, Scalar(0, 255, 255));
 			//cout << "estimate number: " << estimates.size() << endl;
 		}
 
@@ -78,8 +75,8 @@ void MultiTargetTrackingDPP::run()
 			estimates.at(j).bbox.width << "," << estimates.at(j).bbox.height << endl;
 		}
 		
-		/*imshow("MTT", currentFrame);
-		waitKey(1);*/
+		imshow("MTT", currentFrame);
+		waitKey(1);
 		
 		
 	}

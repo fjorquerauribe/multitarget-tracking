@@ -60,7 +60,7 @@ void MultiTargetTrackingDPPPets::run()
 		{
 			rectangle(currentFrame, gt.at(j).bbox, Scalar(0,255,0), 1, LINE_AA);
 		}*/
-		for (int j = 0; j < estimates.size(); ++j)
+		for (size_t j = 0; j < estimates.size(); ++j)
 		{
 			cout << i << "," << estimates.at(j).bbox.x << "," << estimates.at(j).bbox.y << "," << 
 			estimates.at(j).bbox.width << "," << estimates.at(j).bbox.height << endl;
