@@ -18,8 +18,8 @@ include_directories( "src/models/" )
 include_directories( "src/features/" )
 include_directories( "src/libs/libhungarian/" )
 
-if(EXISTS "/usr/local/cuda-7.5/include")
-include_directories( "/usr/local/cuda-7.5/include")
+if(CUDA_FOUND)
+include_directories( ${CUDA_TOOLKIT_INCLUDE} )
 
 add_executable( mtt_dpp src/test_dpp.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/dpp.cpp src/detectors/cuda_hog_detector.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
 target_link_libraries( mtt_dpp ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
