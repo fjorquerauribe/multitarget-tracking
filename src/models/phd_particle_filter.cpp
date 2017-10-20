@@ -95,21 +95,20 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
         }
     }
     
-    uniform_int_distribution<int> random_x(this->min_x, this->max_x);
-    uniform_int_distribution<int> random_y(this->min_y, this->max_y);
-    uniform_int_distribution<int> random_w(this->min_width, this->max_width);
-    uniform_int_distribution<int> random_h(this->min_height, this->max_height);
-
     for (size_t i = 0; i < detections.size(); ++i)
     {
         Target target;
         target.bbox = detections.at(i);
         target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
-        rectangle(current_frame, target.bbox, target.color, 2, LINE_AA);
+        //rectangle(current_frame, target.bbox, target.color, 2, LINE_AA);
         this->tracks.push_back(target);
     }
 
-    /*for(int i = 0; i < remaining_batch; i++){
+    /*uniform_int_distribution<int> random_x(this->min_x, this->max_x);
+    uniform_int_distribution<int> random_y(this->min_y, this->max_y);
+    uniform_int_distribution<int> random_w(this->min_width, this->max_width);
+    uniform_int_distribution<int> random_h(this->min_height, this->max_height);
+    for(int i = 0; i < remaining_batch; i++){
         particle state;
         state.width = random_w(this->generator);
         state.height = random_h(this->generator);
@@ -269,6 +268,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             tmp_weights.push_back((1.0f - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         this->weights.swap(tmp_weights);
+        cout << "states size:" << this->states.size() << endl;
         resample();
         //Scalar phd_estimate = sum(this->weights);
         //cout << "Updated target number : "<< cvRound(phd_estimate[0]) << endl;  
@@ -309,6 +309,10 @@ void PHDParticleFilter::resample(){
     Scalar phd_estimate = sum(this->weights);
     int N_k = min(cvRound(this->particles_batch * phd_estimate[0]), 500);
     double ESS = (1.0f/sum_squared_weights[0]);
+
+    cout << "ESS: " << ESS << "   THESHOLD: " << THRESHOLD << endl;
+    cout << "ESS < THESHOLD: " << isless(ESS, (float)THRESHOLD) << endl;
+
     if(isless(ESS, (float)THRESHOLD)){
         vector<particle> tmp_new_states;
         vector<double> tmp_weights;
@@ -370,7 +374,6 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             data.at<double>(j,3) = this->states[j].height;
         }
         Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
-        cout << "num_targets: " << num_targets << endl;
         em_model->setClustersNumber(num_targets);
         em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
         //em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 1000, 0.1));

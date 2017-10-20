@@ -1,69 +1,51 @@
 #include "test_phd.hpp"
 
-MultiTargetTrackingPHDFilter::MultiTargetTrackingPHDFilter(){}
+TestPHDFilter::TestPHDFilter(){}
 
-MultiTargetTrackingPHDFilter::MultiTargetTrackingPHDFilter(string _firstFrameFileName, 
-	string _groundTruthFileName, string _preDetectionFile, int _group_threshold, double _hit_threshold, int _npart)
+TestPHDFilter::TestPHDFilter(string _firstFrameFileName, 
+	string _groundTruthFileName, string _preDetectionFile, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
 	this->preDetectionFile = _preDetectionFile;
 	this->npart = _npart;
-	this->group_threshold = _group_threshold;
-	this->hit_threshold = _hit_threshold;
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
 }
 
-void MultiTargetTrackingPHDFilter::run()
+void TestPHDFilter::run()
 {
-	namedWindow("MTT");
+	namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
 	PHDParticleFilter filter(this->npart);
 
-#ifdef WITH_CUDA
-	CUDA_HOGDetector hogDetector = CUDA_HOGDetector(this->group_threshold, this->hit_threshold);
-#else
-	HOGDetector hogDetector = HOGDetector(this->group_threshold, this->hit_threshold);
-#endif
 
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
 
-		vector<Rect> preDetections = hogDetector.detect(currentFrame);
+		vector<Rect> preDetections = this->generator.getDetections(i);//hogDetector.detect(currentFrame);
+		
 		vector<Target> estimates;
 		if (!filter.is_initialized())
 		{
 			
 			filter.initialize(currentFrame, preDetections);
 			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
-			estimates = filter.estimate(currentFrame, true);
-			cout << "init" << endl;
+			//estimates = filter.estimate(currentFrame, true);
 		}
 		else
 		{
-			cout << "predict" << endl;
 			filter.predict();
-			cout << "update" << endl;
-			cout << "preDetections size:" << preDetections.size() << endl;
 			filter.update(currentFrame, preDetections);
-			cout << "estimate" << endl;
-			estimates = filter.estimate(currentFrame, true);
+			estimates = filter.estimate(currentFrame, false);
 		}
 
-		/*for (size_t j = 0; j < preDetections.size(); ++j)
-		{
-			rectangle(currentFrame, preDetections.at(j), Scalar(0,255,0), 2, LINE_AA);
-		}*/
-		cout << "before print estimates" << endl;
-		for (size_t j = 0; j < estimates.size(); ++j)
-		{
-			cout << i << "," << estimates.at(j).bbox.x << "," << estimates.at(j).bbox.y << "," << 
-			estimates.at(j).bbox.width << "," << estimates.at(j).bbox.height << endl;
+		for(int j = 0; j < preDetections.size(); j++){
+			//cout << preDetections.at(j) << endl;
+			rectangle(currentFrame, preDetections.at(j), Scalar(255,0,0), 2, LINE_AA);
 		}
-		cout << "after print estimates" << endl;
 		
 		imshow("MTT", currentFrame);
 		waitKey(1);
@@ -73,10 +55,8 @@ void MultiTargetTrackingPHDFilter::run()
 int main(int argc, char const *argv[])
 {
 	string _firstFrameFileName, _gtFileName, _preDetectionFile;
-	int _group_threshold;
-	double _hit_threshold;
 	int _npart;
-	if(argc != 13)
+	if(argc != 9)
 	{
 		cout << "Incorrect input list" << endl;
 		cout << "exiting..." << endl;
@@ -114,29 +94,9 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	if(strcmp(argv[7], "-gp_t") == 0)
+	  	if (strcmp(argv[7], "-npart") == 0)
 	  	{
-	    	_group_threshold = stoi(argv[8]);
-	  	}
-	  	else
-	  	{
-	  		cout << "No group threshold given" << endl;
-	  		cout << "exiting..." << endl;
-	  		return EXIT_FAILURE;
-	  	}
-	  	if(strcmp(argv[9], "-hit_t") == 0)
-	  	{
-	    	_hit_threshold = stod(argv[10]);
-	  	}
-	  	else
-	  	{
-	  		cout << "No hit threshold given" << endl;
-	  		cout << "exiting..." << endl;
-	  		return EXIT_FAILURE;
-	  	}
-	  	if (strcmp(argv[11], "-npart") == 0)
-	  	{
-	  		_npart = atoi(argv[12]);
+	  		_npart = atoi(argv[8]);
 	  	}
 	  	else
 	  	{
@@ -144,7 +104,7 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	MultiTargetTrackingPHDFilter tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _group_threshold, _hit_threshold, _npart);
+	  	TestPHDFilter tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _npart);
 	  	tracker.run();
 	}
 }

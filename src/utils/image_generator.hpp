@@ -26,9 +26,9 @@ public:
   size_t getDatasetSize();
 private:
   void readDetections(string str);
-  void readGroundTruth(string str, string dataset = "mot");
+  void readGroundTruth(string str);
   int frame_id;
-  void getNextFilename(string& filename, string dataset = "mot");
+  void getNextFilename(string& filename);
   vector<Mat> images;
   vector< vector<Target> > ground_truth;
   vector< vector<Rect> > detections;

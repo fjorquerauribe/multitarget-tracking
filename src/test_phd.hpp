@@ -9,27 +9,20 @@
 #include "utils/utils.hpp"
 #include "models/phd_particle_filter.hpp"
 
-#ifdef WITH_CUDA
-#include "detectors/cuda_hog_detector.hpp"
-#else
-#include "detectors/hog_detector.hpp"
-#endif
-
 using namespace std;
 using namespace cv;
 
-class MultiTargetTrackingPHDFilter
+class TestPHDFilter
 {
 public:
-	MultiTargetTrackingPHDFilter();
-	MultiTargetTrackingPHDFilter(string _firstFrameFileName, string _groundTruthFileName,
-	 string _preDetectionFile, int _group_threshold, double _hit_threshold, int _npart);
+	TestPHDFilter();
+	TestPHDFilter(string _firstFrameFileName, string _groundTruthFileName,
+	 string _preDetectionFile, int _npart);
 	void run();
 private:
 	//int numFrames;
 	string firstFrameFileName, groundTruthFileName, preDetectionFile;
-	int npart, group_threshold;
-	double hit_threshold;
+	int npart;
 	ImageGenerator generator;
 };
 
