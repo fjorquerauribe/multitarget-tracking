@@ -8,6 +8,7 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <fstream>
 #include "../likelihood/logistic_regression.hpp"
 
 using namespace cv;

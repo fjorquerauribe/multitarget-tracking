@@ -1,8 +1,8 @@
 #include "test_dpp.hpp"
 
-MultiTargetTrackingDPP::MultiTargetTrackingDPP(){}
+TestDPP::TestDPP(){}
 
-MultiTargetTrackingDPP::MultiTargetTrackingDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile,
+TestDPP::TestDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile,
 	double _epsilon, double _mu, double _lambda, int _npart)
 {
 	this->firstFrameFileName = _firstFrameFileName;
@@ -15,7 +15,7 @@ MultiTargetTrackingDPP::MultiTargetTrackingDPP(string _firstFrameFileName, strin
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
 }
 
-void MultiTargetTrackingDPP::run()
+void TestDPP::run()
 {
 	namedWindow("MTT", WINDOW_NORMAL);
 
@@ -26,7 +26,7 @@ void MultiTargetTrackingDPP::run()
 	HOGDetector hogDetector = HOGDetector(0, 0.0);
 #endif
 
-	resizeWindow("MTT", 400, 400);
+	//resizeWindow("MTT", WINDOW_NORMAL);
 	PHDParticleFilter filter(this->npart);
 	DPP dpp = DPP();
 
@@ -44,41 +44,22 @@ void MultiTargetTrackingDPP::run()
 
 		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
 
-		/*cout << "--------------------------" << endl;
-		cout << "groundtruth number: " << gt.size() << endl;
-		cout << "detections number: " << detections.size() << endl;*/
 		vector<Target> estimates;
 		if (!filter.is_initialized())
 		{
 			filter.initialize(currentFrame, detections);
+			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
+			estimates = filter.estimate(currentFrame, true);
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, detections);
 			estimates = filter.estimate(currentFrame, true);
-			//filter.draw_particles(currentFrame, Scalar(0, 255, 255));
-			//cout << "estimate number: " << estimates.size() << endl;
-		}
-
-		/*for (size_t j = 0; j < detections.size(); ++j)
-		{
-			rectangle(currentFrame, detections.at(j), Scalar(0,255,0), 1, LINE_AA);
-		}
-		for (unsigned int j = 0; j < gt.size(); ++j)
-		{
-			rectangle(currentFrame, gt.at(j).bbox, Scalar(0,255,0), 1, LINE_AA);
-		}*/
-		for (size_t j = 0; j < estimates.size(); ++j)
-		{
-			cout << i << "," << estimates.at(j).bbox.x << "," << estimates.at(j).bbox.y << "," << 
-			estimates.at(j).bbox.width << "," << estimates.at(j).bbox.height << endl;
 		}
 		
 		imshow("MTT", currentFrame);
 		waitKey(1);
-		
-		
 	}
 }
 
@@ -165,7 +146,7 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	MultiTargetTrackingDPP tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _epsilon, _mu, _lambda, _npart);
+	  	TestDPP tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _epsilon, _mu, _lambda, _npart);
 	  	tracker.run();
 	}
 }

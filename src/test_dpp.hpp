@@ -18,11 +18,11 @@
 using namespace std;
 using namespace cv;
 
-class MultiTargetTrackingDPP
+class TestDPP
 {
 public:
-	MultiTargetTrackingDPP();
-	MultiTargetTrackingDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile,
+	TestDPP();
+	TestDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile,
 		double _epsilon, double _mu, double _lambda, int _npart);
 	void run();
 private:

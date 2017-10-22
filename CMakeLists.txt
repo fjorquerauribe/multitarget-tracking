@@ -1,54 +1,56 @@
-cmake_minimum_required(VERSION 2.8)
-project( mtt )
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT( mtt )
 SET (CMAKE_CXX_COMPILER             "/usr/bin/g++")
-SET (CMAKE_CXX_FLAGS               "-Wall -std=c++11 -fopenmp")
-#SET (CMAKE_CXX_FLAGS                "-Wall -std=c++11")
+SET (CMAKE_CXX_FLAGS                "-Wall -std=c++11 -fopenmp")
 SET (CMAKE_CXX_FLAGS_DEBUG          "-g -traceback")
 SET (CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
 SET (CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG")
 SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g")
-find_package( OpenCV REQUIRED )
-find_package( CUDA QUIET REQUIRED )
-include_directories( ${OpenCV_INCLUDE_DIRS} )
-#include_directories( "/usr/include/eigen3/" )
-include_directories( "/usr/include/eigen3/" "/usr/local/include/eigen3/" )
-include_directories( "src/utils/" )
-include_directories( "src/likelihood/" )
-include_directories( "src/models/" )
-include_directories( "src/features/" )
-include_directories( "src/libs/libhungarian/" )
+FIND_PACKAGE( OpenCV REQUIRED )
+FIND_PACKAGE( CUDA QUIET REQUIRED )
+INCLUDE_DIRECTORIES( ${OpenCV_INCLUDE_DIRS} )
+INCLUDE_DIRECTORIES( "/usr/include/eigen3/" "/usr/local/include/eigen3/" )
+INCLUDE_DIRECTORIES( "src/utils/" )
+INCLUDE_DIRECTORIES( "src/likelihood/" )
+INCLUDE_DIRECTORIES( "src/models/" )
+INCLUDE_DIRECTORIES( "src/features/" )
+INCLUDE_DIRECTORIES( "src/libs/libhungarian/" )
+
+OPTION(MAKE_PHD "Make PHD" ON)
+OPTION(MAKE_DPP "Make DPP" ON)
+
+SET( COMMON_SOURCES
+    src/utils/image_generator.cpp
+    src/utils/utils.cpp
+    src/em.cpp
+    src/libs/libhungarian/hungarian.c
+)
 
 if(CUDA_FOUND)
-include_directories( ${CUDA_TOOLKIT_INCLUDE} )
+    INCLUDE_DIRECTORIES( ${CUDA_TOOLKIT_INCLUDE} )
 
-add_executable( phd src/test_phd.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
-target_link_libraries( phd ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
-target_compile_definitions( phd PRIVATE -DWITH_CUDA )
+    if(MAKE_PHD)
+        add_executable( phd src/test_phd.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
+        target_link_libraries( phd ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
+        target_compile_definitions( phd PRIVATE -DWITH_CUDA )
+    endif()
 
-#add_executable( phd_pets src/test_phd_pets.cpp src/detectors/cuda_hog_detector.cpp src/likelihood/logistic_regression.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
-#target_link_libraries( phd_pets ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
-#target_compile_definitions( phd_pets PRIVATE -DWITH_CUDA )
-
-#add_executable( dpp src/test_dpp.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/dpp.cpp src/detectors/cuda_hog_detector.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
-#target_link_libraries( dpp ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
-#target_compile_definitions( dpp PRIVATE -DWITH_CUDA )
-
-#add_executable( dpp_pets src/test_dpp_pets.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/detectors/cuda_hog_detector.cpp src/likelihood/logistic_regression.cpp src/dpp.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
-#target_link_libraries( dpp_pets ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
-#target_compile_definitions( dpp_pets PRIVATE -DWITH_CUDA )
+    if(MAKE_DPP)
+        add_executable( dpp src/test_dpp.cpp src/dpp.cpp src/detectors/cuda_hog_detector.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
+        target_link_libraries( dpp ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
+        target_compile_definitions( dpp PRIVATE -DWITH_CUDA )
+    endif()
 
 else()
 
-add_executable( phd src/test_phd.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/detectors/hog_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
-target_link_libraries( phd ${OpenCV_LIBS} -lpthread)
+    if(MAKE_PHD)
+        add_executable( phd src/test_phd.cpp src/detectors/hog_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
+        target_link_libraries( phd ${OpenCV_LIBS} -lpthread)
+    endif()
 
-add_executable( phd_pets src/test_phd_pets.cpp src/detectors/hog_detector.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
-target_link_libraries( phd_pets ${OpenCV_LIBS} -lpthread)
-
-add_executable( dpp src/test_dpp.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/dpp.cpp src/detectors/hog_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
-target_link_libraries( dpp ${OpenCV_LIBS} -lpthread)
-
-add_executable( dpp_pets src/test_dpp_pets.cpp src/utils/image_generator.cpp src/utils/utils.cpp src/detectors/hog_detector.cpp src/dpp.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/em.cpp src/libs/libhungarian/hungarian.c)
-target_link_libraries( dpp_pets ${OpenCV_LIBS} -lpthread)
+    if(MAKE_DPP)
+        add_executable( dpp src/test_dpp.cpp src/dpp.cpp src/detectors/hog_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
+        target_link_libraries( dpp ${OpenCV_LIBS} -lpthread)
+    endif()
 
 endif()

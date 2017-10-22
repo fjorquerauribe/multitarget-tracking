@@ -1,1 +1,0 @@
-../build/mtt_dpp_pets -img PETS/0.jpg -gt PETS/groundtruth.txt -epsilon $1 -mu $2 -lambda $3 -npart $4

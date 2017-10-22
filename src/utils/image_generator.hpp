@@ -10,8 +10,12 @@
 #include <opencv2/video.hpp>
 #include <utils.hpp>
 
+#include <opencv2/core.hpp>
+#include <Eigen/Dense>
+
 using namespace std;
 using namespace cv;
+using namespace Eigen;
 
 class ImageGenerator{
 public:
@@ -23,6 +27,7 @@ public:
   Mat getFrame(int frame_num);
   vector<Rect> getDetections(int frame_num);
   vector<Target> getGroundTruth(int frame_num);
+  MatrixXd getFeatures(int frame_num);
   size_t getDatasetSize();
 private:
   void readDetections(string str);
@@ -32,6 +37,7 @@ private:
   vector<Mat> images;
   vector< vector<Target> > ground_truth;
   vector< vector<Rect> > detections;
+  vector< MatrixXd > features;
 };
 
 #endif // IMAGE_GENERATOR_H

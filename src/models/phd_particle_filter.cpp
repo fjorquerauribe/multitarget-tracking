@@ -208,11 +208,8 @@ void PHDParticleFilter::predict(){
         }*/
         this->states.swap(tmp_new_states);
         this->weights.swap(tmp_weights);
-        //Scalar phd_estimate = sum(this->weights);
-        tmp_new_states.clear();// = vector<particle>();
-        tmp_weights.clear();// = vector<double>();
-        //cout << "predicted target number : "<< cvRound(phd_estimate[0]) << endl; 
-        //cout << "predicted birth number : "<< J_k << endl; 
+        tmp_new_states.clear();
+        tmp_weights.clear();
     }
 }
 
@@ -230,7 +227,6 @@ void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0,255,2
 
 void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
 {
-    //cout << "states size: " << this->states.size() << endl;
     if(detections.size() > 0){
         this->birth_model.clear();
         vector<double> tmp_weights;
@@ -268,7 +264,6 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             tmp_weights.push_back((1.0f - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         this->weights.swap(tmp_weights);
-        cout << "states size:" << this->states.size() << endl;
         resample();
         //Scalar phd_estimate = sum(this->weights);
         //cout << "Updated target number : "<< cvRound(phd_estimate[0]) << endl;  
@@ -287,7 +282,6 @@ void PHDParticleFilter::resample(){
     for (int i = 0; i < L_k; i++) {
         log_weights[i] = log(this->weights[i]);
     }
-    //cout << "log_weights: " << log_weights.size() << endl;
     double logsumexp = 0.0;
     double max_value = *max_element(log_weights.begin(), log_weights.end());
     for (int i = 0; i < L_k; i++) {
@@ -305,30 +299,28 @@ void PHDParticleFilter::resample(){
             cumulative_sum.at(i) = cumulative_sum.at(i - 1) + normalized_weights.at(i);
         }
     }
-    Scalar sum_squared_weights = sum(squared_normalized_weights);
     Scalar phd_estimate = sum(this->weights);
     int N_k = min(cvRound(this->particles_batch * phd_estimate[0]), 500);
-    double ESS = (1.0f/sum_squared_weights[0]);
 
-    cout << "ESS: " << ESS << "   THESHOLD: " << THRESHOLD << endl;
-    cout << "ESS < THESHOLD: " << isless(ESS, (float)THRESHOLD) << endl;
-
-    if(isless(ESS, (float)THRESHOLD)){
-        vector<particle> tmp_new_states;
-        vector<double> tmp_weights;
-        for (int i = 0; i < N_k; i++) {
-            double uni_rand = unif_rnd(this->generator);
-            vector<double>::iterator pos = lower_bound(cumulative_sum.begin(), cumulative_sum.end(), uni_rand);
-            int ipos = distance(cumulative_sum.begin(), pos);
-            particle state = this->states[ipos];
-            tmp_new_states.push_back(state);
-            tmp_weights.push_back((double)1.0/this->particles_batch);
-        }
-        this->states.swap(tmp_new_states);
-        this->weights.swap(tmp_weights);
-        tmp_new_states.clear();//= vector<particle>();
-        tmp_weights.clear();// = vector<double>();
+    //Scalar sum_squared_weights = sum(squared_normalized_weights);
+    //double ESS = (1.0f/sum_squared_weights[0]);
+    //if(isless(ESS, (float)THRESHOLD)){
+    vector<particle> tmp_new_states;
+    vector<double> tmp_weights;
+    for (int i = 0; i < N_k; i++) {
+        double uni_rand = unif_rnd(this->generator);
+        vector<double>::iterator pos = lower_bound(cumulative_sum.begin(), cumulative_sum.end(), uni_rand);
+        int ipos = distance(cumulative_sum.begin(), pos);
+        particle state = this->states[ipos];
+        tmp_new_states.push_back(state);
+        tmp_weights.push_back((double)1.0/this->particles_batch);
     }
+    this->states.swap(tmp_new_states);
+    this->weights.swap(tmp_weights);
+    tmp_new_states.clear();
+    tmp_weights.clear();
+    //}
+
     cumulative_sum.clear();
     squared_normalized_weights.clear();
 }
@@ -376,7 +368,6 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
         Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
         em_model->setClustersNumber(num_targets);
         em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
-        //em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 1000, 0.1));
         em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 10, 0.1));
         em_model->trainEM(data, noArray(), labels, noArray());
         emMeans = em_model->getMeans();

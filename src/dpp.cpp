@@ -1,11 +1,8 @@
 #include "dpp.hpp"
 
 #ifndef PARAMS
-const double ALPHA = 0.9; //0.9
-//const double LAMBDA = 0.1;
-const double BETA = 1.1;
-//const double MU = 0.7;
-//const double EPSILON = 0.1;
+	const double ALPHA = 0.9;
+	const double BETA = 1.1;
 #endif
 
 DPP::DPP(){}
@@ -49,10 +46,6 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 		MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea, mu);
 		vector<int> top = solve(qualityTerm, similarityTerm, epsilon);
 
-		/*MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea);
-		vector<int> top = solve(detectionWeights, similarityTerm);*/
-
-		
 		for (size_t i = 0; i < top.size(); ++i)
 		{
 			respDPP.push_back(preDetections.at(top.at(i)));
@@ -101,12 +94,6 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 	MatrixXd oldS = MatrixXd::Identity(1,1);
 	prodQ = oldObj;
 
-	/*cout << "qualityTerm:" << endl;
-	cout << qualityTerm.transpose() << endl;
-	cout << "similarityTerm" << endl;
-	cout << similarityTerm << endl;
-	exit(EXIT_FAILURE);*/
-
 	while(true){
 		double maxObj_ = 0;
 		copy( remained.data() + selected + 1, remained.data() + remained.size(), remained.data() + selected ); // delete selected item
@@ -140,7 +127,6 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 		}
 
 		double maxObj = prodQ * maxObj_ ;
-		//cout << "maxObj/oldObj:" << (maxObj / oldObj) << ", epsilon:" << (1 + epsilon) << endl;
 		if ( (maxObj / oldObj) > (1 + epsilon) )
 		//if ( (maxObj / oldObj) > epsilon )
 		{

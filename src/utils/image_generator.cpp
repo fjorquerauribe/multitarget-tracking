@@ -1,5 +1,9 @@
 #include "image_generator.hpp"
 
+#ifndef PARAMS
+  const int FEATURES_NUM = 128;
+#endif
+
 using namespace std;
 using namespace cv;
 
@@ -60,6 +64,10 @@ vector<Target> ImageGenerator::getGroundTruth(int frame_num){
   return this->ground_truth[frame_num];
 }
 
+MatrixXd ImageGenerator::getFeatures(int frame_num){
+  return this->features[frame_num];
+}
+
 bool ImageGenerator::hasEnded(){
   if(frame_id >= (int) this->images.size()){
     return true;
@@ -93,7 +101,6 @@ void ImageGenerator::getNextFilename(string& fn){
     oss << (frameNumber + 1);
     string zeros("0000000");
     //string zeros("");
-    
      
     string nextFrameNumberString = oss.str();
     string nextFrameFilename = prefix + zeros.substr(0, zeros.length() - 1 - nextFrameNumberString.length()) + nextFrameNumberString + suffix;
@@ -104,9 +111,14 @@ void ImageGenerator::readDetections(string detFilename){
   ifstream dt_file(detFilename.c_str(), ios::in);
   string line;
   this->detections.resize(getDatasetSize());
+  this->features.resize(getDatasetSize());
 
   vector<double> coords(4,0);
   int frame_num;
+  
+  //int last_frame_num = 1;
+  VectorXd row(FEATURES_NUM);
+
   while (getline(dt_file, line)) {
     Rect rect;
     size_t pos2 = line.find(",");
@@ -119,13 +131,31 @@ void ImageGenerator::readDetections(string detFilename){
       pos1 = pos2;
       pos2 = line.find(",", pos1 + 1);
       coords[j] = stoi(line.substr(pos1 + 1,pos2 - pos1 - 1));  
-      //detections[atoi(frame_num)]=
     }
     rect.x = coords[0];
     rect.y = coords[1];
     rect.width = coords[2];
     rect.height = coords[3];
-    detections[frame_num].push_back(rect);  
+    detections[frame_num].push_back(rect);
+    
+    for(int j = 1; j < 4; j++){
+      pos1 = pos2;
+      pos2 = line.find(",", pos1 + 1);
+    }
+
+    /*if(frame_num > last_frame_num){
+      this->features.push_back(MatrixXd(0, FEATURES_NUM));
+      last_frame_num = frame_num;
+    }*/
+
+    for(int j = 1; j < FEATURES_NUM; j++){
+      pos1 = pos2;
+      pos2 = line.find(",", pos1 + 1);
+      row(j) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
+    }
+    this->features[frame_num].conservativeResize(this->features[frame_num].rows() + 1, FEATURES_NUM);
+    this->features[frame_num].row(this->features[frame_num].rows() - 1 ) = row;
+    //cout << row << endl;
   }
 }
 

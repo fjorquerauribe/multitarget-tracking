@@ -1,1 +1,1 @@
-../build/mtt_dpp -img 2DMOT2015/train/$1/img1/000001.jpg -gt 2DMOT2015/train/$1/gt/gt.txt -det 2DMOT2015/train/$1/det/det.txt -epsilon $2 -mu $3 -lambda $4 -npart $5
+../build/dpp -img data/2DMOT2015/$1/$2/img1/000001.jpg -gt data/2DMOT2015/$1/$2/gt/gt.txt -det data/2DMOT2015/$1/$2/det/det.txt -epsilon $3 -mu $4 -lambda $5 -npart $6

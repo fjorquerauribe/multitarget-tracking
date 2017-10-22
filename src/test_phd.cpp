@@ -19,32 +19,25 @@ void TestPHDFilter::run()
 	map<int,Scalar> color;
 	PHDParticleFilter filter(this->npart);
 
-
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
 
-		vector<Rect> preDetections = this->generator.getDetections(i);//hogDetector.detect(currentFrame);
-		
+		vector<Rect> preDetections = this->generator.getDetections(i);
+
 		vector<Target> estimates;
 		if (!filter.is_initialized())
 		{
-			
 			filter.initialize(currentFrame, preDetections);
 			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
-			//estimates = filter.estimate(currentFrame, true);
+			estimates = filter.estimate(currentFrame, true);
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, preDetections);
-			estimates = filter.estimate(currentFrame, false);
-		}
-
-		for(int j = 0; j < preDetections.size(); j++){
-			//cout << preDetections.at(j) << endl;
-			rectangle(currentFrame, preDetections.at(j), Scalar(255,0,0), 2, LINE_AA);
+			estimates = filter.estimate(currentFrame, true);
 		}
 		
 		imshow("MTT", currentFrame);
