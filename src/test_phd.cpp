@@ -23,7 +23,6 @@ void TestPHDFilter::run()
 	{
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
-
 		vector<Rect> preDetections = this->generator.getDetections(i);
 
 		vector<Target> estimates;
@@ -38,6 +37,16 @@ void TestPHDFilter::run()
 			filter.predict();
 			filter.update(currentFrame, preDetections);
 			estimates = filter.estimate(currentFrame, true);
+		}
+
+		for(size_t j = 0; j < estimates.size(); j++){
+			cout << i
+			<< "," << estimates.at(j).label
+			<< "," << estimates.at(j).bbox.x
+			<< "," << estimates.at(j).bbox.y
+			<< "," << estimates.at(j).bbox.width
+			<< "," << estimates.at(j).bbox.height
+			<< ",1,-1,-1,-1" << endl;
 		}
 		
 		imshow("MTT", currentFrame);

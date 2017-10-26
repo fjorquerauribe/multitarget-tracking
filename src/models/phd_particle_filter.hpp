@@ -1,12 +1,10 @@
 #ifndef PHD_PARTICLE_FILTER
 #define PHD_PARTICLE_FILTER
 
-
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <Eigen/Dense>
 #include <opencv2/core/eigen.hpp>
-
 #include "opencv2/ml.hpp"
 
 #include "../likelihood/gaussian.hpp"
@@ -22,6 +20,7 @@
 #include <random>
 #include <chrono>
 #include <limits>
+#include <algorithm>
 
 extern const float POS_STD;
 extern const float VEL_STD;
@@ -76,6 +75,7 @@ protected:
     vector<Target> tracks;
     vector<Rect> birth_model;
     RNG rng;
+    vector<int> labels;
 };
 
 #endif

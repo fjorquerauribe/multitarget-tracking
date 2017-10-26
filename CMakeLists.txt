@@ -17,7 +17,7 @@ INCLUDE_DIRECTORIES( "src/features/" )
 INCLUDE_DIRECTORIES( "src/libs/libhungarian/" )
 
 OPTION(MAKE_PHD "Make PHD" ON)
-OPTION(MAKE_DPP "Make DPP" ON)
+OPTION(MAKE_DPP "Make DPP" OFF)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp

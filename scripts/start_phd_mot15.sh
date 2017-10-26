@@ -1,1 +1,1 @@
-../build/phd -img data/2DMOT2015/$1/$2/img1/000001.jpg -gt data/2DMOT2015/$1/$2/gt/gt.txt -det ../data/det/2DMOT2015/$1/MOT16-$2.txt -npart $3
+../build/phd -img data/2DMOT2015/$1/$2/img1/000001.jpg -gt data/2DMOT2015/$1/$2/gt/gt.txt -det ../data/det/2DMOT2015/$1/$2.txt -npart $3
