@@ -13,6 +13,11 @@
 #include "../utils/utils.hpp"
 #include "../em.hpp"
 #include "hungarian.h"
+
+#ifdef WITH_NMS
+    #include "../libs/nms/nms.hpp"
+#endif
+
 #include <time.h>
 #include <float.h>
 #include <vector>
@@ -21,12 +26,6 @@
 #include <chrono>
 #include <limits>
 #include <algorithm>
-
-extern const float POS_STD;
-extern const float VEL_STD;
-extern const float SCALE_STD;
-extern const float  DT;
-extern const float  THRESHOLD;
 
 using namespace cv;
 using namespace std;
@@ -53,14 +52,14 @@ public:
    ~PHDParticleFilter();
     PHDParticleFilter(int _n_particles);
     PHDParticleFilter();
-    void initialize(Mat& current_frame, vector<Rect> detections);
-    void update(Mat& image, vector<Rect> detections);
+    void initialize(Mat& current_frame, vector<Rect> preDetections);
+    void update(Mat& image, vector<Rect> preDetections);
     vector<Target> estimate(Mat& image, bool draw);
     void predict();
     void resample();
     void draw_particles(Mat& image, Scalar color);
     bool is_initialized();
-    //void auxiliary(Mat& image, vector<Rect> detections);
+    //void auxiliary(Mat& image, vector<Rect> preDetections);
     
 protected:
     mt19937 generator;

@@ -1,0 +1,1 @@
+../build/dpp -img data/$1/$2/$3/img1/000001.jpg -gt data/$1/$2/$3/gt/gt.txt -det data/$1/$2/$3/det/det.txt -epsilon $4 -mu $5 -lambda $6 -npart $7

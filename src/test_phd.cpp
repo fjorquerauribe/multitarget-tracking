@@ -21,33 +21,39 @@ void TestPHDFilter::run()
 
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
+		
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
 		vector<Rect> preDetections = this->generator.getDetections(i);
-
 		vector<Target> estimates;
+
+		cout << "Target number: " << gt.size() << endl;
+
 		if (!filter.is_initialized())
 		{
 			filter.initialize(currentFrame, preDetections);
 			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
-			estimates = filter.estimate(currentFrame, true);
+			estimates = filter.estimate(currentFrame, false);
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, preDetections);
-			estimates = filter.estimate(currentFrame, true);
+			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
+			estimates = filter.estimate(currentFrame, false);
 		}
 
-		for(size_t j = 0; j < estimates.size(); j++){
-			cout << i
+		/*for(size_t j = 0; j < estimates.size(); j++){
+			cout << i + 1
 			<< "," << estimates.at(j).label
 			<< "," << estimates.at(j).bbox.x
 			<< "," << estimates.at(j).bbox.y
 			<< "," << estimates.at(j).bbox.width
 			<< "," << estimates.at(j).bbox.height
 			<< ",1,-1,-1,-1" << endl;
-		}
+		}*/
+
+		cout << "----------------------------------------" << endl;
 		
 		imshow("MTT", currentFrame);
 		waitKey(1);

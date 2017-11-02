@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "dense": "cpp"
+        "dense": "cpp",
+        "cstdlib": "cpp",
+        "array": "cpp",
+        "initializer_list": "cpp",
+        "utility": "cpp",
+        "ostream": "cpp"
     }
 }

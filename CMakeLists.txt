@@ -15,9 +15,10 @@ INCLUDE_DIRECTORIES( "src/likelihood/" )
 INCLUDE_DIRECTORIES( "src/models/" )
 INCLUDE_DIRECTORIES( "src/features/" )
 INCLUDE_DIRECTORIES( "src/libs/libhungarian/" )
+INCLUDE_DIRECTORIES( "src/libs/nms/" )
 
-OPTION(MAKE_PHD "Make PHD" ON)
-OPTION(MAKE_DPP "Make DPP" OFF)
+OPTION(MAKE_PHD "Make PHD" OFF)
+OPTION(MAKE_DPP "Make DPP" ON)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp
@@ -32,7 +33,7 @@ if(CUDA_FOUND)
     if(MAKE_PHD)
         add_executable( phd src/test_phd.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
         target_link_libraries( phd ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
-        target_compile_definitions( phd PRIVATE -DWITH_CUDA )
+        target_compile_definitions( phd PRIVATE -DWITH_NMS )
     endif()
 
     if(MAKE_DPP)

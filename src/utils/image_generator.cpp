@@ -89,7 +89,6 @@ void ImageGenerator::getNextFilename(string& fn){
     if(index == string::npos) {
         index = fn.find_last_of("\\");
     }
-    //size_t index1 = fn.find_last_of("0");
     size_t index2 = fn.find_last_of(".");
     string prefix = fn.substr(0,index+1);
     string suffix = fn.substr(index2);
@@ -100,8 +99,6 @@ void ImageGenerator::getNextFilename(string& fn){
     ostringstream oss;
     oss << (frameNumber + 1);
     string zeros("0000000");
-    //string zeros("");
-     
     string nextFrameNumberString = oss.str();
     string nextFrameFilename = prefix + zeros.substr(0, zeros.length() - 1 - nextFrameNumberString.length()) + nextFrameNumberString + suffix;
     fn.assign(nextFrameFilename);
@@ -116,7 +113,6 @@ void ImageGenerator::readDetections(string detFilename){
   vector<double> coords(4,0);
   int frame_num;
   
-  //int last_frame_num = 1;
   VectorXd row(FEATURES_NUM);
 
   while (getline(dt_file, line)) {
@@ -143,11 +139,6 @@ void ImageGenerator::readDetections(string detFilename){
       pos2 = line.find(",", pos1 + 1);
     }
 
-    /*if(frame_num > last_frame_num){
-      this->features.push_back(MatrixXd(0, FEATURES_NUM));
-      last_frame_num = frame_num;
-    }*/
-
     for(int j = 1; j < FEATURES_NUM; j++){
       pos1 = pos2;
       pos2 = line.find(",", pos1 + 1);
@@ -155,7 +146,6 @@ void ImageGenerator::readDetections(string detFilename){
     }
     this->features[frame_num].conservativeResize(this->features[frame_num].rows() + 1, FEATURES_NUM);
     this->features[frame_num].row(this->features[frame_num].rows() - 1 ) = row;
-    //cout << row << endl;
   }
 }
 
@@ -188,32 +178,19 @@ void ImageGenerator::readGroundTruth(string gtFilename){
     rect.width = coords[2];
     rect.height = coords[3];
     target.bbox = rect;
+    
+    /*pos1 = pos2;
+    pos2 = line.find(",", pos1 + 1);
+    target.conf = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));*/
+    
     ground_truth[frame_num].push_back(target);
+    /*cout << frame_num
+    << "," << target.label
+    << "," << target.bbox.x
+    << "," << target.bbox.y
+    << "," << target.bbox.width
+    << "," << target.bbox.height
+    << ",-1,-1,-1,-1" << endl;*/
+
   }
-  
-  /*else{
-    while (getline(gt_file, line)) {
-      Target target; 
-      Rect rect;
-      size_t pos2 = line.find(" ");
-      size_t pos1 = 0;
-      frame_num = stoi(line.substr(pos1, pos2)) - 1;
-      
-      for(int j = 0; j < 4; j++){
-        pos1 = pos2;
-        pos2 = line.find(" ", pos1 + 1);
-        coords[j] = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
-      }
-
-      rect.x = coords[0];
-      rect.y = coords[1];
-      rect.width = coords[2];
-      rect.height = coords[3];
-
-      target.bbox = rect;
-      target.label = -1;
-      ground_truth[frame_num].push_back(target);
-    }
-  }*/
-  
 }

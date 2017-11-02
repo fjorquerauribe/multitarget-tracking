@@ -17,7 +17,13 @@ typedef struct{
 	int label;
   	Scalar color;
 	Rect bbox;
+	//int conf;
 } Target;
+
+typedef struct{
+	float conf;
+	Rect bbox;
+} Detection;
 
 class Utils{
 public:
