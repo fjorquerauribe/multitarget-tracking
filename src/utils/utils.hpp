@@ -20,11 +20,6 @@ typedef struct{
 	//int conf;
 } Target;
 
-typedef struct{
-	float conf;
-	Rect bbox;
-} Detection;
-
 class Utils{
 public:
 	static int** compute_cost_matrix(vector<Target> tracks, vector<Target> new_tracks);

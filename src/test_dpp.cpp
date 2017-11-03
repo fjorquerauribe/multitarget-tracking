@@ -17,16 +17,8 @@ TestDPP::TestDPP(string _firstFrameFileName, string _groundTruthFileName, string
 
 void TestDPP::run()
 {
-	namedWindow("MTT", WINDOW_NORMAL);
+	//namedWindow("MTT", WINDOW_NORMAL);
 
-#ifdef WITH_CUDA
-	CUDA_HOGDetector hogDetector = CUDA_HOGDetector(0, 0.0);
-	hogDetector.loadPreTrainedModel();
-#else
-	HOGDetector hogDetector = HOGDetector(0, 0.0);
-#endif
-
-	//resizeWindow("MTT", WINDOW_NORMAL);
 	PHDParticleFilter filter(this->npart);
 	DPP dpp = DPP();
 
@@ -35,14 +27,18 @@ void TestDPP::run()
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
 
-		MatrixXd features; vector<Rect> preDetections; VectorXd detectionWeights;
-	
-		preDetections = hogDetector.detect(currentFrame);
-		features = hogDetector.getFeatureValues();
-		detectionWeights = hogDetector.getDetectionWeights();
+		vector<Rect> preDetections;
+		VectorXd detectionWeights;
+		MatrixXd features;
+
+		preDetections = this->generator.getDetections(i);
+		detectionWeights = this->generator.getDetectionWeights(i);
+		features = this->generator.getDetectionFeatures(i);
 		//preDetections = this->generator.getDetections(i);
 
 		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
+
+		//cout << "Target number: " << gt.size() << endl;
 
 		vector<Target> estimates;
 		if (!filter.is_initialized())
@@ -57,9 +53,21 @@ void TestDPP::run()
 			filter.update(currentFrame, detections);
 			estimates = filter.estimate(currentFrame, true);
 		}
+
+		for(size_t j = 0; j < estimates.size(); j++){
+			cout << i + 1
+			<< "," << estimates.at(j).label
+			<< "," << estimates.at(j).bbox.x
+			<< "," << estimates.at(j).bbox.y
+			<< "," << estimates.at(j).bbox.width
+			<< "," << estimates.at(j).bbox.height
+			<< ",1,-1,-1,-1" << endl;
+		}
 		
-		imshow("MTT", currentFrame);
-		waitKey(1);
+		//cout << "----------------------------------------" << endl;
+
+		/*imshow("MTT", currentFrame);
+		waitKey(1);*/
 	}
 }
 

@@ -35,7 +35,8 @@
                 "/usr/include/linux",
                 "/usr/include/eigen3",
                 "${workspaceRoot}/src/libs/libhungarian",
-                "/usr/include/c++/5/tr1"
+                "/usr/include/c++/5/tr1",
+                "${workspaceRoot}/src/utils"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",

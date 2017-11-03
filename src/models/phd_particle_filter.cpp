@@ -9,8 +9,8 @@
 const float POS_STD = 3.0;
 const float SCALE_STD = 3.0;
 const float THRESHOLD = 1000;
-const float SURVIVAL_RATE = 0.99;
-const float CLUTTER_RATE = 1.0e-3;
+const float SURVIVAL_RATE = 0.9;//0.99
+const float CLUTTER_RATE = 1.0e-2;//1.0e-3
 const float BIRTH_RATE = 5e-6;
 const float DETECTION_RATE = 0.7;
 const float POSITION_LIKELIHOOD_STD = 30.0;
@@ -88,7 +88,7 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> preDetection
                 particle state;
                 float _x, _y, _width, _height;
                 float _dx = position_random_x(this->generator);
-                float _dy =+ position_random_y(this->generator);
+                float _dy = position_random_y(this->generator);
                 float _dw = 0.0f;//scale_random_width(generator);
                 float _dh = 0.0f;//scale_random_height(generator);
                 _x = MIN(MAX(cvRound(detections[j].x + _dx), 0), this->img_size.width);
@@ -172,6 +172,8 @@ void PHDParticleFilter::predict(){
         }
 
         double lambda_birth = this->img_size.area() * BIRTH_RATE;
+        /*poisson_distribution<int> birth_num(lambda_birth);
+        int J_k = birth_num(this->generator);*/
         if(this->birth_model.size() > 0){
             for (size_t j = 0; j < this->birth_model.size(); j++){
                 for (int k = 0; k < this->particles_batch; k++){
@@ -194,8 +196,8 @@ void PHDParticleFilter::predict(){
         tmp_weights.clear();
     }
 
-    Scalar phd_estimate = sum(this->weights);
-    cout << "Predicted target number: "<< cvRound(phd_estimate[0]) << endl;
+    /*Scalar phd_estimate = sum(this->weights);
+    cout << "Predicted target number: "<< cvRound(phd_estimate[0]) << endl;*/
 }
 
 void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0, 255, 255)){
@@ -213,7 +215,6 @@ void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0, 255,
 void PHDParticleFilter::update(Mat& image, vector<Rect> preDetections)
 {
     if(preDetections.size() > 0){
-
         vector<Rect> detections;
 
 #ifdef WITH_NMS
@@ -258,8 +259,8 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> preDetections)
             tmp_weights.push_back((1.0f - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         
-        Scalar phd_estimate = sum(this->weights);
-        cout << "Update target number: "<< cvRound(phd_estimate[0]) << endl;
+        /*Scalar phd_estimate = sum(this->weights);
+        cout << "Update target number: "<< cvRound(phd_estimate[0]) << endl;*/
         
         this->weights.swap(tmp_weights);
         resample();
@@ -299,7 +300,7 @@ void PHDParticleFilter::resample(){
     }
     Scalar phd_estimate = sum(this->weights);
     int N_k = cvRound(this->particles_batch * phd_estimate[0]);
-    cout << "Resampled target number: " << cvRound(phd_estimate[0]) << endl;
+    //cout << "Resampled target number: " << cvRound(phd_estimate[0]) << endl;
     //cout << "N_k: " << N_k << endl;
 
     vector<particle> tmp_new_states;
@@ -323,7 +324,7 @@ void PHDParticleFilter::resample(){
 
 vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
     Scalar phd_estimate = sum(this->weights);
-    cout << "Estimated target number : "<< cvRound(phd_estimate[0]) << endl;
+    //cout << "Estimated target number : "<< cvRound(phd_estimate[0]) << endl;
     int num_targets = cvRound(phd_estimate[0]);
     vector<Target> new_tracks;
     if(num_targets > 0)
@@ -338,7 +339,6 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             data.at<double>(j,3) = this->states[j].height;
         }
         Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
-        //cout << "num_targets: " << num_targets << endl;
         em_model->setClustersNumber(num_targets);
         em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
         em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 10, 0.1));

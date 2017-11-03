@@ -60,11 +60,15 @@ vector<Rect> ImageGenerator::getDetections(int frame_num){
   return this->detections[frame_num];
 }
 
+VectorXd ImageGenerator::getDetectionWeights(int frame_num){
+  return this->detection_weights[frame_num];
+}
+
 vector<Target> ImageGenerator::getGroundTruth(int frame_num){
   return this->ground_truth[frame_num];
 }
 
-MatrixXd ImageGenerator::getFeatures(int frame_num){
+MatrixXd ImageGenerator::getDetectionFeatures(int frame_num){
   return this->features[frame_num];
 }
 
@@ -108,6 +112,7 @@ void ImageGenerator::readDetections(string detFilename){
   ifstream dt_file(detFilename.c_str(), ios::in);
   string line;
   this->detections.resize(getDatasetSize());
+  this->detection_weights.resize(getDatasetSize());
   this->features.resize(getDatasetSize());
 
   vector<double> coords(4,0);
@@ -132,9 +137,14 @@ void ImageGenerator::readDetections(string detFilename){
     rect.y = coords[1];
     rect.width = coords[2];
     rect.height = coords[3];
-    detections[frame_num].push_back(rect);
+    this->detections[frame_num].push_back(rect);
     
-    for(int j = 1; j < 4; j++){
+    pos1 = pos2;
+    pos2 = line.find(",", pos1 + 1);
+    this->detection_weights[frame_num].resize( this->detection_weights[frame_num].size() + 1 );
+    this->detection_weights[frame_num](this->detection_weights[frame_num].size() - 1) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
+
+    for(int j = 1; j < 3; j++){
       pos1 = pos2;
       pos2 = line.find(",", pos1 + 1);
     }
@@ -146,13 +156,14 @@ void ImageGenerator::readDetections(string detFilename){
     }
     this->features[frame_num].conservativeResize(this->features[frame_num].rows() + 1, FEATURES_NUM);
     this->features[frame_num].row(this->features[frame_num].rows() - 1 ) = row;
+
   }
 }
 
 void ImageGenerator::readGroundTruth(string gtFilename){
   ifstream gt_file(gtFilename.c_str(), ios::in);
   string line;
-  ground_truth.resize(getDatasetSize());
+  this->ground_truth.resize(getDatasetSize());
   vector<double> coords(4,0);
   int frame_num;
   
@@ -183,7 +194,7 @@ void ImageGenerator::readGroundTruth(string gtFilename){
     pos2 = line.find(",", pos1 + 1);
     target.conf = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));*/
     
-    ground_truth[frame_num].push_back(target);
+    this->ground_truth[frame_num].push_back(target);
     /*cout << frame_num
     << "," << target.label
     << "," << target.bbox.x

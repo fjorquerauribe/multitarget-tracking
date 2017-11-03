@@ -18,7 +18,8 @@ INCLUDE_DIRECTORIES( "src/libs/libhungarian/" )
 INCLUDE_DIRECTORIES( "src/libs/nms/" )
 
 OPTION(MAKE_PHD "Make PHD" OFF)
-OPTION(MAKE_DPP "Make DPP" ON)
+OPTION(MAKE_DPP "Make DPP" OFF)
+OPTION(MAKE_PEDESTRIAN "Make PEDESTRIAN" ON)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp
@@ -26,6 +27,11 @@ SET( COMMON_SOURCES
     src/em.cpp
     src/libs/libhungarian/hungarian.c
 )
+
+if(MAKE_PEDESTRIAN)
+    add_executable( pedestrian src/test_pedestrian.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/detectors/hog_detector.cpp ${COMMON_SOURCES})
+    target_link_libraries( pedestrian ${OpenCV_LIBS} -lpthread)
+endif()
 
 if(CUDA_FOUND)
     INCLUDE_DIRECTORIES( ${CUDA_TOOLKIT_INCLUDE} )
@@ -37,7 +43,7 @@ if(CUDA_FOUND)
     endif()
 
     if(MAKE_DPP)
-        add_executable( dpp src/test_dpp.cpp src/dpp.cpp src/detectors/cuda_hog_detector.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
+        add_executable( dpp src/test_dpp.cpp src/dpp/dpp.cpp src/detectors/cuda_hog_detector.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
         target_link_libraries( dpp ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
         target_compile_definitions( dpp PRIVATE -DWITH_CUDA )
     endif()
@@ -50,7 +56,7 @@ else()
     endif()
 
     if(MAKE_DPP)
-        add_executable( dpp src/test_dpp.cpp src/dpp.cpp src/detectors/hog_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
+        add_executable( dpp src/test_dpp.cpp src/dpp/dpp.cpp src/detectors/hog_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
         target_link_libraries( dpp ${OpenCV_LIBS} -lpthread)
     endif()
 

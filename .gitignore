@@ -3,3 +3,4 @@ PETS/
 pre-data/
 *.backup
 backups/
+.vscode/

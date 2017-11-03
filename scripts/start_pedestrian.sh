@@ -1,0 +1,1 @@
+../build/pedestrian -npart $1

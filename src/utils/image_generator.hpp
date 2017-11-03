@@ -25,9 +25,10 @@ public:
   bool hasEnded();
   void moveNext();
   Mat getFrame(int frame_num);
-  vector<Rect> getDetections(int frame_num);
   vector<Target> getGroundTruth(int frame_num);
-  MatrixXd getFeatures(int frame_num);
+  vector<Rect> getDetections(int frame_num);
+  VectorXd getDetectionWeights(int frame_num);
+  MatrixXd getDetectionFeatures(int frame_num);
   size_t getDatasetSize();
 private:
   void readDetections(string str);
@@ -37,6 +38,7 @@ private:
   vector<Mat> images;
   vector< vector<Target> > ground_truth;
   vector< vector<Rect> > detections;
+  vector< VectorXd > detection_weights;
   vector< MatrixXd > features;
 };
 
