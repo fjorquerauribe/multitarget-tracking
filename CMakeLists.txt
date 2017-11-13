@@ -17,20 +17,23 @@ INCLUDE_DIRECTORIES( "src/features/" )
 INCLUDE_DIRECTORIES( "src/libs/libhungarian/" )
 INCLUDE_DIRECTORIES( "src/libs/nms/" )
 
+add_subdirectory( "src/libs/piotr_fhog/" )
+
 OPTION(MAKE_PHD "Make PHD" OFF)
 OPTION(MAKE_DPP "Make DPP" OFF)
-OPTION(MAKE_PEDESTRIAN "Make PEDESTRIAN" ON)
+OPTION(MAKE_LR_DETECTOR "Make LR_DETECTOR" ON)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp
     src/utils/utils.cpp
+    src/utils/c_utils.cpp
     src/em.cpp
     src/libs/libhungarian/hungarian.c
 )
 
-if(MAKE_PEDESTRIAN)
-    add_executable( pedestrian src/test_pedestrian.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp src/detectors/hog_detector.cpp ${COMMON_SOURCES})
-    target_link_libraries( pedestrian ${OpenCV_LIBS} -lpthread)
+if(MAKE_LR_DETECTOR)
+    add_executable(lr_detector src/test_lr_detector.cpp src/detectors/CPU_LR_hog_detector.cpp src/likelihood/CPU_logistic_regression.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES})
+    target_link_libraries( lr_detector ${OpenCV_LIBS} fhog)
 endif()
 
 if(CUDA_FOUND)

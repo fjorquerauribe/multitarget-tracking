@@ -27,7 +27,7 @@ void TestPHDFilter::run()
 		vector<Rect> preDetections = this->generator.getDetections(i);
 		vector<Target> estimates;
 
-		cout << "Target number: " << gt.size() << endl;
+		//cout << "Target number: " << gt.size() << endl;
 
 		if (!filter.is_initialized())
 		{
