@@ -36,7 +36,7 @@ void TestLRDetector::run()
 	utils.read_Labels(this->modelFilesPath + "mins.csv", min);
     
     //detector.init(this->group_threshold, this->hit_threshold);
-	detector.init(0.8,0.8);
+	detector.init(this->group_threshold, this->hit_threshold);
 	detector.loadModel(weights, mean, std, max, min, bias(0));
 
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
