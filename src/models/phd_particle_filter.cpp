@@ -6,14 +6,14 @@
 #include "phd_particle_filter.hpp"
 
 #ifndef PARAMS
-const float POS_STD = 3.0;
-const float SCALE_STD = 3.0;
-const float THRESHOLD = 1000;
-const float SURVIVAL_RATE = 0.9;//0.99
-const float CLUTTER_RATE = 1.0e-2;//1.0e-3
-const float BIRTH_RATE = 5e-6;
-const float DETECTION_RATE = 0.7;
-const float POSITION_LIKELIHOOD_STD = 30.0;
+    const float POS_STD = 3.0;
+    const float SCALE_STD = 3.0;
+    const float THRESHOLD = 1000;
+    const float SURVIVAL_RATE = 0.9;
+    const float CLUTTER_RATE = 1.0e-2;
+    const float BIRTH_RATE = 5e-6;
+    const float DETECTION_RATE = 0.7;
+    const float POSITION_LIKELIHOOD_STD = 30.0;
 #endif 
 
 PHDParticleFilter::PHDParticleFilter() {
@@ -28,7 +28,7 @@ bool PHDParticleFilter::is_initialized() {
     return this->initialized;
 }
 
-PHDParticleFilter::PHDParticleFilter(int _n_particles) {
+PHDParticleFilter::PHDParticleFilter(int _n_particles, bool verbose) {
     this->states.clear();
     this->weights.clear();
     this->birth_model.clear();
@@ -38,10 +38,10 @@ PHDParticleFilter::PHDParticleFilter(int _n_particles) {
     this->generator.seed(seed1);
     this->theta_x.clear();
     RowVectorXd theta_x_pos(2);
-    theta_x_pos << POS_STD,POS_STD;
+    theta_x_pos << POS_STD, POS_STD;
     this->theta_x.push_back(theta_x_pos);
     RowVectorXd theta_x_scale(2);
-    theta_x_scale << SCALE_STD,SCALE_STD;
+    theta_x_scale << SCALE_STD, SCALE_STD;
     this->theta_x.push_back(theta_x_scale);
     this->max_height = 100;
     this->max_width = 40;
@@ -52,6 +52,7 @@ PHDParticleFilter::PHDParticleFilter(int _n_particles) {
     this->min_x = 1e6;
     this->min_y = 1e6;
     this->rng(12345);
+    this->verbose = verbose;
     this->initialized = false;
 }
 
@@ -112,6 +113,7 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> preDetection
             target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
             target.bbox = detections.at(i);
             this->tracks.push_back(target);
+            this->current_labels.push_back(i);
             this->labels.push_back(i);
         }
     
@@ -196,8 +198,10 @@ void PHDParticleFilter::predict(){
         tmp_weights.clear();
     }
 
-    /*Scalar phd_estimate = sum(this->weights);
-    cout << "Predicted target number: "<< cvRound(phd_estimate[0]) << endl;*/
+    if(this->verbose){
+        Scalar phd_estimate = sum(this->weights);
+        cout << "Predicted target number: "<< cvRound(phd_estimate[0]) << endl;
+    }
 }
 
 void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0, 255, 255)){
@@ -219,7 +223,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> preDetections)
 
 #ifdef WITH_NMS
         nms(preDetections, detections, 0.5, 0);
-#else
+#else       
         detections = preDetections;
 #endif
 
@@ -259,8 +263,10 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> preDetections)
             tmp_weights.push_back((1.0f - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         
-        /*Scalar phd_estimate = sum(this->weights);
-        cout << "Update target number: "<< cvRound(phd_estimate[0]) << endl;*/
+        if(this->verbose){
+            Scalar phd_estimate = sum(this->weights);
+            cout << "Update target number: "<< cvRound(phd_estimate[0]) << endl;
+        }
         
         this->weights.swap(tmp_weights);
         resample();
@@ -322,7 +328,7 @@ void PHDParticleFilter::resample(){
     squared_normalized_weights.clear();
 }
 
-vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
+vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
     Scalar phd_estimate = sum(this->weights);
     //cout << "Estimated target number : "<< cvRound(phd_estimate[0]) << endl;
     int num_targets = cvRound(phd_estimate[0]);
@@ -354,7 +360,7 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
             
             while( (find(this->labels.begin(), this->labels.end(), label) != this->labels.end()) ) label++;
             target.label = label;
-            this->labels.push_back(label);
+            this->current_labels.push_back(label);
             label++;
             new_tracks.push_back(target);
         }
@@ -381,12 +387,17 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw = false){
         }
 
         this->tracks.swap(new_tracks);
-        this->labels.clear();
-        for(size_t i = 0; i < this->tracks.size(); i++) this->labels.push_back(this->tracks.at(i).label);
+        this->current_labels.clear();
+        for(size_t i = 0; i < this->tracks.size(); i++) this->current_labels.push_back(this->tracks.at(i).label);
         
+        this->labels.insert( this->labels.end(), this->current_labels.begin(), this->current_labels.end() );
+
         /*cout << endl << "labels" << endl;
-        for(size_t i = 0; i < this->labels.size(); i++) cout << this->labels.at(i) << " ";
-        cout << endl << "estimated target num: " << cvRound(phd_estimate[0]) << endl;*/
+        for(size_t i = 0; i < this->labels.size(); i++) cout << this->labels.at(i) << " ";*/
+
+        if(this->verbose){
+            cout << "estimated target num: " << cvRound(phd_estimate[0]) << endl;
+        }
 
         new_tracks.clear();
 

@@ -20,7 +20,6 @@ public:
 	 string _preDetectionFile, int _npart);
 	void run();
 private:
-	//int numFrames;
 	string firstFrameFileName, groundTruthFileName, preDetectionFile;
 	int npart;
 	ImageGenerator generator;

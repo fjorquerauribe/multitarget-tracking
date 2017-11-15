@@ -50,11 +50,11 @@ public:
     vector<particle> states;
     vector<double> weights;
    ~PHDParticleFilter();
-    PHDParticleFilter(int _n_particles);
+    PHDParticleFilter(int _n_particles, bool verbose = false);
     PHDParticleFilter();
     void initialize(Mat& current_frame, vector<Rect> preDetections);
     void update(Mat& image, vector<Rect> preDetections);
-    vector<Target> estimate(Mat& image, bool draw);
+    vector<Target> estimate(Mat& image, bool draw = false);
     void predict();
     void resample();
     void draw_particles(Mat& image, Scalar color);
@@ -74,7 +74,8 @@ protected:
     vector<Target> tracks;
     vector<Rect> birth_model;
     RNG rng;
-    vector<int> labels;
+    vector<int> labels, current_labels;
+    bool verbose;
 };
 
 #endif

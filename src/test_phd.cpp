@@ -14,10 +14,10 @@ TestPHDFilter::TestPHDFilter(string _firstFrameFileName,
 
 void TestPHDFilter::run()
 {
-	namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
+	//namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
-	PHDParticleFilter filter(this->npart);
+	PHDParticleFilter filter(this->npart, false);
 
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
@@ -33,17 +33,17 @@ void TestPHDFilter::run()
 		{
 			filter.initialize(currentFrame, preDetections);
 			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
-			estimates = filter.estimate(currentFrame, false);
+			estimates = filter.estimate(currentFrame, true);
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, preDetections);
 			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
-			estimates = filter.estimate(currentFrame, false);
+			estimates = filter.estimate(currentFrame, true);
 		}
 
-		/*for(size_t j = 0; j < estimates.size(); j++){
+		for(size_t j = 0; j < estimates.size(); j++){
 			cout << i + 1
 			<< "," << estimates.at(j).label
 			<< "," << estimates.at(j).bbox.x
@@ -51,12 +51,11 @@ void TestPHDFilter::run()
 			<< "," << estimates.at(j).bbox.width
 			<< "," << estimates.at(j).bbox.height
 			<< ",1,-1,-1,-1" << endl;
-		}*/
+		}
 
-		cout << "----------------------------------------" << endl;
-		
+		/*cout << "----------------------------------------" << endl;
 		imshow("MTT", currentFrame);
-		waitKey(1);
+		waitKey(1);*/
 	}
 }
 
@@ -78,7 +77,7 @@ int main(int argc, char const *argv[])
 	  	}
 	  	else
 	  	{
-	  		cout << "No images given" << endl;
+	  		cout << "No im//1.0e-3ages given" << endl;
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}

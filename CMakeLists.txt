@@ -19,9 +19,9 @@ INCLUDE_DIRECTORIES( "src/libs/nms/" )
 
 add_subdirectory( "src/libs/piotr_fhog/" )
 
-OPTION(MAKE_PHD "Make PHD" OFF)
+OPTION(MAKE_PHD "Make PHD" ON)
 OPTION(MAKE_DPP "Make DPP" OFF)
-OPTION(MAKE_LR_DETECTOR "Make LR_DETECTOR" ON)
+OPTION(MAKE_LR_DETECTOR "Make LR_DETECTOR" OFF)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp
