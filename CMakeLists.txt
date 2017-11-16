@@ -42,7 +42,7 @@ if(CUDA_FOUND)
     if(MAKE_PHD)
         add_executable( phd src/test_phd.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
         target_link_libraries( phd ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
-        target_compile_definitions( phd PRIVATE -DWITH_NMS )
+        target_compile_definitions( phd PRIVATE -DWITH_CUDA )
     endif()
 
     if(MAKE_DPP)

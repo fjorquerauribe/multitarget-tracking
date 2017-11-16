@@ -14,7 +14,7 @@
     const float BIRTH_RATE = 5e-6;
     const float DETECTION_RATE = 0.7;
     const float POSITION_LIKELIHOOD_STD = 30.0;
-    const float DET_THRESHOLD = 50.0;
+    const float DET_THRESHOLD = 0.0;
 #endif 
 
 PHDParticleFilter::PHDParticleFilter() {
@@ -57,8 +57,8 @@ PHDParticleFilter::PHDParticleFilter(int _n_particles, bool verbose) {
     this->initialized = false;
 }
 
-void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> preDetections, VectorXd detectionsWeights) {
-    if(preDetections.size() > 0){
+void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections, VectorXd detectionsWeights) {
+    if(detections.size() > 0){
         this->img_size = current_frame.size();
         normal_distribution<double> position_random_x(0.0,theta_x.at(0)(0));
         normal_distribution<double> position_random_y(0.0,theta_x.at(0)(1));
@@ -68,50 +68,39 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> preDetection
         this->weights.clear();
         this->particles_batch = (int)this->n_particles;
         double weight = (double)1.0f/this->n_particles;
-        
-        vector<Rect> detections;
-
-#ifdef WITH_NMS
-        nms(preDetections, detections, 0.5, 0);
-#else
-        detections = preDetections;
-#endif
 
         for(size_t j = 0; j < detections.size(); j++){
-            if(detectionsWeights(j) > DET_THRESHOLD){
-                this->max_width = MAX(detections[j].width, this->max_width);
-                this->max_height = MAX(detections[j].height, this->max_height);
-                this->min_width = MIN(detections[j].width, this->min_width);
-                this->min_height = MIN(detections[j].height, this->min_height);
-                this->max_x = MAX(detections[j].x, this->max_x);
-                this->max_y = MAX(detections[j].y, this->max_y);
-                this->min_x = MIN(detections[j].x, this->min_x);
-                this->min_y = MIN(detections[j].y, this->min_y);
-                for (int i = 0; i < this->particles_batch; i++){
-                    particle state;
-                    float _x, _y, _width, _height;
-                    float _dx = position_random_x(this->generator);
-                    float _dy = position_random_y(this->generator);
-                    float _dw = 0.0f;
-                    float _dh = 0.0f;
-                    _x = MIN(MAX(cvRound(detections[j].x + _dx), 0), this->img_size.width);
-                    _y = MIN(MAX(cvRound(detections[j].y + _dy), 0), this->img_size.height);
-                    _width = MIN(MAX(cvRound(detections[j].width + _dw), 0), this->img_size.width);
-                    _height = MIN(MAX(cvRound(detections[j].height + _dh), 0), this->img_size.height);
-                    state.x = _x;
-                    state.y = _y;
-                    state.width = _width;
-                    state.height = _height;
-                    state.scale = 1.0;
-                    this->states.push_back(state);
-                    this->weights.push_back(weight);
-                }
+            this->max_width = MAX(detections[j].width, this->max_width);
+            this->max_height = MAX(detections[j].height, this->max_height);
+            this->min_width = MIN(detections[j].width, this->min_width);
+            this->min_height = MIN(detections[j].height, this->min_height);
+            this->max_x = MAX(detections[j].x, this->max_x);
+            this->max_y = MAX(detections[j].y, this->max_y);
+            this->min_x = MIN(detections[j].x, this->min_x);
+            this->min_y = MIN(detections[j].y, this->min_y);
+            for (int i = 0; i < this->particles_batch; i++){
+                particle state;
+                float _x, _y, _width, _height;
+                float _dx = position_random_x(this->generator);
+                float _dy = position_random_y(this->generator);
+                float _dw = 0.0f;
+                float _dh = 0.0f;
+                _x = MIN(MAX(cvRound(detections[j].x + _dx), 0), this->img_size.width);
+                _y = MIN(MAX(cvRound(detections[j].y + _dy), 0), this->img_size.height);
+                _width = MIN(MAX(cvRound(detections[j].width + _dw), 0), this->img_size.width);
+                _height = MIN(MAX(cvRound(detections[j].height + _dh), 0), this->img_size.height);
+                state.x = _x;
+                state.y = _y;
+                state.width = _width;
+                state.height = _height;
+                state.scale = 1.0;
+                this->states.push_back(state);
+                this->weights.push_back(weight);
             }
         }
         
         for (size_t i = 0; i < detections.size(); ++i)
         {
-            if(detectionsWeights(i) > DET_THRESHOLD){
                 Target target;
                 target.label = i;
                 target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
@@ -119,7 +108,6 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> preDetection
                 this->tracks.push_back(target);
                 this->current_labels.push_back(i);
                 this->labels.push_back(i);
-            }
         }
     
         this->initialized = true;
@@ -220,17 +208,9 @@ void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0, 255,
     }
 }
 
-void PHDParticleFilter::update(Mat& image, vector<Rect> preDetections, VectorXd detectionsWeights)
+void PHDParticleFilter::update(Mat& image, vector<Rect> detections, VectorXd detectionsWeights)
 {
-    if(preDetections.size() > 0){
-        vector<Rect> detections;
-
-#ifdef WITH_NMS
-        nms(preDetections, detections, 0.5, 0);
-#else       
-        detections = preDetections;
-#endif
-
+    if(detections.size() > 0){
         this->birth_model.clear();
         vector<double> tmp_weights;
         MatrixXd observations = MatrixXd::Zero(detections.size(), 4);

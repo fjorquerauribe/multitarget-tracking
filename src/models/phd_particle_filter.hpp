@@ -52,14 +52,13 @@ public:
    ~PHDParticleFilter();
     PHDParticleFilter(int _n_particles, bool verbose = false);
     PHDParticleFilter();
-    void initialize(Mat& current_frame, vector<Rect> preDetections, VectorXd detectionsWeights);
-    void update(Mat& image, vector<Rect> preDetections, VectorXd detectionsWeights);
+    void initialize(Mat& current_frame, vector<Rect> detections, VectorXd detectionsWeights);
+    void update(Mat& image, vector<Rect> detections, VectorXd detectionsWeights);
     vector<Target> estimate(Mat& image, bool draw = false);
     void predict();
     void resample();
     void draw_particles(Mat& image, Scalar color);
     bool is_initialized();
-    //void auxiliary(Mat& image, vector<Rect> preDetections);
     
 protected:
     mt19937 generator;
