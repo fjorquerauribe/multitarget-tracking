@@ -141,7 +141,7 @@ void ImageGenerator::readDetections(string detFilename){
     
     pos1 = pos2;
     pos2 = line.find(",", pos1 + 1);
-    this->detection_weights[frame_num].resize( this->detection_weights[frame_num].size() + 1 );
+    this->detection_weights[frame_num].conservativeResize( this->detection_weights[frame_num].size() + 1 );
     this->detection_weights[frame_num](this->detection_weights[frame_num].size() - 1) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
 
     for(int j = 1; j < 3; j++){

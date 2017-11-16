@@ -14,6 +14,7 @@
     const float BIRTH_RATE = 5e-6;
     const float DETECTION_RATE = 0.7;
     const float POSITION_LIKELIHOOD_STD = 30.0;
+    const float DET_THRESHOLD = 50.0;
 #endif 
 
 PHDParticleFilter::PHDParticleFilter() {
@@ -56,7 +57,7 @@ PHDParticleFilter::PHDParticleFilter(int _n_particles, bool verbose) {
     this->initialized = false;
 }
 
-void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> preDetections) {
+void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> preDetections, VectorXd detectionsWeights) {
     if(preDetections.size() > 0){
         this->img_size = current_frame.size();
         normal_distribution<double> position_random_x(0.0,theta_x.at(0)(0));
@@ -67,7 +68,7 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> preDetection
         this->weights.clear();
         this->particles_batch = (int)this->n_particles;
         double weight = (double)1.0f/this->n_particles;
-    
+        
         vector<Rect> detections;
 
 #ifdef WITH_NMS
@@ -77,44 +78,48 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> preDetection
 #endif
 
         for(size_t j = 0; j < detections.size(); j++){
-            this->max_width = MAX(detections[j].width, this->max_width);
-            this->max_height = MAX(detections[j].height, this->max_height);
-            this->min_width = MIN(detections[j].width, this->min_width);
-            this->min_height = MIN(detections[j].height, this->min_height);
-            this->max_x = MAX(detections[j].x, this->max_x);
-            this->max_y = MAX(detections[j].y, this->max_y);
-            this->min_x = MIN(detections[j].x, this->min_x);
-            this->min_y = MIN(detections[j].y, this->min_y);
-            for (int i = 0; i < this->particles_batch; i++){
-                particle state;
-                float _x, _y, _width, _height;
-                float _dx = position_random_x(this->generator);
-                float _dy = position_random_y(this->generator);
-                float _dw = 0.0f;//scale_random_width(generator);
-                float _dh = 0.0f;//scale_random_height(generator);
-                _x = MIN(MAX(cvRound(detections[j].x + _dx), 0), this->img_size.width);
-                _y = MIN(MAX(cvRound(detections[j].y + _dy), 0), this->img_size.height);
-                _width = MIN(MAX(cvRound(detections[j].width + _dw), 0), this->img_size.width);
-                _height = MIN(MAX(cvRound(detections[j].height + _dh), 0), this->img_size.height);
-                state.x = _x;
-                state.y = _y;
-                state.width = _width;
-                state.height = _height;
-                state.scale = 1.0;
-                this->states.push_back(state);
-                this->weights.push_back(weight);
+            if(detectionsWeights(j) > DET_THRESHOLD){
+                this->max_width = MAX(detections[j].width, this->max_width);
+                this->max_height = MAX(detections[j].height, this->max_height);
+                this->min_width = MIN(detections[j].width, this->min_width);
+                this->min_height = MIN(detections[j].height, this->min_height);
+                this->max_x = MAX(detections[j].x, this->max_x);
+                this->max_y = MAX(detections[j].y, this->max_y);
+                this->min_x = MIN(detections[j].x, this->min_x);
+                this->min_y = MIN(detections[j].y, this->min_y);
+                for (int i = 0; i < this->particles_batch; i++){
+                    particle state;
+                    float _x, _y, _width, _height;
+                    float _dx = position_random_x(this->generator);
+                    float _dy = position_random_y(this->generator);
+                    float _dw = 0.0f;
+                    float _dh = 0.0f;
+                    _x = MIN(MAX(cvRound(detections[j].x + _dx), 0), this->img_size.width);
+                    _y = MIN(MAX(cvRound(detections[j].y + _dy), 0), this->img_size.height);
+                    _width = MIN(MAX(cvRound(detections[j].width + _dw), 0), this->img_size.width);
+                    _height = MIN(MAX(cvRound(detections[j].height + _dh), 0), this->img_size.height);
+                    state.x = _x;
+                    state.y = _y;
+                    state.width = _width;
+                    state.height = _height;
+                    state.scale = 1.0;
+                    this->states.push_back(state);
+                    this->weights.push_back(weight);
+                }
             }
         }
         
         for (size_t i = 0; i < detections.size(); ++i)
         {
-            Target target;
-            target.label = i;
-            target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
-            target.bbox = detections.at(i);
-            this->tracks.push_back(target);
-            this->current_labels.push_back(i);
-            this->labels.push_back(i);
+            if(detectionsWeights(i) > DET_THRESHOLD){
+                Target target;
+                target.label = i;
+                target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
+                target.bbox = detections.at(i);
+                this->tracks.push_back(target);
+                this->current_labels.push_back(i);
+                this->labels.push_back(i);
+            }
         }
     
         this->initialized = true;
@@ -190,7 +195,6 @@ void PHDParticleFilter::predict(){
                 }
             }
         }
-        //cout << "new particles weight: " << (double)lambda_birth/(this->birth_model.size() * this->particles_batch) << endl;
 
         this->states.swap(tmp_new_states);
         this->weights.swap(tmp_weights);
@@ -216,7 +220,7 @@ void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0, 255,
     }
 }
 
-void PHDParticleFilter::update(Mat& image, vector<Rect> preDetections)
+void PHDParticleFilter::update(Mat& image, vector<Rect> preDetections, VectorXd detectionsWeights)
 {
     if(preDetections.size() > 0){
         vector<Rect> detections;
@@ -242,7 +246,9 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> preDetections)
             this->min_x = MIN(detections[j].x, this->min_x);
             this->min_y = MIN(detections[j].y, this->min_y);
             observations.row(j) << detections[j].x, detections[j].y, detections[j].width, detections[j].height;
-            this->birth_model.push_back(detections[j]);
+            if(detectionsWeights(j) > DET_THRESHOLD){
+                this->birth_model.push_back(detections[j]);
+            }
         }
 
         MatrixXd psi(this->states.size(), detections.size());
@@ -273,8 +279,6 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> preDetections)
         
         tmp_weights.clear();
     }
-    /*cout << "---------------------------------------------------" << endl;
-    cout << "track: " << this->tracks.size() << " | detections: " << detections.size() << " | states: " << this->states.size() << endl;*/
 }
 
 void PHDParticleFilter::resample(){
@@ -306,8 +310,6 @@ void PHDParticleFilter::resample(){
     }
     Scalar phd_estimate = sum(this->weights);
     int N_k = cvRound(this->particles_batch * phd_estimate[0]);
-    //cout << "Resampled target number: " << cvRound(phd_estimate[0]) << endl;
-    //cout << "N_k: " << N_k << endl;
 
     vector<particle> tmp_new_states;
     vector<double> tmp_weights;
@@ -330,7 +332,6 @@ void PHDParticleFilter::resample(){
 
 vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
     Scalar phd_estimate = sum(this->weights);
-    //cout << "Estimated target number : "<< cvRound(phd_estimate[0]) << endl;
     int num_targets = cvRound(phd_estimate[0]);
     vector<Target> new_tracks;
     if(num_targets > 0)
@@ -358,7 +359,8 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
             target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
             target.bbox = Rect(emMeans.at<double>(i,0), emMeans.at<double>(i,1), emMeans.at<double>(i,2), emMeans.at<double>(i,3));
             
-            while( (find(this->labels.begin(), this->labels.end(), label) != this->labels.end()) ) label++;
+            while( (find(this->labels.begin(), this->labels.end(), label) != this->labels.end()) ||
+             (find(this->current_labels.begin(), this->current_labels.end(), label) != this->current_labels.end()) ) label++;
             target.label = label;
             this->current_labels.push_back(label);
             label++;
