@@ -15,7 +15,6 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 		VectorXd area(preDetections.size());
 		MatrixXd intersectionArea(preDetections.size(), preDetections.size());
 
-		//cout << "preDetections size: " << preDetections.size() << endl;
 		for (size_t i = 0; i < preDetections.size(); ++i)
 		{
 			Rect bbox = preDetections.at(i);
@@ -39,6 +38,7 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 					nContain(i) += 1;
 			}
 		}
+		
 		nContain = nContain.array() - 1;
 		VectorXd nPenalty = nContain.array().exp().pow(lambda);
 		

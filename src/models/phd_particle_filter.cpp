@@ -4,7 +4,7 @@
  * @author Sergio Hernandez
  */
 #include "phd_particle_filter.hpp"
-
+    
 #ifndef PARAMS
     const float POS_STD = 3.0;
     const float SCALE_STD = 3.0;
@@ -14,7 +14,8 @@
     const float BIRTH_RATE = 5e-6;
     const float DETECTION_RATE = 0.7;
     const float POSITION_LIKELIHOOD_STD = 30.0;
-    const float DET_THRESHOLD = 0.0;
+    const float W_MIN = -1.0;
+    const float W_MAX = 140.0;
 #endif 
 
 PHDParticleFilter::PHDParticleFilter() {
@@ -109,7 +110,6 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections, 
                 this->current_labels.push_back(i);
                 this->labels.push_back(i);
         }
-    
         this->initialized = true;
     }
 }
@@ -166,20 +166,47 @@ void PHDParticleFilter::predict(){
             }
         }
 
-        double lambda_birth = this->img_size.area() * BIRTH_RATE;
-        /*poisson_distribution<int> birth_num(lambda_birth);
-        int J_k = birth_num(this->generator);*/
         if(this->birth_model.size() > 0){
+            double lambda_birth = this->img_size.area() * BIRTH_RATE;
+            
+            /**********************************************/
+            double overlap_threshold = 0.0, lambda = -1.0, alpha = 0.8, beta = 1.0;
+            
+            VectorXd contain = VectorXd::Zero(this->birth_model.size());
+            this->birth_model_weights = (this->birth_model_weights.array() - W_MIN) / (W_MAX - W_MIN);
+
+            for(size_t i = 0; i < this->birth_model.size(); i++){
+                for(size_t j = 0; j < this->tracks.size(); j++){
+                    if( (double((this->birth_model[i] & this->tracks[j].bbox).area())/this->birth_model[i].area()) > overlap_threshold )
+                    {   
+                        contain(i)++;
+                    }
+                }
+            }
+            
+            MatrixXd penalty = contain.array().exp().pow(lambda);
+            
+            this->birth_model_weights = this->birth_model_weights.cwiseProduct(penalty);
+            //this->birth_model_weights = this->birth_model_weights.array() / this->birth_model_weights.maxCoeff();
+            this->birth_model_weights = this->birth_model_weights.array() + 1;
+            this->birth_model_weights = this->birth_model_weights.array().log() / log(10);
+            this->birth_model_weights = alpha * this->birth_model_weights.array() + beta;
+            this->birth_model_weights = this->birth_model_weights.array().square();
+            /**********************************************/
+
             for (size_t j = 0; j < this->birth_model.size(); j++){
                 for (int k = 0; k < this->particles_batch; k++){
-                    particle state;
-                    state.width = this->birth_model[j].width + scale_random_width(this->generator);
-                    state.height = this->birth_model[j].height + scale_random_height(this->generator);
-                    state.x = this->birth_model[j].x + position_random_x(this->generator);
-                    state.y = this->birth_model[j].y + position_random_y(this->generator);
-                    Rect box(state.x, state.y, state.width, state.height);
-                    tmp_new_states.push_back(state);
-                    tmp_weights.push_back((double)lambda_birth/(this->birth_model.size() * this->particles_batch));
+                    //if(contain(j) == 0){
+                        particle state;
+                        state.width = this->birth_model[j].width + scale_random_width(this->generator);
+                        state.height = this->birth_model[j].height + scale_random_height(this->generator);
+                        state.x = this->birth_model[j].x + position_random_x(this->generator);
+                        state.y = this->birth_model[j].y + position_random_y(this->generator);
+                        Rect box(state.x, state.y, state.width, state.height);
+                        tmp_new_states.push_back(state);
+                        tmp_weights.push_back((double)lambda_birth/(this->birth_model.size() * this->particles_batch));
+                        //tmp_weights.push_back((double)this->birth_model_weights[j]/(this->birth_model.size() * this->particles_batch));
+                    //}
                 }
             }
         }
@@ -226,10 +253,9 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections, VectorXd det
             this->min_x = MIN(detections[j].x, this->min_x);
             this->min_y = MIN(detections[j].y, this->min_y);
             observations.row(j) << detections[j].x, detections[j].y, detections[j].width, detections[j].height;
-            if(detectionsWeights(j) > DET_THRESHOLD){
-                this->birth_model.push_back(detections[j]);
-            }
+            this->birth_model.push_back(detections[j]);
         }
+        this->birth_model_weights = detectionsWeights;
 
         MatrixXd psi(this->states.size(), detections.size());
         for (size_t i = 0; i < this->states.size(); ++i)
@@ -256,7 +282,6 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections, VectorXd det
         
         this->weights.swap(tmp_weights);
         resample();
-        
         tmp_weights.clear();
     }
 }
@@ -267,7 +292,7 @@ void PHDParticleFilter::resample(){
     vector<double> normalized_weights(L_k);
     vector<double> log_weights(L_k);
     vector<double> squared_normalized_weights(L_k);
-    uniform_real_distribution<double> unif_rnd(0.0,1.0);
+    uniform_real_distribution<double> unif_rnd(0.0, 1.0);
     for (int i = 0; i < L_k; i++) {
         log_weights[i] = log(this->weights[i]);
     }
@@ -290,7 +315,7 @@ void PHDParticleFilter::resample(){
     }
     Scalar phd_estimate = sum(this->weights);
     int N_k = cvRound(this->particles_batch * phd_estimate[0]);
-
+    
     vector<particle> tmp_new_states;
     vector<double> tmp_weights;
     for (int i = 0; i < N_k; i++) {
@@ -316,7 +341,7 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
     vector<Target> new_tracks;
     if(num_targets > 0)
     {
-        /********************** OpenCV EM **********************/
+        /********************** EM **********************/
         Mat data, em_labels, emMeans;
         data = Mat::zeros((int)this->states.size(),4, CV_64F);
         for (size_t j = 0; j < this->states.size(); j++){
@@ -328,7 +353,7 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
         Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
         em_model->setClustersNumber(num_targets);
         em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
-        em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 10, 0.1));
+        em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 10, 0.1));// 10,0.1
         em_model->trainEM(data, noArray(), em_labels, noArray());
         emMeans = em_model->getMeans();
         
@@ -351,8 +376,11 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
         if (this->tracks.size() > 0)
         {
             hungarian_problem_t p;
-            int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);// this->tracks --> this-states
-            hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);// this->tracks.size --> this->states().size()
+            int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
+            hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);
+            /*int **m = Utils::compute_overlap_matrix(this->tracks, new_tracks);
+            hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);*/
+            
             hungarian_solve(&p);
             for (size_t i = 0; i < this->tracks.size(); ++i)
             {
@@ -374,9 +402,6 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
         
         this->labels.insert( this->labels.end(), this->current_labels.begin(), this->current_labels.end() );
 
-        /*cout << endl << "labels" << endl;
-        for(size_t i = 0; i < this->labels.size(); i++) cout << this->labels.at(i) << " ";*/
-
         if(this->verbose){
             cout << "estimated target num: " << cvRound(phd_estimate[0]) << endl;
         }
@@ -390,6 +415,11 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
                 rectangle(image, this->tracks.at(i).bbox, this->tracks.at(i).color, 2, LINE_AA);
             }
         }
+    }
+    else
+    {
+        this->tracks.clear();
+        this->current_labels.clear();
     }
 
     return this->tracks;

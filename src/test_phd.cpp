@@ -14,43 +14,37 @@ TestPHDFilter::TestPHDFilter(string _firstFrameFileName,
 
 void TestPHDFilter::run()
 {
-	namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
+	//namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
-	PHDParticleFilter filter(this->npart, true);
+	bool verbose = false;
+	PHDParticleFilter filter(this->npart, verbose);
 
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
-		
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
 		vector<Rect> preDetections = this->generator.getDetections(i);
 		VectorXd weights = this->generator.getDetectionWeights(i);
 		vector<Target> estimates;
 		
-		/*for(size_t j = 0; j < preDetections.size(); j++){
-			cout << preDetections.at(j).x << "," << preDetections.at(j).y << "," << 
-					preDetections.at(j).width << "," << preDetections.at(j).height << "," <<
-					weights(j) << endl;
-		}*/
-
-		cout << "Target number: " << gt.size() << endl;
+		//cout << "Target number: " << gt.size() << endl;
 
 		if (!filter.is_initialized())
 		{
 			filter.initialize(currentFrame, preDetections, weights);
-			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			estimates = filter.estimate(currentFrame, true);
+			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, preDetections, weights);
-			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 			estimates = filter.estimate(currentFrame, true);
+			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 		}
 
-		/*for(size_t j = 0; j < estimates.size(); j++){
+		for(size_t j = 0; j < estimates.size(); j++){
 			cout << i + 1
 			<< "," << estimates.at(j).label
 			<< "," << estimates.at(j).bbox.x
@@ -58,11 +52,11 @@ void TestPHDFilter::run()
 			<< "," << estimates.at(j).bbox.width
 			<< "," << estimates.at(j).bbox.height
 			<< ",1,-1,-1,-1" << endl;
-		}*/
+		}
 
-		cout << "----------------------------------------" << endl;
+		/*cout << "----------------------------------------" << endl;
 		imshow("MTT", currentFrame);
-		waitKey(1);
+		waitKey(1);*/
 	}
 }
 

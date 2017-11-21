@@ -1,5 +1,6 @@
 #declare -a datasets=(2DMOT2015 MOT16)
-declare -a datasets=(2DMOT2015)
+#declare -a datasets=(2DMOT2015)
+declare -a datasets=(MOT17)
 OUTPUT_DIRECTORY=$1
 
 for dataset in "${datasets[@]}"
