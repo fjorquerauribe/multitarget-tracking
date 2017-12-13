@@ -28,12 +28,12 @@ void TestLRDetector::run()
 	VectorXd min;
 	VectorXd weights;
     VectorXd bias;
-    utils.read_Labels(this->modelFilesPath + "means.csv", mean);
-	utils.read_Labels(this->modelFilesPath + "weights.csv", weights);
-	utils.read_Labels(this->modelFilesPath + "stds.csv", std);
-	utils.read_Labels(this->modelFilesPath + "bias.csv", bias);
-	utils.read_Labels(this->modelFilesPath + "maxs.csv", max);
-	utils.read_Labels(this->modelFilesPath + "mins.csv", min);
+    utils.read_Labels(this->modelFilesPath + "Model_means.csv", mean);
+	utils.read_Labels(this->modelFilesPath + "Model_weights.csv", weights);
+	utils.read_Labels(this->modelFilesPath + "Model_stds.csv", std);
+	utils.read_Labels(this->modelFilesPath + "Model_bias.csv", bias);
+	utils.read_Labels(this->modelFilesPath + "Model_maxs.csv", max);
+	utils.read_Labels(this->modelFilesPath + "Model_mins.csv", min);
     
     //detector.init(this->group_threshold, this->hit_threshold);
 	detector.init(this->group_threshold, this->hit_threshold);
@@ -44,23 +44,23 @@ void TestLRDetector::run()
         Mat currentFrame = this->generator.getFrame(i);
 		MatrixXd features;
 		vector<double> weights;
-		vector<Rect> preDetections;
-		detector.detect(currentFrame, preDetections, weights, features);
+		vector<Rect> detections;
+		detections = detector.detect(currentFrame);
 		
-		for(size_t j = 0; j < preDetections.size(); j++){
-			cout << i + 1 << ",-1" << 
-			preDetections.at(j).x << "," <<
-			preDetections.at(j).y << "," <<
-			preDetections.at(j).width << "," <<
-			preDetections.at(j).height << "," <<
-			weights[j] << ",-1,-1,-1";
-			for(unsigned int k = 0; k < features.cols(); k++){
-				cout << "," << features(j,k);
+		for(size_t j = 0; j < detections.size(); j++){
+			cout << i + 1 << ",-1," << 
+			detections.at(j).x << "," <<
+			detections.at(j).y << "," <<
+			detections.at(j).width << "," <<
+			detections.at(j).height << "," <<
+			detector.weights[j] << ",-1,-1,-1";
+			for(unsigned int k = 0; k < detector.feature_values.cols(); k++){
+				cout << "," << detector.feature_values(j,k);
 			}
 			cout << endl;
 		}
-        /*for (size_t i = 0; i < preDetections.size(); ++i){
-            rectangle( currentFrame, preDetections.at(i), Scalar(0,0,255), 2, LINE_8  );
+        /*for (size_t i = 0; i < detections.size(); ++i){
+            rectangle( currentFrame, detections.at(i), Scalar(0,0,255), 2, LINE_8  );
         }
 		imshow("MTT", currentFrame);
 		waitKey(1);*/
@@ -129,7 +129,9 @@ int main(int argc, char const *argv[])
 			cout << "exiting..." << endl;
 			return EXIT_FAILURE;
 		}
-	  	TestLRDetector tracker(_firstFrameFileName, _gtFileName, _modelFilesPath, _group_threshold, _hit_threshold);
+
+	  	TestLRDetector tracker(_firstFrameFileName, _gtFileName, _modelFilesPath,
+		   _group_threshold, _hit_threshold);
 	  	tracker.run();
 	}
 }

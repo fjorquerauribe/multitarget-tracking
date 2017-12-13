@@ -7,7 +7,6 @@ SET (CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
 SET (CMAKE_CXX_FLAGS_RELEASE        "-O4 -DNDEBUG")
 SET (CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O3 -g")
 FIND_PACKAGE( OpenCV REQUIRED )
-FIND_PACKAGE( CUDA QUIET REQUIRED )
 INCLUDE_DIRECTORIES( ${OpenCV_INCLUDE_DIRS} )
 INCLUDE_DIRECTORIES( "/usr/include/eigen3/" "/usr/local/include/eigen3/" )
 INCLUDE_DIRECTORIES( "src/utils/" )
@@ -19,9 +18,9 @@ INCLUDE_DIRECTORIES( "src/libs/nms/" )
 
 add_subdirectory( "src/libs/piotr_fhog/" )
 
-OPTION(MAKE_PHD "Make PHD" ON)
+OPTION(MAKE_PHD "Make PHD" OFF)
 OPTION(MAKE_DPP "Make DPP" OFF)
-OPTION(MAKE_LR_DETECTOR "Make LR_DETECTOR" OFF)
+OPTION(MAKE_LR_DETECTOR "Make LR_DETECTOR" ON)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp
@@ -32,7 +31,7 @@ SET( COMMON_SOURCES
 )
 
 if(MAKE_LR_DETECTOR)
-    add_executable(lr_detector src/test_lr_detector.cpp src/detectors/CPU_LR_hog_detector.cpp src/likelihood/CPU_logistic_regression.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES})
+    add_executable(lr_detector src/test_lr_detector.cpp src/detectors/CPU_LR_hog_detector.cpp src/likelihood/CPU_logistic_regression.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/dpp/dpp.cpp ${COMMON_SOURCES})
     target_link_libraries( lr_detector ${OpenCV_LIBS} fhog)
 endif()
 

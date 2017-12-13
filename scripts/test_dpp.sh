@@ -1,4 +1,4 @@
-declare -a datasets=(2DMOT2015 MOT16)
+declare -a datasets=(2DMOT2015)
 declare -a epsilon=(0.1)
 declare -a mu=(-0.1)
 declare -a lambda=(0.2 0.4 0.6 0.8 1.0)

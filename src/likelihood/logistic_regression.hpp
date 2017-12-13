@@ -31,7 +31,7 @@ class LogisticRegression
  	//MatrixXd computeHessian(MatrixXd &_X, VectorXd &_Y, VectorXd &_W);
  	RowVectorXd featureMean,featureStd,featureMin,featureMax;
  	bool initialized = false;
- 	virtual VectorXd train(int n_iter,double alpha,double tol) = 0 ;
+ 	virtual double train(int n_iter,double alpha,double tol) = 0 ;
  	virtual VectorXd predict(MatrixXd &_X_test, bool prob=false, bool data_processing = true) = 0;
 
  protected:

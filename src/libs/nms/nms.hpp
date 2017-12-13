@@ -83,14 +83,12 @@ inline void nms2(
         const std::vector<cv::Rect>& srcRects,
         const std::vector<double>& scores,
         std::vector<cv::Rect>& resRects,
-        std::vector<double>& resScores,
         float thresh,
         int neighbors = 0,
         float minScoresSum = 0.f
         )
 {
     resRects.clear();
-    resScores.clear();
 
     const size_t size = srcRects.size();
     if (!size)
@@ -144,7 +142,6 @@ inline void nms2(
                 scoresSum >= minScoresSum)
         {
             resRects.push_back(rect1);
-            resScores.push_back(lastElem->first);
         }
     }
 }

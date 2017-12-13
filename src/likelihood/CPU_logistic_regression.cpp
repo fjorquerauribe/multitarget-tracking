@@ -1,21 +1,19 @@
 #include "CPU_logistic_regression.hpp"
 
-VectorXd CPU_LogisticRegression::train(int n_iter,double alpha,double tol){
+double CPU_LogisticRegression::train(int n_iter,double alpha,double tol){
 	VectorXd log_likelihood=VectorXd::Zero(n_iter);
 	for(int i=0;i<n_iter;i++){
 		//tools.printProgBar(i, n_iter);
 		this->preCompute();
 		log_likelihood(i)=-this->logPosterior();
-		if (i % 10 == 0) cout << "iteration :   " << i << " | loss : " << log_likelihood(i) << endl;
+		//if (i % 10 == 0) cout << "iteration :   " << i << " | loss : " << log_likelihood(i) << endl;
 		VectorXd gradient=this->computeGradient();
 		this->momemtum*=alpha;
-		this->momemtum-=gradient/(double)this->rows;
+		this->momemtum-=tol*gradient/(double)this->rows;
 		this->weights+=this->momemtum;
-		if(this->with_bias) this->bias-=this->grad_bias/(double)this->rows;
+		if(this->with_bias) this->bias-=tol*this->grad_bias/(double)this->rows;
 	}
-	cout << endl;
-	//exit(0);
-	return log_likelihood;
+	return log_likelihood.mean();
 }
 
 void CPU_LogisticRegression::preCompute(){

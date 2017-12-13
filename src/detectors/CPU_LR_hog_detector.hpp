@@ -44,8 +44,8 @@ class CPU_LR_HOGDetector
 {
 public:
 	void init(double group_threshold, double hit_threshold);
-	vector<Rect> detect(Mat &frame, vector<Rect> &detections, vector<double> &weights, MatrixXd &features);
-	void train();
+	vector<Rect> detect(Mat &frame);
+	double train();
 	VectorXd getFeatures(Mat &frame);
     vector<double> getWeights();
 	void generateFeatures(Mat &frame, double label);
@@ -55,7 +55,9 @@ public:
 	void loadModel(VectorXd weights,VectorXd featureMean, VectorXd featureStd, VectorXd featureMax, VectorXd featureMin, double bias);
 	void loadFeatures(MatrixXd features, VectorXd labels);
 	VectorXd predictTest(MatrixXd features,bool data_processing);
-	
+	MatrixXd feature_values;
+	vector<double> weights;
+
 protected:
 	Args args;
 	VectorXd genHog(Mat &frame);
@@ -64,13 +66,11 @@ protected:
 	CPU_LogisticRegression logistic_regression;
 	int num_frame=0;
 	double max_value=1.0;
-	MatrixXd feature_values;
 	int group_threshold;
 	double hit_threshold;
 	int n_descriptors, n_data;
 	vector<Rect> detections;
 	VectorXd labels;
-	vector<double> weights;
 	Mat frame;
 	C_utils tools;
 	mt19937 generator;
