@@ -14,8 +14,6 @@
     const float BIRTH_RATE = 5e-6;
     const float DETECTION_RATE = 0.7;
     const float POSITION_LIKELIHOOD_STD = 30.0;
-    const float W_MIN = -1.0;
-    const float W_MAX = 140.0;
 #endif 
 
 PHDParticleFilter::PHDParticleFilter() {
@@ -58,7 +56,7 @@ PHDParticleFilter::PHDParticleFilter(int _n_particles, bool verbose) {
     this->initialized = false;
 }
 
-void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections, VectorXd detectionsWeights) {
+void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) {
     if(detections.size() > 0){
         this->img_size = current_frame.size();
         normal_distribution<double> position_random_x(0.0,theta_x.at(0)(0));
@@ -168,35 +166,8 @@ void PHDParticleFilter::predict(){
 
         if(this->birth_model.size() > 0){
             double lambda_birth = this->img_size.area() * BIRTH_RATE;
-            
-            /**********************************************/
-            double overlap_threshold = 0.0, lambda = -1.0, alpha = 0.8, beta = 1.0;
-            
-            VectorXd contain = VectorXd::Zero(this->birth_model.size());
-            this->birth_model_weights = (this->birth_model_weights.array() - W_MIN) / (W_MAX - W_MIN);
-
-            for(size_t i = 0; i < this->birth_model.size(); i++){
-                for(size_t j = 0; j < this->tracks.size(); j++){
-                    if( (double((this->birth_model[i] & this->tracks[j].bbox).area())/this->birth_model[i].area()) > overlap_threshold )
-                    {   
-                        contain(i)++;
-                    }
-                }
-            }
-            
-            MatrixXd penalty = contain.array().exp().pow(lambda);
-            
-            this->birth_model_weights = this->birth_model_weights.cwiseProduct(penalty);
-            //this->birth_model_weights = this->birth_model_weights.array() / this->birth_model_weights.maxCoeff();
-            this->birth_model_weights = this->birth_model_weights.array() + 1;
-            this->birth_model_weights = this->birth_model_weights.array().log() / log(10);
-            this->birth_model_weights = alpha * this->birth_model_weights.array() + beta;
-            this->birth_model_weights = this->birth_model_weights.array().square();
-            /**********************************************/
-
             for (size_t j = 0; j < this->birth_model.size(); j++){
                 for (int k = 0; k < this->particles_batch; k++){
-                    //if(contain(j) == 0){
                         particle state;
                         state.width = this->birth_model[j].width + scale_random_width(this->generator);
                         state.height = this->birth_model[j].height + scale_random_height(this->generator);
@@ -205,8 +176,6 @@ void PHDParticleFilter::predict(){
                         Rect box(state.x, state.y, state.width, state.height);
                         tmp_new_states.push_back(state);
                         tmp_weights.push_back((double)lambda_birth/(this->birth_model.size() * this->particles_batch));
-                        //tmp_weights.push_back((double)this->birth_model_weights[j]/(this->birth_model.size() * this->particles_batch));
-                    //}
                 }
             }
         }
@@ -235,7 +204,7 @@ void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0, 255,
     }
 }
 
-void PHDParticleFilter::update(Mat& image, vector<Rect> detections, VectorXd detectionsWeights)
+void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
 {
     if(detections.size() > 0){
         this->birth_model.clear();
@@ -255,8 +224,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections, VectorXd det
             observations.row(j) << detections[j].x, detections[j].y, detections[j].width, detections[j].height;
             this->birth_model.push_back(detections[j]);
         }
-        this->birth_model_weights = detectionsWeights;
-
+        
         MatrixXd psi(this->states.size(), detections.size());
         for (size_t i = 0; i < this->states.size(); ++i)
         {

@@ -52,8 +52,8 @@ public:
    ~PHDParticleFilter();
     PHDParticleFilter(int _n_particles, bool verbose = false);
     PHDParticleFilter();
-    void initialize(Mat& current_frame, vector<Rect> detections, VectorXd detectionsWeights);
-    void update(Mat& image, vector<Rect> detections, VectorXd detectionsWeights);
+    void initialize(Mat& current_frame, vector<Rect> detections);
+    void update(Mat& image, vector<Rect> detections);
     vector<Target> estimate(Mat& image, bool draw = false);
     void predict();
     void resample();
@@ -72,7 +72,6 @@ protected:
     int particles_batch;
     vector<Target> tracks;
     vector<Rect> birth_model;
-    VectorXd birth_model_weights;
     RNG rng;
     vector<int> labels, current_labels;
     bool verbose;

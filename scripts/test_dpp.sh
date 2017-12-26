@@ -1,7 +1,7 @@
 declare -a datasets=(2DMOT2015)
-declare -a epsilon=(0.1)
-declare -a mu=(-0.1)
-declare -a lambda=(0.2 0.4 0.6 0.8 1.0)
+declare -a epsilon=(0.1 0.3 0.5 0.7)
+declare -a mu=(0.1 0.3 0.5 0.7)
+declare -a lambda=(0.1 0.3 0.5 0.7 0.9)
 
 for dataset in "${datasets[@]}"
 do

@@ -18,9 +18,9 @@ INCLUDE_DIRECTORIES( "src/libs/nms/" )
 
 add_subdirectory( "src/libs/piotr_fhog/" )
 
-OPTION(MAKE_PHD "Make PHD" OFF)
-OPTION(MAKE_DPP "Make DPP" OFF)
-OPTION(MAKE_LR_DETECTOR "Make LR_DETECTOR" ON)
+OPTION(MAKE_PHD "Make PHD" ON)
+OPTION(MAKE_DPP "Make DPP" ON)
+OPTION(MAKE_LR_DETECTOR "Make LR_DETECTOR" OFF)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp
@@ -45,7 +45,7 @@ if(CUDA_FOUND)
     endif()
 
     if(MAKE_DPP)
-        add_executable( dpp src/test_dpp.cpp src/dpp/dpp.cpp src/detectors/cuda_hog_detector.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
+        add_executable( dpp src/test_dpp.cpp src/dpp/dpp.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
         target_link_libraries( dpp ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
         target_compile_definitions( dpp PRIVATE -DWITH_CUDA )
     endif()

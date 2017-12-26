@@ -4,3 +4,5 @@ pre-data/
 *.backup
 backups/
 .vscode/
+data/
+.DS_Store

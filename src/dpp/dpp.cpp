@@ -40,7 +40,7 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 		}
 		
 		nContain = nContain.array() - 1;
-		VectorXd nPenalty = nContain.array().exp().pow(lambda);
+		VectorXd nPenalty = nContain.array().exp().pow(-lambda);
 		
 		VectorXd qualityTerm = getQualityTerm(detectionWeights, nPenalty);
 		MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea, mu);

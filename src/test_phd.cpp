@@ -25,21 +25,21 @@ void TestPHDFilter::run()
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
 		vector<Rect> preDetections = this->generator.getDetections(i);
-		VectorXd weights = this->generator.getDetectionWeights(i);
+		//VectorXd weights = this->generator.getDetectionWeights(i);
 		vector<Target> estimates;
 		
 		//cout << "Target number: " << gt.size() << endl;
 
 		if (!filter.is_initialized())
 		{
-			filter.initialize(currentFrame, preDetections, weights);
+			filter.initialize(currentFrame, preDetections);
 			estimates = filter.estimate(currentFrame, true);
 			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 		}
 		else
 		{
 			filter.predict();
-			filter.update(currentFrame, preDetections, weights);
+			filter.update(currentFrame, preDetections);
 			estimates = filter.estimate(currentFrame, true);
 			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 		}
