@@ -14,10 +14,10 @@ TestPHDFilter::TestPHDFilter(string _firstFrameFileName,
 
 void TestPHDFilter::run()
 {
-	//namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
+	namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
-	bool verbose = false;
+	bool verbose = true;
 	PHDParticleFilter filter(this->npart, verbose);
 
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
@@ -28,7 +28,7 @@ void TestPHDFilter::run()
 		//VectorXd weights = this->generator.getDetectionWeights(i);
 		vector<Target> estimates;
 		
-		//cout << "Target number: " << gt.size() << endl;
+		if(verbose)	cout << "Target number: " << gt.size() << endl;
 
 		if (!filter.is_initialized())
 		{
@@ -54,9 +54,9 @@ void TestPHDFilter::run()
 			<< ",1,-1,-1,-1" << endl;
 		}
 
-		/*cout << "----------------------------------------" << endl;
+		cout << "----------------------------------------" << endl;
 		imshow("MTT", currentFrame);
-		waitKey(1);*/
+		waitKey(1);
 	}
 }
 
