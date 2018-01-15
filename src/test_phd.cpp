@@ -34,14 +34,14 @@ void TestPHDFilter::run()
 		{
 			filter.initialize(currentFrame, preDetections);
 			estimates = filter.estimate(currentFrame, true);
-			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
+			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 		}
 		else
 		{
 			filter.predict();
 			filter.update(currentFrame, preDetections);
 			estimates = filter.estimate(currentFrame, true);
-			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
+			//filter.draw_particles(currentFrame, Scalar(255, 255, 255));
 		}
 
 		for(size_t j = 0; j < estimates.size(); j++){

@@ -206,11 +206,11 @@ void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0, 255,
 
 void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
 {
+    uniform_real_distribution<double> unif(0.0,1.0);
     if(detections.size() > 0){
         this->birth_model.clear();
         vector<double> tmp_weights;
         MatrixXd observations = MatrixXd::Zero(detections.size(), 4);
-        
         double clutter_prob = (double)CLUTTER_RATE/this->img_size.area();
         for (size_t j = 0; j < detections.size(); j++){
             this->max_width = MAX(detections[j].width, this->max_width);
@@ -222,9 +222,19 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             this->min_x = MIN(detections[j].x, this->min_x);
             this->min_y = MIN(detections[j].y, this->min_y);
             observations.row(j) << detections[j].x, detections[j].y, detections[j].width, detections[j].height;
-            this->birth_model.push_back(detections[j]);
+            vector<double> IoU;
+            Rect current_observation=Rect( detections[j].x, detections[j].y, detections[j].width, detections[j].height);
+            for (size_t i = 0; i < this->states.size(); ++i){
+                particle state = this->states[i];
+                Rect current_state=Rect( state.x, state.y, state.width, state.height);
+                double Intersection = (double)(current_state & current_observation).area();
+		        double Union=(double)current_state.area()+(double)current_observation.area()-Intersection;
+		        IoU.push_back(Intersection/Union);
+            }
+            double max_iou = *max_element(IoU.begin(), IoU.end());
+            double uni_rand = (max_iou > 0.7) ? unif(this->generator) : 1.0;
+            if(uni_rand > 0.99) this->birth_model.push_back(detections[j]);
         }
-        
         MatrixXd psi(this->states.size(), detections.size());
         for (size_t i = 0; i < this->states.size(); ++i)
         {
@@ -292,7 +302,7 @@ void PHDParticleFilter::resample(){
         int ipos = distance(cumulative_sum.begin(), pos);
         particle state = this->states[ipos];
         tmp_new_states.push_back(state);
-        tmp_weights.push_back((double)1.0f/this->particles_batch);
+        tmp_weights.push_back(1.0/(double)this->particles_batch);
     }
     this->states.swap(tmp_new_states);
     this->weights.swap(tmp_weights);
@@ -317,7 +327,7 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
             data.at<double>(j,1) = this->states[j].y;
             data.at<double>(j,2) = this->states[j].width;
             data.at<double>(j,3) = this->states[j].height;
-        }
+        }   
         Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
         em_model->setClustersNumber(num_targets);
         em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
@@ -380,7 +390,13 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
         {
             for (size_t i = 0; i < this->tracks.size(); ++i)
             {
-                rectangle(image, this->tracks.at(i).bbox, this->tracks.at(i).color, 2, LINE_AA);
+                //rectangle(image, this->tracks.at(i).bbox, this->tracks.at(i).color, 3, LINE_8);
+                Rect current_estimate=Rect(this->tracks.at(i).bbox.x,this->tracks.at(i).bbox.y,this->tracks.at(i).bbox.width,this->tracks.at(i).bbox.height);
+				rectangle( image,current_estimate, this->tracks.at(i).color, 3, LINE_8  );
+				rectangle( image,Point(current_estimate.x,current_estimate.y-10),
+						Point(current_estimate.x+current_estimate.width,current_estimate.y+20),
+							this->tracks.at(i).color, -1,8,0 );
+				putText(image,to_string( this->current_labels.at(i)),Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.5,Scalar(255,255,255),1);
             }
         }
     }
