@@ -12,7 +12,7 @@
     const float SURVIVAL_RATE = 0.9;
     const float CLUTTER_RATE = 1.0e-2;
     const float BIRTH_RATE = 5e-6;
-    const float DETECTION_RATE = 0.7;
+    const float DETECTION_RATE = 0.9;
     const float POSITION_LIKELIHOOD_STD = 30.0;
 #endif 
 
@@ -224,9 +224,8 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             observations.row(j) << detections[j].x, detections[j].y, detections[j].width, detections[j].height;
             vector<double> IoU;
             Rect current_observation=Rect( detections[j].x, detections[j].y, detections[j].width, detections[j].height);
-            for (size_t i = 0; i < this->states.size(); ++i){
-                particle state = this->states[i];
-                Rect current_state=Rect( state.x, state.y, state.width, state.height);
+            for (size_t i = 0; i < this->tracks.size(); ++i){
+                Rect current_state=this->tracks[i].bbox;
                 double Intersection = (double)(current_state & current_observation).area();
 		        double Union=(double)current_state.area()+(double)current_observation.area()-Intersection;
 		        IoU.push_back(Intersection/Union);
@@ -253,12 +252,11 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             tmp_weights.push_back((1.0f - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
         }
         
+        this->weights.swap(tmp_weights);
         if(this->verbose){
             Scalar phd_estimate = sum(this->weights);
             cout << "Update target number: "<< cvRound(phd_estimate[0]) << endl;
         }
-        
-        this->weights.swap(tmp_weights);
         resample();
         tmp_weights.clear();
     }
@@ -308,7 +306,6 @@ void PHDParticleFilter::resample(){
     this->weights.swap(tmp_weights);
     tmp_new_states.clear();
     tmp_weights.clear();
-
     cumulative_sum.clear();
     squared_normalized_weights.clear();
 }
@@ -354,10 +351,10 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
         if (this->tracks.size() > 0)
         {
             hungarian_problem_t p;
-            int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
-            hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);
-            /*int **m = Utils::compute_overlap_matrix(this->tracks, new_tracks);
-            hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);*/
+            /*int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
+            hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);*/
+            int **m = Utils::compute_overlap_matrix(this->tracks, new_tracks);
+            hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);
             
             hungarian_solve(&p);
             for (size_t i = 0; i < this->tracks.size(); ++i)
@@ -379,11 +376,6 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
         for(size_t i = 0; i < this->tracks.size(); i++) this->current_labels.push_back(this->tracks.at(i).label);
         
         this->labels.insert( this->labels.end(), this->current_labels.begin(), this->current_labels.end() );
-
-        if(this->verbose){
-            cout << "estimated target num: " << cvRound(phd_estimate[0]) << endl;
-        }
-
         new_tracks.clear();
 
         if (draw)

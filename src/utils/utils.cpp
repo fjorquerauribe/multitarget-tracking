@@ -6,11 +6,13 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 	{
 		cost_matrix[i] = new int[new_tracks.size()];
 		Point2f pointTracked(tracks.at(i).bbox.x + tracks.at(i).bbox.width/2, tracks.at(i).bbox.y + tracks.at(i).bbox.height/2);
+		Point2f scaleTracked(tracks.at(i).bbox.width, tracks.at(i).bbox.height);
 		for (size_t j = 0; j < new_tracks.size(); ++j)
 		{
 			Point2f pointEstimated(new_tracks.at(j).bbox.x + new_tracks.at(j).bbox.width/2,
 			 new_tracks.at(j).bbox.y + new_tracks.at(j).bbox.height/2);
-			cost_matrix[i][j] = norm(pointTracked - pointEstimated);
+			 Point2f scaleEstimated( new_tracks.at(j).bbox.width,new_tracks.at(j).bbox.height);
+			cost_matrix[i][j] = norm(pointTracked - pointEstimated)+norm(scaleTracked-scaleEstimated);
 		}
 	}
 	return cost_matrix;

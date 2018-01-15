@@ -17,7 +17,7 @@ void TestPHDFilter::run()
 	namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
-	bool verbose = true;
+	bool verbose = false;
 	PHDParticleFilter filter(this->npart, verbose);
 
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
@@ -54,7 +54,7 @@ void TestPHDFilter::run()
 			<< ",1,-1,-1,-1" << endl;
 		}
 
-		cout << "----------------------------------------" << endl;
+		//cout << "----------------------------------------" << endl;
 		imshow("MTT", currentFrame);
 		waitKey(1);
 	}
