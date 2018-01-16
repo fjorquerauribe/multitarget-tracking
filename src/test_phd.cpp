@@ -14,12 +14,12 @@ TestPHDFilter::TestPHDFilter(string _firstFrameFileName,
 
 void TestPHDFilter::run()
 {
-	namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
 	bool verbose = false;
 	PHDParticleFilter filter(this->npart, verbose);
-
+	if(verbose) namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
+	
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
@@ -30,7 +30,7 @@ void TestPHDFilter::run()
 		
 		if(verbose)	cout << "Target number: " << gt.size() << endl;
 
-		if (!filter.is_initialized())
+		if (!filter.is_initialized() &&  gt.size()>0)
 		{
 			filter.initialize(currentFrame, preDetections);
 			estimates = filter.estimate(currentFrame, true);
@@ -55,8 +55,10 @@ void TestPHDFilter::run()
 		}
 
 		//cout << "----------------------------------------" << endl;
-		imshow("MTT", currentFrame);
-		waitKey(1);
+		if(verbose) {
+			imshow("MTT", currentFrame);
+			waitKey(1);
+		}
 	}
 }
 
@@ -78,7 +80,7 @@ int main(int argc, char const *argv[])
 	  	}
 	  	else
 	  	{
-	  		cout << "No im//1.0e-3ages given" << endl;
+	  		cout << "No images given" << endl;
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}

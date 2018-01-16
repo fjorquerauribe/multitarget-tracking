@@ -11,7 +11,7 @@
     const float THRESHOLD = 1000;
     const float SURVIVAL_RATE = 0.9;
     const float CLUTTER_RATE = 1.0e-2;
-    const float BIRTH_RATE = 5e-6;
+    const float BIRTH_RATE = 1e-6;
     const float DETECTION_RATE = 0.9;
     const float POSITION_LIKELIHOOD_STD = 30.0;
 #endif 
@@ -175,7 +175,7 @@ void PHDParticleFilter::predict(){
                         state.y = this->birth_model[j].y + position_random_y(this->generator);
                         Rect box(state.x, state.y, state.width, state.height);
                         tmp_new_states.push_back(state);
-                        tmp_weights.push_back((double)lambda_birth/(this->birth_model.size() * this->particles_batch));
+                        tmp_weights.push_back(lambda_birth/((double)this->particles_batch));
                 }
             }
         }
@@ -207,7 +207,7 @@ void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0, 255,
 void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
 {
     uniform_real_distribution<double> unif(0.0,1.0);
-    if(detections.size() > 0){
+    if(this->initialized && detections.size() > 0){
         this->birth_model.clear();
         vector<double> tmp_weights;
         MatrixXd observations = MatrixXd::Zero(detections.size(), 4);
@@ -230,9 +230,18 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
 		        double Union=(double)current_state.area()+(double)current_observation.area()-Intersection;
 		        IoU.push_back(Intersection/Union);
             }
-            double max_iou = *max_element(IoU.begin(), IoU.end());
-            double uni_rand = (max_iou > 0.7) ? unif(this->generator) : 1.0;
-            if(uni_rand > 0.99) this->birth_model.push_back(detections[j]);
+            if(this->tracks.size()>0){
+                double max_iou = *max_element(IoU.begin(), IoU.end());
+                double uni_rand = (max_iou > 0.5) ? unif(this->generator) : 1.0;
+                if(uni_rand > 0.9) this->birth_model.push_back(detections[j]);    
+            }
+            else{
+                this->birth_model.push_back(detections[j]);    
+            }
+        }
+        if(this->verbose){
+            cout << "New Detections: "<< detections.size() << endl;
+            cout << "New Born Targets: "<< this->birth_model.size() << endl;
         }
         MatrixXd psi(this->states.size(), detections.size());
         for (size_t i = 0; i < this->states.size(); ++i)
@@ -311,92 +320,93 @@ void PHDParticleFilter::resample(){
 }
 
 vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
-    Scalar phd_estimate = sum(this->weights);
-    int num_targets = cvRound(phd_estimate[0]);
-    vector<Target> new_tracks;
-    if(num_targets > 0)
-    {
-        /********************** EM **********************/
-        Mat data, em_labels, emMeans;
-        data = Mat::zeros((int)this->states.size(),4, CV_64F);
-        for (size_t j = 0; j < this->states.size(); j++){
-            data.at<double>(j,0) = this->states[j].x;
-            data.at<double>(j,1) = this->states[j].y;
-            data.at<double>(j,2) = this->states[j].width;
-            data.at<double>(j,3) = this->states[j].height;
-        }   
-        Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
-        em_model->setClustersNumber(num_targets);
-        em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
-        em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 10, 0.1));// 10,0.1
-        em_model->trainEM(data, noArray(), em_labels, noArray());
-        emMeans = em_model->getMeans();
-        
-        int label = 0;
-        for (int i = 0; i < emMeans.rows; ++i)
+    if(this->initialized){
+        Scalar phd_estimate = sum(this->weights);
+        int num_targets = cvRound(phd_estimate[0]);
+        vector<Target> new_tracks;
+        if(num_targets > 0)
         {
-            Target target;
-            target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
-            target.bbox = Rect(emMeans.at<double>(i,0), emMeans.at<double>(i,1), emMeans.at<double>(i,2), emMeans.at<double>(i,3));
+            /********************** EM **********************/
+            Mat data, em_labels, emMeans;
+            data = Mat::zeros((int)this->states.size(),4, CV_64F);
+            for (size_t j = 0; j < this->states.size(); j++){
+                data.at<double>(j,0) = this->states[j].x;
+                data.at<double>(j,1) = this->states[j].y;
+                data.at<double>(j,2) = this->states[j].width;
+                data.at<double>(j,3) = this->states[j].height;
+            }   
+            Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
+            em_model->setClustersNumber(num_targets);
+            em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
+            em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 100, 0.1));// 10,0.1
+            em_model->trainEM(data, noArray(), em_labels, noArray());
+            emMeans = em_model->getMeans();
             
-            while( (find(this->labels.begin(), this->labels.end(), label) != this->labels.end()) ||
-             (find(this->current_labels.begin(), this->current_labels.end(), label) != this->current_labels.end()) ) label++;
-            target.label = label;
-            this->current_labels.push_back(label);
-            label++;
-            new_tracks.push_back(target);
-        }
-        /*******************************************************/
-        
-        if (this->tracks.size() > 0)
-        {
-            hungarian_problem_t p;
-            /*int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
-            hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);*/
-            int **m = Utils::compute_overlap_matrix(this->tracks, new_tracks);
-            hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);
-            
-            hungarian_solve(&p);
-            for (size_t i = 0; i < this->tracks.size(); ++i)
+            int label = 0;
+            for (int i = 0; i < emMeans.rows; ++i)
             {
-                for (size_t j = 0; j < new_tracks.size(); ++j)
+                Target target;
+                target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
+                target.bbox = Rect(emMeans.at<double>(i,0), emMeans.at<double>(i,1), emMeans.at<double>(i,2), emMeans.at<double>(i,3));
+                
+                while( (find(this->labels.begin(), this->labels.end(), label) != this->labels.end()) ||
+                 (find(this->current_labels.begin(), this->current_labels.end(), label) != this->current_labels.end()) ) label++;
+                target.label = label;
+                this->current_labels.push_back(label);
+                label++;
+                new_tracks.push_back(target);
+            }
+            /*******************************************************/
+            
+            if (this->tracks.size() > 0)
+            {
+                hungarian_problem_t p;
+                int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
+                hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);
+                /*int **m = Utils::compute_overlap_matrix(this->tracks, new_tracks);
+                hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);*/
+                
+                hungarian_solve(&p);
+                for (size_t i = 0; i < this->tracks.size(); ++i)
                 {
-                    if (p.assignment[i][j] == HUNGARIAN_ASSIGNED)
+                    for (size_t j = 0; j < new_tracks.size(); ++j)
                     {
-                        new_tracks.at(j).label = this->tracks.at(i).label;
-                        new_tracks.at(j).color = this->tracks.at(i).color;
-                        break;
+                        if (p.assignment[i][j] == HUNGARIAN_ASSIGNED)
+                        {
+                            new_tracks.at(j).label = this->tracks.at(i).label;
+                            new_tracks.at(j).color = this->tracks.at(i).color;
+                            break;
+                        }
                     }
                 }
             }
-        }
-
-        this->tracks.swap(new_tracks);
-        this->current_labels.clear();
-        for(size_t i = 0; i < this->tracks.size(); i++) this->current_labels.push_back(this->tracks.at(i).label);
-        
-        this->labels.insert( this->labels.end(), this->current_labels.begin(), this->current_labels.end() );
-        new_tracks.clear();
-
-        if (draw)
-        {
-            for (size_t i = 0; i < this->tracks.size(); ++i)
+    
+            this->tracks.swap(new_tracks);
+            this->current_labels.clear();
+            for(size_t i = 0; i < this->tracks.size(); i++) this->current_labels.push_back(this->tracks.at(i).label);
+            
+            this->labels.insert( this->labels.end(), this->current_labels.begin(), this->current_labels.end() );
+            new_tracks.clear();
+    
+            if (draw)
             {
-                //rectangle(image, this->tracks.at(i).bbox, this->tracks.at(i).color, 3, LINE_8);
-                Rect current_estimate=Rect(this->tracks.at(i).bbox.x,this->tracks.at(i).bbox.y,this->tracks.at(i).bbox.width,this->tracks.at(i).bbox.height);
-				rectangle( image,current_estimate, this->tracks.at(i).color, 3, LINE_8  );
-				rectangle( image,Point(current_estimate.x,current_estimate.y-10),
-						Point(current_estimate.x+current_estimate.width,current_estimate.y+20),
-							this->tracks.at(i).color, -1,8,0 );
-				putText(image,to_string( this->current_labels.at(i)),Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.5,Scalar(255,255,255),1);
+                for (size_t i = 0; i < this->tracks.size(); ++i)
+                {
+                    //rectangle(image, this->tracks.at(i).bbox, this->tracks.at(i).color, 3, LINE_8);
+                    Rect current_estimate=Rect(this->tracks.at(i).bbox.x,this->tracks.at(i).bbox.y,this->tracks.at(i).bbox.width,this->tracks.at(i).bbox.height);
+                    rectangle( image,current_estimate, this->tracks.at(i).color, 3, LINE_8  );
+                    rectangle( image,Point(current_estimate.x,current_estimate.y-10),
+                            Point(current_estimate.x+current_estimate.width,current_estimate.y+20),
+                                this->tracks.at(i).color, -1,8,0 );
+                    putText(image,to_string( this->current_labels.at(i)),Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.5,Scalar(255,255,255),1);
+                }
             }
         }
+        else
+        {
+            this->tracks.clear();
+            this->current_labels.clear();
+        }    
     }
-    else
-    {
-        this->tracks.clear();
-        this->current_labels.clear();
-    }
-
     return this->tracks;
 }

@@ -19,6 +19,7 @@ typedef struct{
 	int label;
   	Scalar color;
 	Rect bbox;
+	Rect velocity;
 	//int conf;
 } Target;
 

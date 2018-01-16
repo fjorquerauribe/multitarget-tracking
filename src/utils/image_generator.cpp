@@ -124,39 +124,40 @@ void ImageGenerator::readDetections(string detFilename){
     Rect rect;
     size_t pos2 = line.find(",");
     size_t pos1 = 0;
-    frame_num=stoi(line.substr(pos1, pos2)) - 1;
-    pos1 = line.find(",",pos2 + 1);
-    pos2 = line.find(",",pos1 + 1);
-    coords[0] = stoi(line.substr(pos1 + 1, pos2 - pos1 - 1));
-    for(int j = 1; j < 4; j++){
+    if(pos2>pos1){
+      frame_num=stoi(line.substr(pos1, pos2)) - 1;
+      pos1 = line.find(",",pos2 + 1);
+      pos2 = line.find(",",pos1 + 1);
+      coords[0] = stoi(line.substr(pos1 + 1, pos2 - pos1 - 1));
+      for(int j = 1; j < 4; j++){
+        pos1 = pos2;
+        pos2 = line.find(",", pos1 + 1);
+        coords[j] = stoi(line.substr(pos1 + 1,pos2 - pos1 - 1));
+      }
+      rect.x = coords[0];
+      rect.y = coords[1];
+      rect.width = coords[2];
+      rect.height = coords[3];
+      this->detections[frame_num].push_back(rect);
+      
       pos1 = pos2;
       pos2 = line.find(",", pos1 + 1);
-      coords[j] = stoi(line.substr(pos1 + 1,pos2 - pos1 - 1));  
+      this->detection_weights[frame_num].conservativeResize( this->detection_weights[frame_num].size() + 1 );
+      this->detection_weights[frame_num](this->detection_weights[frame_num].size() - 1) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
+  
+      for(int j = 1; j < 3; j++){
+        pos1 = pos2;
+        pos2 = line.find(",", pos1 + 1);
+      }
+  
+      for(int j = 1; j < FEATURES_NUM; j++){
+        pos1 = pos2;
+        pos2 = line.find(",", pos1 + 1);
+        row(j) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
+      }
+      this->features[frame_num].conservativeResize(this->features[frame_num].rows() + 1, FEATURES_NUM);
+      this->features[frame_num].row(this->features[frame_num].rows() - 1 ) = row; 
     }
-    rect.x = coords[0];
-    rect.y = coords[1];
-    rect.width = coords[2];
-    rect.height = coords[3];
-    this->detections[frame_num].push_back(rect);
-    
-    pos1 = pos2;
-    pos2 = line.find(",", pos1 + 1);
-    this->detection_weights[frame_num].conservativeResize( this->detection_weights[frame_num].size() + 1 );
-    this->detection_weights[frame_num](this->detection_weights[frame_num].size() - 1) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
-
-    for(int j = 1; j < 3; j++){
-      pos1 = pos2;
-      pos2 = line.find(",", pos1 + 1);
-    }
-
-    for(int j = 1; j < FEATURES_NUM; j++){
-      pos1 = pos2;
-      pos2 = line.find(",", pos1 + 1);
-      row(j) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
-    }
-    this->features[frame_num].conservativeResize(this->features[frame_num].rows() + 1, FEATURES_NUM);
-    this->features[frame_num].row(this->features[frame_num].rows() - 1 ) = row;
-
   }
 }
 
