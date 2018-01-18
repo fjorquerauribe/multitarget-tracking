@@ -105,50 +105,43 @@ void PHDGaussianMixture::predict(){
                 state.bbox.y = _y;
                 state.bbox.width = _width;
                 state.bbox.height = _height;
-                tmp_new_states.push_back(state);
+                tmp_new_tracks.push_back(state);
             }
         }
-
-        if(this->birth_model.size() > 0){
-            //double birth_prob = BIRTH_RATE/(double)birth_model.size();
-            for (size_t j = 0; j < this->birth_model.size(); j++){
-                for (int k = 0; k < this->particles_batch; k++){
-                        particle state;
-                        state.width = this->birth_model[j].width + scale_random_width(this->generator);
-                        state.height = this->birth_model[j].height + scale_random_height(this->generator);
-                        state.x = this->birth_model[j].x + position_random_x(this->generator);
-                        state.y = this->birth_model[j].y + position_random_y(this->generator);
-                        Rect box(state.x, state.y, state.width, state.height);
-                        tmp_new_states.push_back(state);
-                        tmp_weights.push_back(1.0f/((double)this->particles_batch));
-                }
-            }
+        for (size_t j = 0; j < this->birth_model.size(); j++){
+            Target state=this->birth_model[j];
+            tmp_new_tracks.push_back(state);
         }
-
-        this->states.swap(tmp_new_states);
-        this->weights.swap(tmp_weights);
+        this->tracks.swap(tmp_new_states);
         tmp_new_states.clear();
         tmp_weights.clear();
     }
 
-    if(this->verbose){
-        Scalar phd_estimate = sum(this->weights);
-        cout << "Predicted target number: "<< cvRound(phd_estimate[0]) << endl;
-    }
 }
 
 
 void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
 {
     uniform_real_distribution<double> unif(0.0,1.0);
+    double birth_prob = exp(detections.size() * log(BIRTH_RATE) - lgamma(detections.size() + 1.0) - BIRTH_RATE);
+    double clutter_prob = exp(detections.size() * log(CLUTTER_RATE) - lgamma(detections.size() + 1.0) - CLUTTER_RATE);
     if(this->initialized && detections.size() > 0){
+        vector<Target> new_tracks;
+        this->current_labels.clear();
         this->birth_model.clear();
         vector<double> tmp_weights;
-        MatrixXd observations = MatrixXd::Zero(detections.size(), 4);
         double clutter_prob = (double)CLUTTER_RATE/this->img_size.area();
+        int label = 0;
         for (size_t j = 0; j < detections.size(); j++){
             vector<double> IoU;
             Rect current_observation=Rect( detections[j].x, detections[j].y, detections[j].width, detections[j].height);
+            Target target;
+            target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
+            target.bbox = current_observation
+            while( (find(this->labels.begin(), this->labels.end(), label) != this->labels.end()) ||
+             (find(this->current_labels.begin(), this->current_labels.end(), label) != this->current_labels.end()) ) label++;
+            target.label = label;
+            label++;
             for (size_t i = 0; i < this->tracks.size(); ++i){
                 Rect current_state=this->tracks[i].bbox;
                 double Intersection = (double)(current_state & current_observation).area();
@@ -158,135 +151,39 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
             if(this->tracks.size()>0){
                 double max_iou = *max_element(IoU.begin(), IoU.end());
                 double uni_rand = (max_iou > 0.5) ? unif(this->generator) : 1.0;
-                if(uni_rand > 0.9) this->birth_model.push_back(detections[j]);    
+                if(uni_rand > birth_prob) this->birth_model.push_back(target);
+                else{
+                    this->current_labels.push_back(label);
+                    new_tracks.push_back(target);
+                }    
             }
             else{
                 this->birth_model.push_back(detections[j]);    
+            }
+        }
+        hungarian_problem_t p;
+        /*int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
+        hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);*/
+        int **m = Utils::compute_overlap_matrix(this->tracks, new_tracks);
+        hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);
+        
+        hungarian_solve(&p);
+        for (size_t i = 0; i < this->tracks.size(); ++i)
+        {
+            for (size_t j = 0; j < new_tracks.size(); ++j)
+            {
+                if (p.assignment[i][j] == HUNGARIAN_ASSIGNED)
+                {
+                    new_tracks.at(j).label = this->tracks.at(i).label;
+                    new_tracks.at(j).color = this->tracks.at(i).color;
+                    break;
+                }
             }
         }
         if(this->verbose){
             cout << "New Detections: "<< detections.size() << endl;
             cout << "New Born Targets: "<< this->birth_model.size() << endl;
         }
-        MatrixXd psi(this->states.size(), detections.size());
-        for (size_t i = 0; i < this->states.size(); ++i)
-        {
-            particle state = this->states[i];
-            VectorXd mean(4);
-            mean << state.x, state.y, state.width, state.height;
-            MatrixXd cov = POSITION_LIKELIHOOD_STD * POSITION_LIKELIHOOD_STD * MatrixXd::Identity(4, 4);
-            MVNGaussian gaussian(mean, cov);
-            psi.row(i) = DETECTION_RATE * this->weights[i] * gaussian.log_likelihood(observations).array().exp();
-        }
-
-        VectorXd tau = VectorXd::Zero(detections.size());
-        tau = clutter_prob + psi.colwise().sum().array();
-        for (size_t i = 0; i < this->weights.size(); ++i)
-        {
-            tmp_weights.push_back((1.0f - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
-        }
-        
-        this->weights.swap(tmp_weights);
-        if(this->verbose){
-            Scalar phd_estimate = sum(this->weights);
-            cout << "Update target number: "<< cvRound(phd_estimate[0]) << endl;
-        }
-        resample();
-        tmp_weights.clear();
+        this->states.swap(tmp_new_states);
     }
-}
-
-vector<Target> PHDGaussianMixture::estimate(Mat& image, bool draw){
-    if(this->initialized){
-        Scalar phd_estimate = sum(this->weights);
-        int num_targets = cvRound(phd_estimate[0]);
-        vector<Target> new_tracks;
-        if(num_targets > 0)
-        {
-            /********************** EM **********************/
-            Mat data, em_labels, emMeans;
-            data = Mat::zeros((int)this->states.size(),6, CV_64F);
-            for (size_t j = 0; j < this->states.size(); j++){
-                data.at<double>(j,0) = this->states[j].x;
-                data.at<double>(j,1) = this->states[j].y;
-                data.at<double>(j,2) = this->states[j].width;
-                data.at<double>(j,3) = this->states[j].height;
-                data.at<double>(j,4) = this->states[j].x_p;
-                data.at<double>(j,5) = this->states[j].y_p;
-            }   
-            Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
-            em_model->setClustersNumber(num_targets);
-            em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
-            em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 10, 0.1));// 10,0.1
-            em_model->trainEM(data, noArray(), em_labels, noArray());
-            emMeans = em_model->getMeans();
-            
-            int label = 0;
-            for (int i = 0; i < emMeans.rows; ++i)
-            {
-                Target target;
-                target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
-                target.bbox = Rect(emMeans.at<double>(i,0), emMeans.at<double>(i,1), emMeans.at<double>(i,2), emMeans.at<double>(i,3));
-                target.dx=emMeans.at<double>(i,0)-emMeans.at<double>(i,4);
-                target.dy=emMeans.at<double>(i,1)-emMeans.at<double>(i,5);
-                while( (find(this->labels.begin(), this->labels.end(), label) != this->labels.end()) ||
-                 (find(this->current_labels.begin(), this->current_labels.end(), label) != this->current_labels.end()) ) label++;
-                target.label = label;
-                this->current_labels.push_back(label);
-                label++;
-                new_tracks.push_back(target);
-            }
-            /*******************************************************/
-            
-            if (this->tracks.size() > 0)
-            {
-                hungarian_problem_t p;
-                int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
-                hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);
-                /*int **m = Utils::compute_overlap_matrix(this->tracks, new_tracks);
-                hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);*/
-                
-                hungarian_solve(&p);
-                for (size_t i = 0; i < this->tracks.size(); ++i)
-                {
-                    for (size_t j = 0; j < new_tracks.size(); ++j)
-                    {
-                        if (p.assignment[i][j] == HUNGARIAN_ASSIGNED)
-                        {
-                            new_tracks.at(j).label = this->tracks.at(i).label;
-                            new_tracks.at(j).color = this->tracks.at(i).color;
-                            break;
-                        }
-                    }
-                }
-            }
-    
-            this->tracks.swap(new_tracks);
-            this->current_labels.clear();
-            for(size_t i = 0; i < this->tracks.size(); i++) this->current_labels.push_back(this->tracks.at(i).label);
-            
-            this->labels.insert( this->labels.end(), this->current_labels.begin(), this->current_labels.end() );
-            new_tracks.clear();
-    
-            if (draw)
-            {
-                for (size_t i = 0; i < this->tracks.size(); ++i)
-                {
-                    //rectangle(image, this->tracks.at(i).bbox, this->tracks.at(i).color, 3, LINE_8);
-                    Rect current_estimate=Rect(this->tracks.at(i).bbox.x,this->tracks.at(i).bbox.y,this->tracks.at(i).bbox.width,this->tracks.at(i).bbox.height);
-                    rectangle( image,current_estimate, this->tracks.at(i).color, 3, LINE_8  );
-                    rectangle( image,Point(current_estimate.x,current_estimate.y-10),
-                            Point(current_estimate.x+current_estimate.width,current_estimate.y+20),
-                                this->tracks.at(i).color, -1,8,0 );
-                    putText(image,to_string( this->current_labels.at(i)),Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.5,Scalar(255,255,255),1);
-                }
-            }
-        }
-        else
-        {
-            this->tracks.clear();
-            this->current_labels.clear();
-        }    
-    }
-    return this->tracks;
 }

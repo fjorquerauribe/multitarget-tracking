@@ -49,7 +49,7 @@ protected:
     normal_distribution<double> position_random_walk, velocity_random_walk, scale_random_walk;
     Size img_size;
     vector<Target> tracks;
-    vector<Rect> birth_model;
+    vector<Target> birth_model;
     RNG rng;
     vector<int> labels, current_labels;
     bool verbose;

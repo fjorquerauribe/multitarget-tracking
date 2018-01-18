@@ -11,7 +11,7 @@
     const float THRESHOLD = 1000;
     const float SURVIVAL_RATE = 0.9;
     const float CLUTTER_RATE = 3.0;
-    const float BIRTH_RATE = 1.0;
+    const float BIRTH_RATE = 0.1;
     const float DETECTION_RATE = 0.9;
     const float POSITION_LIKELIHOOD_STD = 30.0;
 #endif 
@@ -195,21 +195,17 @@ void PHDParticleFilter::draw_particles(Mat& image, Scalar color = Scalar(0, 255,
 void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
 {
     uniform_real_distribution<double> unif(0.0,1.0);
+    double birth_prob = exp(detections.size() * log(BIRTH_RATE) - lgamma(detections.size() + 1.0) - BIRTH_RATE);
+    double clutter_prob = exp(detections.size() * log(CLUTTER_RATE) - lgamma(detections.size() + 1.0) - CLUTTER_RATE);
     if(this->initialized && detections.size() > 0){
         this->birth_model.clear();
-        vector<double> tmp_weights;
-        MatrixXd observations = MatrixXd::Zero(detections.size(), 4);
-        double clutter_prob = CLUTTER_RATE/(double)detections.size();
-        double birth_prob = BIRTH_RATE/(double)detections.size();
+        vector<double> IoU;
         for (size_t j = 0; j < detections.size(); j++){
-            observations.row(j) << detections[j].x, detections[j].y, detections[j].width, detections[j].height;
-            vector<double> IoU;
-            Rect current_observation=Rect( detections[j].x, detections[j].y, detections[j].width, detections[j].height);
             for (size_t i = 0; i < this->tracks.size(); ++i){
                 Rect current_state=this->tracks[i].bbox;
-                double Intersection = (double)(current_state & current_observation).area();
-		        double Union=(double)current_state.area()+(double)current_observation.area()-Intersection;
-		        IoU.push_back(Intersection/Union);
+                double Intersection = (double)(current_state & detections[j]).area();
+                double Union=(double)current_state.area()+(double)detections[j].area()-Intersection;
+                IoU.push_back(Intersection/Union);
             }
             if(this->tracks.size()>0){
                 double max_iou = *max_element(IoU.begin(), IoU.end());
@@ -220,42 +216,39 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
                 this->birth_model.push_back(detections[j]);    
             }
         }
-        if(this->verbose){
-            cout << "New Detections: "<< detections.size() << endl;
-            cout << "New Born Targets: "<< this->birth_model.size() << endl;
-        }
-        MatrixXd psi(this->states.size(), detections.size());
-        for (size_t i = 0; i < this->states.size(); ++i)
-        {
+    }
+    if(this->verbose){
+        cout << "New Detections: "<< detections.size() << endl;
+        cout << "New Born Targets: "<< this->birth_model.size() << endl;
+    }
+    MatrixXd psi(this->states.size(), detections.size());
+    for (size_t i = 0; i < this->states.size(); ++i){
             /*particle state = this->states[i];
             VectorXd mean(4);
             mean << state.x, state.y, state.width, state.height;
             MatrixXd cov = POSITION_LIKELIHOOD_STD * POSITION_LIKELIHOOD_STD * MatrixXd::Identity(4, 4);
             MVNGaussian gaussian(mean, cov);
             psi.row(i) = DETECTION_RATE * this->weights[i] * gaussian.log_likelihood(observations).array().exp();*/
-            Rect current_particle=Rect( this->states[i].x, this->states[i].y, this->states[i].width, this->states[i].height);
-            for (size_t j = 0; j < detections.size(); j++){
-                Rect current_observation=Rect( detections[j].x, detections[j].y, detections[j].width, detections[j].height);
-                double Intersection = (double)(current_particle & current_observation).area();
-		        double Union=(double)current_particle.area()+(double)current_observation.area()-Intersection;
-		        psi(i,j)=DETECTION_RATE * this->weights[i] * exp(2.0*(-1.0+Intersection/Union));
-            }
+        Rect current_particle=Rect( this->states[i].x, this->states[i].y, this->states[i].width, this->states[i].height);
+        for (size_t j = 0; j < detections.size(); j++){
+            double Intersection = (double)(current_particle & detections[j]).area();
+		    double Union=(double)current_particle.area()+(double)detections[j].area()-Intersection;
+		    psi(i,j)=DETECTION_RATE * this->weights[i] * exp(2.0*(-1.0+Intersection/Union));
         }
-        VectorXd tau = VectorXd::Zero(detections.size());
-        tau = clutter_prob + psi.colwise().sum().array();
-        for (size_t i = 0; i < this->weights.size(); ++i)
-        {
-            tmp_weights.push_back((1.0f - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
-        }
-        
-        this->weights.swap(tmp_weights);
-        if(this->verbose){
-            Scalar phd_estimate = sum(this->weights);
-            cout << "Update target number: "<< cvRound(phd_estimate[0]) << endl;
-        }
-        resample();
-        tmp_weights.clear();
     }
+    VectorXd tau = VectorXd::Zero(detections.size());
+    tau = clutter_prob + psi.colwise().sum().array();
+    vector<double> tmp_weights;
+    for (size_t i = 0; i < this->weights.size(); ++i){
+        tmp_weights.push_back((1.0f - DETECTION_RATE) * this->weights[i] + psi.row(i).cwiseQuotient(tau.transpose()).sum() );
+    }    
+    this->weights.swap(tmp_weights);
+    if(this->verbose){
+        Scalar phd_estimate = sum(this->weights);
+        cout << "Update target number: "<< cvRound(phd_estimate[0]) << endl;
+    }
+    resample();
+    tmp_weights.clear();
 }
 
 void PHDParticleFilter::resample(){
