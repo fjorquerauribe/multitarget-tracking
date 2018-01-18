@@ -10,7 +10,7 @@
     const float SCALE_STD = 3.0;
     const float THRESHOLD = 1000;
     const float SURVIVAL_RATE = 0.9;
-    const float CLUTTER_RATE = 1.0e-2;
+    const float CLUTTER_RATE = 1.0;
     const float BIRTH_RATE = 1e-6;
     const float DETECTION_RATE = 0.9;
     const float POSITION_LIKELIHOOD_STD = 30.0;
@@ -211,7 +211,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
         this->birth_model.clear();
         vector<double> tmp_weights;
         MatrixXd observations = MatrixXd::Zero(detections.size(), 4);
-        double clutter_prob = (double)CLUTTER_RATE/this->img_size.area();
+        double clutter_prob = (double)CLUTTER_RATE*this->img_size.area();
         for (size_t j = 0; j < detections.size(); j++){
             this->max_width = MAX(detections[j].width, this->max_width);
             this->max_height = MAX(detections[j].height, this->max_height);
@@ -233,7 +233,7 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
             if(this->tracks.size()>0){
                 double max_iou = *max_element(IoU.begin(), IoU.end());
                 double uni_rand = (max_iou > 0.5) ? unif(this->generator) : 1.0;
-                if(uni_rand > 0.9) this->birth_model.push_back(detections[j]);    
+                if(uni_rand > 0.99) this->birth_model.push_back(detections[j]);    
             }
             else{
                 this->birth_model.push_back(detections[j]);    
@@ -246,14 +246,20 @@ void PHDParticleFilter::update(Mat& image, vector<Rect> detections)
         MatrixXd psi(this->states.size(), detections.size());
         for (size_t i = 0; i < this->states.size(); ++i)
         {
-            particle state = this->states[i];
+            /*particle state = this->states[i];
             VectorXd mean(4);
             mean << state.x, state.y, state.width, state.height;
             MatrixXd cov = POSITION_LIKELIHOOD_STD * POSITION_LIKELIHOOD_STD * MatrixXd::Identity(4, 4);
             MVNGaussian gaussian(mean, cov);
-            psi.row(i) = DETECTION_RATE * this->weights[i] * gaussian.log_likelihood(observations).array().exp();
+            psi.row(i) = DETECTION_RATE * this->weights[i] * gaussian.log_likelihood(observations).array().exp();*/
+            Rect current_particle=Rect( this->states[i].x, this->states[i].y, this->states[i].width, this->states[i].height);
+            for (size_t j = 0; j < detections.size(); j++){
+                Rect current_observation=Rect( detections[j].x, detections[j].y, detections[j].width, detections[j].height);
+                double Intersection = (double)(current_particle & current_observation).area();
+		        double Union=(double)current_particle.area()+(double)current_observation.area()-Intersection;
+		        psi(i,j)=DETECTION_RATE * this->weights[i] * exp(2.0*(-1.0+Intersection/Union));
+            }
         }
-
         VectorXd tau = VectorXd::Zero(detections.size());
         tau = clutter_prob + psi.colwise().sum().array();
         for (size_t i = 0; i < this->weights.size(); ++i)
@@ -338,7 +344,7 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
             Ptr<cv::ml::EM> em_model = cv::ml::EM::create();
             em_model->setClustersNumber(num_targets);
             em_model->setCovarianceMatrixType(cv::ml::EM::COV_MAT_DIAGONAL);
-            em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 100, 0.1));// 10,0.1
+            em_model->setTermCriteria(TermCriteria(TermCriteria::COUNT, 10, 0.1));// 10,0.1
             em_model->trainEM(data, noArray(), em_labels, noArray());
             emMeans = em_model->getMeans();
             
