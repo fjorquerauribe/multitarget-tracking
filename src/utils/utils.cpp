@@ -20,10 +20,13 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 
 int** Utils::compute_overlap_matrix(vector<Target> tracks, vector<Target> new_tracks){
 	int** cost_matrix = new int*[tracks.size()];
-	
 	for(size_t i = 0; i < tracks.size(); i++){
 		cost_matrix[i] = new int[new_tracks.size()];
+		Rect current_track=tracks[i].bbox;
 		for(size_t j = 0; j < new_tracks.size(); j++){
+			Rect new_track=new_tracks[i].bbox;
+			double Intersection = (double)(current_track & new_track).area();
+			double Union=(double)current_track.area()+(double)new_track.area()-Intersection;
 			cost_matrix[i][j] = (tracks.at(i).bbox & new_tracks.at(j).bbox).area();
 		}
 	}
