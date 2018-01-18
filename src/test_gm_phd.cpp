@@ -1,0 +1,106 @@
+#include "test_gm_phd.hpp"
+
+TestGMPHDFilter::TestGMPHDFilter(){}
+
+TestGMPHDFilter::TestGMPHDFilter(string _firstFrameFileName, 
+	string _groundTruthFileName, string _preDetectionFile)
+{
+	this->firstFrameFileName = _firstFrameFileName;
+	this->groundTruthFileName = _groundTruthFileName;
+	this->preDetectionFile = _preDetectionFile;
+	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
+}
+
+void TestGMPHDFilter::run()
+{
+	RNG rng( 0xFFFFFFFF );
+	map<int,Scalar> color;
+	bool verbose = false;
+	PHDGaussianMixture filter(verbose);
+	if(verbose) namedWindow("PHD Gaussian Mixture", WINDOW_NORMAL);
+	
+	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
+	{
+		Mat currentFrame = this->generator.getFrame(i);
+		vector<Target> gt = this->generator.getGroundTruth(i);
+		vector<Rect> preDetections = this->generator.getDetections(i);
+		//VectorXd weights = this->generator.getDetectionWeights(i);
+		vector<Target> estimates;
+		
+		if(verbose)	cout << "Target number: " << gt.size() << endl;
+
+		if (!filter.is_initialized() &&  preDetections.size()>0)
+		{
+			filter.initialize(currentFrame, preDetections);
+		}
+		else
+		{
+			filter.predict();
+			filter.update(currentFrame, preDetections);
+		}
+
+		if(!verbose){
+            for(size_t j = 0; j < estimates.size(); j++){
+                cout << i + 1
+                << "," << estimates.at(j).label
+                << "," << estimates.at(j).bbox.x
+                << "," << estimates.at(j).bbox.y
+                << "," << estimates.at(j).bbox.width
+                << "," << estimates.at(j).bbox.height
+                << ",1,-1,-1,-1" << endl;
+            }
+        }
+
+		if(verbose) {
+            cout << "----------------------------------------" << endl;
+            imshow("PHD Gaussian Mixture", currentFrame);
+			waitKey(1);
+		}
+	}
+}
+
+int main(int argc, char const *argv[])
+{
+	string _firstFrameFileName, _gtFileName, _preDetectionFile;
+	if(argc != 7)
+	{
+		cout << "Incorrect input list" << endl;
+		cout << "exiting..." << endl;
+		return EXIT_FAILURE;
+	}
+	else
+	{
+	  	if(strcmp(argv[1], "-img") == 0)
+	  	{
+	    	_firstFrameFileName = argv[2];
+	  	}
+	  	else
+	  	{
+	  		cout << "No images given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if(strcmp(argv[3], "-gt") == 0)
+	  	{
+	    	_gtFileName = argv[4];
+	  	}
+	  	else
+	  	{
+	  		cout << "No ground truth given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if(strcmp(argv[5], "-det") == 0)
+	  	{
+	    	_preDetectionFile = argv[6];
+	  	}
+	  	else
+	  	{
+	  		cout << "No detections file given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	TestGMPHDFilter tracker(_firstFrameFileName, _gtFileName, _preDetectionFile);
+	  	tracker.run();
+	}
+}

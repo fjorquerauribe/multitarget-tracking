@@ -10,7 +10,6 @@
 #include "../likelihood/multivariate_gaussian.hpp"
 #include "../utils/image_generator.hpp"
 #include "../utils/utils.hpp"
-#include "../em.hpp"
 #include "hungarian.h"
 
 #ifdef WITH_NMS

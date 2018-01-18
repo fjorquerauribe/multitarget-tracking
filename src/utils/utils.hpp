@@ -20,6 +20,8 @@ typedef struct{
   	Scalar color;
 	Rect bbox;
 	Rect velocity;
+	double dx;
+	double dy;
 	//int conf;
 } Target;
 

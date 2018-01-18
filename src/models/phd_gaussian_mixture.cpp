@@ -19,9 +19,10 @@
 PHDGaussianMixture::PHDGaussianMixture() {
 }
 
-PHDGaussianMixture::~PHDGaussianMixture() {
-    this->states.clear();
-    this->weights.clear();
+PHDGaussianMixture::~PHDGaussianMixture(){
+    this->tracks.clear();
+    this->birth_model.clear();
+    this->labels.clear();
 }
 
 bool PHDGaussianMixture::is_initialized() {
@@ -76,21 +77,20 @@ void PHDGaussianMixture::predict(){
     normal_distribution<double> scale_random_height(0.0,theta_x.at(1)(1));
     uniform_real_distribution<double> unif(0.0,1.0);
 
-    
     if(this->initialized == true){
         vector<Target> tmp_new_tracks;
         
         for (size_t i = 0; i < this->tracks.size(); i++){
-            Target state = this->tracks[i];
+            Target track = this->tracks[i];
             float _x, _y, _width, _height;
             float _dx = position_random_x(this->generator);
             float _dy = position_random_y(this->generator);
             float _dw = scale_random_width(this->generator);
             float _dh = scale_random_height(this->generator);
-            _x = MIN(MAX(cvRound(state.bbox.x + _dx), 0), this->img_size.width);
-            _y = MIN(MAX(cvRound(state.bbox.y + _dy), 0), this->img_size.height);
-            _width = MIN(MAX(cvRound(state.bbox.width + _dw), 0), this->img_size.width);
-            _height = MIN(MAX(cvRound(state.bbox.height + _dh), 0), this->img_size.height);
+            _x = MIN(MAX(cvRound(track.bbox.x + _dx), 0), this->img_size.width);
+            _y = MIN(MAX(cvRound(track.bbox.y + _dy), 0), this->img_size.height);
+            _width = MIN(MAX(cvRound(track.bbox.width + _dw), 0), this->img_size.width);
+            _height = MIN(MAX(cvRound(track.bbox.height + _dh), 0), this->img_size.height);
             
             if((_x + _width) < this->img_size.width 
                 && _x > 0 
@@ -101,20 +101,19 @@ void PHDGaussianMixture::predict(){
                 && _width > 0 
                 && _height > 0 
                 && unif(this->generator) < SURVIVAL_RATE){
-                state.bbox.x = _x;
-                state.bbox.y = _y;
-                state.bbox.width = _width;
-                state.bbox.height = _height;
-                tmp_new_tracks.push_back(state);
+                track.bbox.x = _x;
+                track.bbox.y = _y;
+                track.bbox.width = _width;
+                track.bbox.height = _height;
+                tmp_new_tracks.push_back(track);
             }
         }
         for (size_t j = 0; j < this->birth_model.size(); j++){
-            Target state=this->birth_model[j];
-            tmp_new_tracks.push_back(state);
+            Target track = this->birth_model[j];
+            tmp_new_tracks.push_back(track);
         }
-        this->tracks.swap(tmp_new_states);
-        tmp_new_states.clear();
-        tmp_weights.clear();
+        this->tracks.swap(tmp_new_tracks);
+        tmp_new_tracks.clear();
     }
 
 }
@@ -137,7 +136,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
             Rect current_observation=Rect( detections[j].x, detections[j].y, detections[j].width, detections[j].height);
             Target target;
             target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
-            target.bbox = current_observation
+            target.bbox = current_observation;
             while( (find(this->labels.begin(), this->labels.end(), label) != this->labels.end()) ||
              (find(this->current_labels.begin(), this->current_labels.end(), label) != this->current_labels.end()) ) label++;
             target.label = label;
@@ -155,10 +154,12 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
                 else{
                     this->current_labels.push_back(label);
                     new_tracks.push_back(target);
-                }    
+                }
             }
             else{
-                this->birth_model.push_back(detections[j]);    
+                Target new_track;
+                new_track.bbox = detections[j];
+                this->birth_model.push_back(new_track);    
             }
         }
         hungarian_problem_t p;
@@ -184,6 +185,5 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
             cout << "New Detections: "<< detections.size() << endl;
             cout << "New Born Targets: "<< this->birth_model.size() << endl;
         }
-        this->states.swap(tmp_new_states);
     }
 }
