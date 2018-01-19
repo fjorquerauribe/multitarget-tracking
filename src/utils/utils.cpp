@@ -12,7 +12,7 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 			Point2f pointEstimated(new_tracks.at(j).bbox.x + new_tracks.at(j).bbox.width/2,
 			new_tracks.at(j).bbox.y + new_tracks.at(j).bbox.height/2);
 			Point2f scaleEstimated( new_tracks.at(j).bbox.width,new_tracks.at(j).bbox.height);
-			cost_matrix[i][j] = 10*(norm(pointTracked - pointEstimated)+norm(scaleTracked-scaleEstimated));
+			cost_matrix[i][j] = (norm(pointTracked - pointEstimated)+norm(scaleTracked-scaleEstimated));
 		}
 	}
 	return cost_matrix;
@@ -27,7 +27,7 @@ int** Utils::compute_overlap_matrix(vector<Target> tracks, vector<Target> new_tr
 			Rect new_track=new_tracks[i].bbox;
 			double Intersection = (double)(current_track & new_track).area();
 			double Union=(double)current_track.area()+(double)new_track.area()-Intersection;
-			cost_matrix[i][j] = 10*Intersection/Union;
+			cost_matrix[i][j] = Intersection/Union;
 		}
 	}
 	return cost_matrix;

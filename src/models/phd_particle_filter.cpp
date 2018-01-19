@@ -12,7 +12,7 @@
     const float SURVIVAL_RATE = 0.9;
     const float CLUTTER_RATE = 3.0;
     const float BIRTH_RATE = 0.1;
-    const float DETECTION_RATE = 0.9;
+    const float DETECTION_RATE = 1.0;
     const float POSITION_LIKELIHOOD_STD = 30.0;
 #endif 
 

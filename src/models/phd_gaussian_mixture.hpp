@@ -19,6 +19,7 @@
 #include <time.h>
 #include <float.h>
 #include <vector>
+#include <set>
 #include <iostream>
 #include <random>
 #include <chrono>
@@ -40,6 +41,7 @@ public:
     void update(Mat& image, vector<Rect> detections);
     void predict();
     bool is_initialized();
+    vector<Target> estimate(Mat& image, bool draw = false);
     
 protected:
     mt19937 generator;
@@ -50,7 +52,8 @@ protected:
     vector<Target> tracks;
     vector<Target> birth_model;
     RNG rng;
-    vector<int> labels, current_labels;
+    vector<int> current_labels;
+    set<int> labels;
     bool verbose;
 };
 

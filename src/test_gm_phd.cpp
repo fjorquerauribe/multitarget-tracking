@@ -37,10 +37,10 @@ void TestGMPHDFilter::run()
 		{
 			filter.predict();
 			filter.update(currentFrame, preDetections);
+			estimates = filter.estimate(currentFrame, true);
 		}
 
-		if(!verbose){
-            for(size_t j = 0; j < estimates.size(); j++){
+		for(size_t j = 0; j < estimates.size(); j++){
                 cout << i + 1
                 << "," << estimates.at(j).label
                 << "," << estimates.at(j).bbox.x
@@ -48,13 +48,12 @@ void TestGMPHDFilter::run()
                 << "," << estimates.at(j).bbox.width
                 << "," << estimates.at(j).bbox.height
                 << ",1,-1,-1,-1" << endl;
-            }
         }
 
 		if(verbose) {
             cout << "----------------------------------------" << endl;
             imshow("PHD Gaussian Mixture", currentFrame);
-			waitKey(1);
+			waitKey(1000);
 		}
 	}
 }

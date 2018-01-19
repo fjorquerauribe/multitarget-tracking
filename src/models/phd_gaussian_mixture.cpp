@@ -9,10 +9,10 @@
     const float POS_STD = 3.0;
     const float SCALE_STD = 3.0;
     const float THRESHOLD = 1000;
-    const float SURVIVAL_RATE = 0.9;
+    const float SURVIVAL_RATE = 0.;
     const float CLUTTER_RATE = 2.0;
-    const float BIRTH_RATE = 1.0;
-    const float DETECTION_RATE = 0.9;
+    const float BIRTH_RATE = 0.1;
+    const float DETECTION_RATE = 0.5;
     const float POSITION_LIKELIHOOD_STD = 30.0;
 #endif 
 
@@ -62,9 +62,10 @@ void PHDGaussianMixture::initialize(Mat& current_frame, vector<Rect> detections)
                 target.bbox = detections.at(i);
                 target.dx=0.0f;
                 target.dy=0.0f;
+                target.survival_rate = 1.0;
                 this->tracks.push_back(target);
                 this->current_labels.push_back(i);
-                this->labels.push_back(i);
+                this->labels.insert(i);
         }
         this->initialized = true;
     }
@@ -100,7 +101,7 @@ void PHDGaussianMixture::predict(){
                 && _height < this->img_size.height 
                 && _width > 0 
                 && _height > 0 
-                && unif(this->generator) < SURVIVAL_RATE){
+                && unif(this->generator) < track.survival_rate){
                 track.bbox.x = _x;
                 track.bbox.y = _y;
                 track.bbox.width = _width;
@@ -122,45 +123,26 @@ void PHDGaussianMixture::predict(){
 void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
 {
     uniform_real_distribution<double> unif(0.0,1.0);
-    double birth_prob = exp(detections.size() * log(BIRTH_RATE) - lgamma(detections.size() + 1.0) - BIRTH_RATE);
-    double clutter_prob = exp(detections.size() * log(CLUTTER_RATE) - lgamma(detections.size() + 1.0) - CLUTTER_RATE);
+    //double birth_prob = exp(detections.size() * log(BIRTH_RATE) - lgamma(detections.size() + 1.0) - BIRTH_RATE);
+    //double clutter_prob = exp(detections.size() * log(CLUTTER_RATE) - lgamma(detections.size() + 1.0) - CLUTTER_RATE);
+    //double birth_prob = BIRTH_RATE/detections.size();
     if(this->initialized && detections.size() > 0){
         vector<Target> new_tracks;
         this->current_labels.clear();
         this->birth_model.clear();
         vector<double> tmp_weights;
-        double clutter_prob = (double)CLUTTER_RATE/this->img_size.area();
         int label = 0;
         for (size_t j = 0; j < detections.size(); j++){
             vector<double> IoU;
-            Rect current_observation=Rect( detections[j].x, detections[j].y, detections[j].width, detections[j].height);
+            Rect current_observation=detections[j];
             Target target;
             target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
             target.bbox = current_observation;
-            while( (find(this->labels.begin(), this->labels.end(), label) != this->labels.end()) ||
-             (find(this->current_labels.begin(), this->current_labels.end(), label) != this->current_labels.end()) ) label++;
+            target.survival_rate = 1.0;
+            while( (find(this->labels.begin(), this->labels.end(), label) != this->labels.end()) ) label++;
             target.label = label;
-            label++;
-            for (size_t i = 0; i < this->tracks.size(); ++i){
-                Rect current_state=this->tracks[i].bbox;
-                double Intersection = (double)(current_state & current_observation).area();
-		        double Union=(double)current_state.area()+(double)current_observation.area()-Intersection;
-		        IoU.push_back(Intersection/Union);
-            }
-            if(this->tracks.size()>0){
-                double max_iou = *max_element(IoU.begin(), IoU.end());
-                double uni_rand = (max_iou > 0.5) ? unif(this->generator) : 1.0;
-                if(uni_rand > birth_prob) this->birth_model.push_back(target);
-                else{
-                    this->current_labels.push_back(label);
-                    new_tracks.push_back(target);
-                }
-            }
-            else{
-                Target new_track;
-                new_track.bbox = detections[j];
-                this->birth_model.push_back(new_track);    
-            }
+            this->labels.insert(label);
+            new_tracks.push_back(target);
         }
         hungarian_problem_t p;
         /*int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
@@ -171,8 +153,15 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
         hungarian_solve(&p);
         for (size_t i = 0; i < this->tracks.size(); ++i)
         {
+            int no_assignment_count=0;
             for (size_t j = 0; j < new_tracks.size(); ++j)
             {
+                if(this->verbose){
+                    cout << "track  : " << this->tracks.at(i).label 
+                        << ", new track  : " << new_tracks.at(j).label
+                         << ", assignment : " << p.assignment[i][j] << endl;
+                }
+                no_assignment_count++;
                 if (p.assignment[i][j] == HUNGARIAN_ASSIGNED)
                 {
                     new_tracks.at(j).label = this->tracks.at(i).label;
@@ -180,10 +169,35 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
                     break;
                 }
             }
+            if(no_assignment_count==(int)new_tracks.size()) {
+                this->tracks.at(i).survival_rate=exp(10*(-1.0+this->tracks.at(i).survival_rate*0.9));
+                new_tracks.push_back(this->tracks.at(i));
+            }  
         }
         if(this->verbose){
+            cout << "Current Targets: "<< this->tracks.size() << endl;
             cout << "New Detections: "<< detections.size() << endl;
             cout << "New Born Targets: "<< this->birth_model.size() << endl;
+            cout << "Updated Targets: "<< new_tracks.size() << endl;
+        }
+        this->tracks.swap(new_tracks);
+        this->current_labels.clear();
+        new_tracks.clear();
+    }
+}
+
+vector <Target> PHDGaussianMixture::estimate(Mat& image, bool draw)
+{
+    if (draw){
+        for (size_t i = 0; i < this->tracks.size(); ++i){
+            Rect current_estimate=this->tracks.at(i).bbox;
+            rectangle( image,current_estimate, this->tracks.at(i).color, 3, LINE_8  );
+            rectangle( image,Point(current_estimate.x,current_estimate.y-10),
+                Point(current_estimate.x+current_estimate.width,current_estimate.y+20),
+                this->tracks.at(i).color, -1,8,0 );
+            //putText(image,to_string( this->tracks.at(i).label),Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.5,Scalar(255,255,255),1);
+            putText(image,to_string( this->tracks.at(i).survival_rate),Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.5,Scalar(255,255,255),1);
         }
     }
+    return this->tracks;
 }

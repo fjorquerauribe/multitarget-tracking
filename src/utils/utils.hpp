@@ -22,6 +22,7 @@ typedef struct{
 	Rect velocity;
 	double dx;
 	double dy;
+	double survival_rate;
 	//int conf;
 } Target;
 
