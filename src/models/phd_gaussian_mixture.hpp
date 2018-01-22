@@ -52,7 +52,6 @@ protected:
     vector<Target> tracks;
     vector<Target> birth_model;
     RNG rng;
-    vector<int> current_labels;
     set<int> labels;
     bool verbose;
 };

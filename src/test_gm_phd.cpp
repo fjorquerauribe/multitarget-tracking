@@ -52,8 +52,9 @@ void TestGMPHDFilter::run()
 
 		if(verbose) {
             cout << "----------------------------------------" << endl;
-            imshow("PHD Gaussian Mixture", currentFrame);
-			waitKey(1000);
+			imshow("PHD Gaussian Mixture", currentFrame);
+			imwrite("gm_phd_"+to_string(i)+".png", currentFrame);
+			waitKey(100);
 		}
 	}
 }
