@@ -6,3 +6,4 @@ backups/
 .vscode/
 data/
 .DS_Store
+scripts/*.png
