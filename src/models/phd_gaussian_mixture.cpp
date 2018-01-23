@@ -9,7 +9,7 @@
     const float POS_STD = 3.0;
     const float SCALE_STD = 3.0;
     const float THRESHOLD = 1000;
-    const float SURVIVAL_RATE = 0.99;
+    const float SURVIVAL_RATE = 1.0;
     const float CLUTTER_RATE = 2.0;
     const float BIRTH_RATE = 0.9;
     const float DETECTION_RATE = 0.5;
@@ -101,6 +101,8 @@ void PHDGaussianMixture::predict(){
                 && _width > 0 
                 && _height > 0 
                 && unif(this->generator) < track.survival_rate){
+                track.dx=_x-track.bbox.x;
+                track.dy=_y-track.bbox.y;
                 track.bbox.x = _x;
                 track.bbox.y = _y;
                 track.bbox.width = _width;
@@ -148,10 +150,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
         hungarian_init(&p, m, this->tracks.size(), new_detections.size(), HUNGARIAN_MODE_MINIMIZE_COST);
         /*int **m = Utils::compute_overlap_matrix(this->tracks, new_detections);
         hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);*/
-        hungarian_solve(&p);
-        if(this->verbose){
-            hungarian_print_costmatrix(&p); 
-        }       
+        hungarian_solve(&p);    
         for (size_t i = 0; i < this->tracks.size(); ++i)
         {
             int no_assignment_count=0;
@@ -163,7 +162,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
                         << ", cost  : " << m[i][j]
                          << ", assignment : " << p.assignment[i][j] << endl;
                 }
-                if (p.assignment[i][j] == HUNGARIAN_ASSIGNED)
+                if (p.assignment[i][j] == HUNGARIAN_ASSIGNED && m[i][j]!=1000)
                 {
                     //new_labels.erase(new_tracks.at(j).label);
                     new_detections.at(j).label = this->tracks.at(i).label;
@@ -175,7 +174,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
                 this->labels.insert(new_detections.at(j).label);
             }
             if(no_assignment_count==(int)new_detections.size()) {
-                this->tracks.at(i).survival_rate=exp(10*(-1.0+this->tracks.at(i).survival_rate*0.9));
+                this->tracks.at(i).survival_rate=exp(4*(-1.0+this->tracks.at(i).survival_rate*0.9));
                 new_tracks.push_back(this->tracks.at(i));
             }  
         }

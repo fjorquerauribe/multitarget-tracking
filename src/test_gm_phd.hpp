@@ -18,7 +18,7 @@ public:
 	TestGMPHDFilter();
 	TestGMPHDFilter(string _firstFrameFileName, string _groundTruthFileName,
 	 string _preDetectionFile);
-	void run();
+	void run(bool verbose);
 private:
 	string firstFrameFileName, groundTruthFileName, preDetectionFile;
 	ImageGenerator generator;

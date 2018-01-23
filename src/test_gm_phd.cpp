@@ -11,11 +11,11 @@ TestGMPHDFilter::TestGMPHDFilter(string _firstFrameFileName,
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
 }
 
-void TestGMPHDFilter::run()
+void TestGMPHDFilter::run(bool verbose=false)
 {
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
-	bool verbose = false;
+	//bool verbose = false;
 	PHDGaussianMixture filter(verbose);
 	if(verbose) namedWindow("PHD Gaussian Mixture", WINDOW_NORMAL);
 	
@@ -62,7 +62,8 @@ void TestGMPHDFilter::run()
 int main(int argc, char const *argv[])
 {
 	string _firstFrameFileName, _gtFileName, _preDetectionFile;
-	if(argc != 7)
+	bool verbose=false;
+	if(argc != 9)
 	{
 		cout << "Incorrect input list" << endl;
 		cout << "exiting..." << endl;
@@ -99,8 +100,12 @@ int main(int argc, char const *argv[])
 	  		cout << "No detections file given" << endl;
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
+		  }
+		if(strcmp(argv[7], "-verbose") == 0)
+	  	{
+	    	verbose=(stoi(argv[8])==1)? true : false;
 	  	}
 	  	TestGMPHDFilter tracker(_firstFrameFileName, _gtFileName, _preDetectionFile);
-	  	tracker.run();
+	  	tracker.run(verbose);
 	}
 }

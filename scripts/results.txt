@@ -1,0 +1,4506 @@
+Target number: 5
+----------------------------------------
+Target number: 5
+track  : 0, new detections  : 1, cost  : 12, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+2,0,45,193,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 0, new detections  : 4, cost  : 13, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+3,0,36,193,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 0, new detections  : 7, cost  : 24, assignment : 1
+Current Targets: 1
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 1
+4,0,29,179,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 0, new detections  : 12, cost  : 14, assignment : 1
+Current Targets: 1
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 1
+5,0,18,179,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 0, new detections  : 17, cost  : 10000, assignment : 0
+track  : 0, new detections  : 18, cost  : 16, assignment : 1
+Current Targets: 1
+New Detections: 4
+New Born Targets: 1
+Updated Targets: 1
+6,0,17,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 0, new detections  : 21, cost  : 26, assignment : 1
+track  : 20, new detections  : 0, cost  : 10000, assignment : 0
+track  : 20, new detections  : 22, cost  : 120, assignment : 0
+track  : 20, new detections  : 23, cost  : 0, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 2
+7,0,8,189,68,154,1,-1,-1,-1
+7,20,252,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 0, new detections  : 26, cost  : 10000, assignment : 0
+track  : 0, new detections  : 27, cost  : 10000, assignment : 0
+track  : 0, new detections  : 28, cost  : 10000, assignment : 0
+track  : 0, new detections  : 29, cost  : 30, assignment : 1
+track  : 20, new detections  : 26, cost  : 130, assignment : 0
+track  : 20, new detections  : 27, cost  : 55, assignment : 0
+track  : 20, new detections  : 28, cost  : 8, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 2
+8,0,-3,173,74,168,1,-1,-1,-1
+8,20,252,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 20, new detections  : 31, cost  : 131, assignment : 0
+track  : 20, new detections  : 32, cost  : 129, assignment : 0
+track  : 20, new detections  : 33, cost  : 23, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+9,20,262,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 20, new detections  : 34, cost  : 121, assignment : 0
+track  : 20, new detections  : 35, cost  : 23, assignment : 1
+Current Targets: 1
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 1
+10,20,261,176,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 20, new detections  : 38, cost  : 134, assignment : 0
+track  : 20, new detections  : 39, cost  : 14, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+11,20,262,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 20, new detections  : 40, cost  : 130, assignment : 0
+track  : 20, new detections  : 41, cost  : 57, assignment : 0
+track  : 20, new detections  : 42, cost  : 159, assignment : 0
+track  : 20, new detections  : 43, cost  : 16, assignment : 1
+Current Targets: 1
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 1
+12,20,270,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 20, new detections  : 44, cost  : 135, assignment : 0
+track  : 20, new detections  : 45, cost  : 48, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+13,20,307,200,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 20, new detections  : 46, cost  : 166, assignment : 0
+track  : 20, new detections  : 47, cost  : 10000, assignment : 0
+track  : 20, new detections  : 48, cost  : 60, assignment : 1
+Current Targets: 1
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 1
+14,20,270,176,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 20, new detections  : 50, cost  : 157, assignment : 0
+track  : 20, new detections  : 51, cost  : 57, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 1
+Updated Targets: 1
+15,20,307,200,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 20, new detections  : 52, cost  : 161, assignment : 0
+track  : 20, new detections  : 53, cost  : 43, assignment : 0
+track  : 20, new detections  : 54, cost  : 10000, assignment : 0
+track  : 20, new detections  : 55, cost  : 5, assignment : 1
+track  : 50, new detections  : 52, cost  : 9, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+16,20,307,200,47,108,1,-1,-1,-1
+16,50,199,227,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 20, new detections  : 56, cost  : 163, assignment : 0
+track  : 20, new detections  : 57, cost  : 10000, assignment : 0
+track  : 20, new detections  : 58, cost  : 10000, assignment : 0
+track  : 20, new detections  : 59, cost  : 117, assignment : 0
+track  : 20, new detections  : 60, cost  : 21, assignment : 1
+track  : 50, new detections  : 56, cost  : 15, assignment : 1
+Current Targets: 2
+New Detections: 6
+New Born Targets: 1
+Updated Targets: 2
+17,20,308,204,43,99,1,-1,-1,-1
+17,50,199,237,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 20, new detections  : 62, cost  : 164, assignment : 0
+track  : 20, new detections  : 63, cost  : 93, assignment : 0
+track  : 50, new detections  : 62, cost  : 6, assignment : 1
+track  : 59, new detections  : 50, cost  : 185, assignment : 0
+track  : 59, new detections  : 63, cost  : 6, assignment : 1
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+18,20,307,202,42,100,1,-1,-1,-1
+18,50,195,237,26,59,1,-1,-1,-1
+18,59,369,214,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 20, new detections  : 64, cost  : 156, assignment : 0
+track  : 20, new detections  : 65, cost  : 100, assignment : 0
+track  : 50, new detections  : 64, cost  : 15, assignment : 1
+track  : 59, new detections  : 50, cost  : 181, assignment : 0
+track  : 59, new detections  : 65, cost  : 14, assignment : 1
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+19,20,304,207,37,101,1,-1,-1,-1
+19,50,190,232,28,64,1,-1,-1,-1
+19,59,373,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 66, cost  : 22, assignment : 1
+track  : 59, new detections  : 50, cost  : 189, assignment : 0
+track  : 59, new detections  : 67, cost  : 10000, assignment : 0
+track  : 59, new detections  : 68, cost  : 14, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+20,50,185,223,33,76,1,-1,-1,-1
+20,59,373,214,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 70, cost  : 18, assignment : 1
+track  : 59, new detections  : 50, cost  : 194, assignment : 0
+track  : 59, new detections  : 71, cost  : 10000, assignment : 0
+track  : 59, new detections  : 72, cost  : 68, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 2
+21,50,186,232,28,64,1,-1,-1,-1
+21,59,321,245,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 75, cost  : 17, assignment : 1
+track  : 59, new detections  : 50, cost  : 148, assignment : 0
+track  : 59, new detections  : 76, cost  : 89, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 2
+22,50,184,224,30,69,1,-1,-1,-1
+22,59,310,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 80, cost  : 14, assignment : 1
+track  : 59, new detections  : 50, cost  : 196, assignment : 0
+track  : 59, new detections  : 81, cost  : 11, assignment : 1
+track  : 77, new detections  : 50, cost  : 171, assignment : 0
+track  : 77, new detections  : 59, cost  : 51, assignment : 0
+track  : 77, new detections  : 82, cost  : 0, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+23,50,179,229,30,69,1,-1,-1,-1
+23,59,310,193,52,118,1,-1,-1,-1
+23,77,270,176,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 85, cost  : 193, assignment : 0
+track  : 50, new detections  : 86, cost  : 20, assignment : 1
+track  : 59, new detections  : 85, cost  : 5, assignment : 1
+track  : 77, new detections  : 59, cost  : 43, assignment : 0
+track  : 77, new detections  : 50, cost  : 167, assignment : 0
+track  : 77, new detections  : 87, cost  : 14, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 3
+24,50,174,217,33,76,1,-1,-1,-1
+24,59,310,193,52,118,1,-1,-1,-1
+24,77,270,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 91, cost  : 187, assignment : 0
+track  : 50, new detections  : 92, cost  : 10, assignment : 1
+track  : 59, new detections  : 91, cost  : 8, assignment : 1
+track  : 77, new detections  : 59, cost  : 40, assignment : 0
+track  : 77, new detections  : 50, cost  : 150, assignment : 0
+track  : 77, new detections  : 93, cost  : 6, assignment : 1
+Current Targets: 3
+New Detections: 7
+New Born Targets: 0
+Updated Targets: 3
+25,50,169,215,36,83,1,-1,-1,-1
+25,59,310,193,52,118,1,-1,-1,-1
+25,77,270,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 98, cost  : 13, assignment : 1
+track  : 59, new detections  : 50, cost  : 198, assignment : 0
+track  : 59, new detections  : 99, cost  : 8, assignment : 1
+track  : 77, new detections  : 50, cost  : 154, assignment : 0
+track  : 77, new detections  : 59, cost  : 41, assignment : 0
+track  : 77, new detections  : 100, cost  : 10000, assignment : 0
+track  : 77, new detections  : 101, cost  : 4, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 3
+26,50,163,215,36,83,1,-1,-1,-1
+26,59,310,193,52,118,1,-1,-1,-1
+26,77,270,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 50, new detections  : 104, cost  : 12, assignment : 1
+track  : 59, new detections  : 50, cost  : 10000, assignment : 0
+track  : 59, new detections  : 105, cost  : 99, assignment : 1
+track  : 77, new detections  : 50, cost  : 158, assignment : 0
+track  : 77, new detections  : 59, cost  : 129, assignment : 0
+track  : 77, new detections  : 106, cost  : 10000, assignment : 0
+track  : 77, new detections  : 107, cost  : 11, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 1
+Updated Targets: 3
+27,50,157,215,36,83,1,-1,-1,-1
+27,59,323,253,26,59,1,-1,-1,-1
+27,77,261,176,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 50, new detections  : 108, cost  : 16, assignment : 1
+track  : 59, new detections  : 50, cost  : 195, assignment : 0
+track  : 59, new detections  : 109, cost  : 105, assignment : 1
+track  : 77, new detections  : 50, cost  : 168, assignment : 0
+track  : 77, new detections  : 59, cost  : 62, assignment : 0
+track  : 77, new detections  : 110, cost  : 6, assignment : 1
+track  : 106, new detections  : 50, cost  : 10000, assignment : 0
+track  : 106, new detections  : 59, cost  : 10000, assignment : 0
+track  : 106, new detections  : 77, cost  : 10000, assignment : 0
+track  : 106, new detections  : 111, cost  : 10000, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+28,50,152,221,36,83,1,-1,-1,-1
+28,59,310,185,52,118,1,-1,-1,-1
+28,77,261,176,56,129,1,-1,-1,-1
+28,106,99,209,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 50, new detections  : 112, cost  : 11, assignment : 1
+track  : 59, new detections  : 50, cost  : 10000, assignment : 0
+track  : 59, new detections  : 113, cost  : 3, assignment : 1
+track  : 77, new detections  : 50, cost  : 159, assignment : 0
+track  : 77, new detections  : 59, cost  : 61, assignment : 0
+track  : 106, new detections  : 50, cost  : 93, assignment : 0
+track  : 106, new detections  : 59, cost  : 10000, assignment : 0
+Current Targets: 4
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 4
+29,50,152,221,36,83,1,-1,-1,-1
+29,59,310,185,52,118,1,-1,-1,-1
+29,77,257,173,51,125,1,-1,-1,-1
+29,106,97,209,24,58,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 114, cost  : 10, assignment : 1
+track  : 59, new detections  : 50, cost  : 10000, assignment : 0
+track  : 59, new detections  : 115, cost  : 20, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+30,50,146,221,36,83,1,-1,-1,-1
+30,59,318,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 118, cost  : 188, assignment : 0
+track  : 50, new detections  : 119, cost  : 52, assignment : 1
+track  : 59, new detections  : 118, cost  : 58, assignment : 0
+track  : 59, new detections  : 50, cost  : 186, assignment : 0
+track  : 59, new detections  : 120, cost  : 20, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+31,50,134,193,52,118,1,-1,-1,-1
+31,59,313,176,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 121, cost  : 5, assignment : 1
+track  : 59, new detections  : 50, cost  : 187, assignment : 0
+track  : 59, new detections  : 122, cost  : 58, assignment : 0
+track  : 59, new detections  : 123, cost  : 20, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+32,50,134,193,52,118,1,-1,-1,-1
+32,59,318,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 124, cost  : 56, assignment : 1
+track  : 59, new detections  : 50, cost  : 10000, assignment : 0
+track  : 59, new detections  : 125, cost  : 8, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+33,50,135,227,36,83,1,-1,-1,-1
+33,59,318,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 128, cost  : 8, assignment : 1
+track  : 59, new detections  : 50, cost  : 10000, assignment : 0
+track  : 59, new detections  : 129, cost  : 54, assignment : 0
+track  : 59, new detections  : 130, cost  : 17, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 2
+34,50,135,227,36,83,1,-1,-1,-1
+34,59,313,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 133, cost  : 26, assignment : 0
+track  : 50, new detections  : 134, cost  : 92, assignment : 1
+track  : 59, new detections  : 133, cost  : 10000, assignment : 0
+track  : 59, new detections  : 50, cost  : 10000, assignment : 0
+track  : 59, new detections  : 135, cost  : 54, assignment : 1
+track  : 129, new detections  : 133, cost  : 190, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+35,50,73,210,28,64,1,-1,-1,-1
+35,59,261,184,56,129,1,-1,-1,-1
+35,129,120,217,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 136, cost  : 86, assignment : 0
+track  : 50, new detections  : 137, cost  : 11, assignment : 1
+track  : 59, new detections  : 136, cost  : 188, assignment : 0
+track  : 59, new detections  : 50, cost  : 10000, assignment : 0
+track  : 59, new detections  : 138, cost  : 125, assignment : 1
+track  : 129, new detections  : 136, cost  : 8, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+36,50,69,214,28,64,1,-1,-1,-1
+36,59,321,248,30,69,1,-1,-1,-1
+36,129,113,224,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 139, cost  : 10000, assignment : 0
+track  : 50, new detections  : 140, cost  : 12, assignment : 1
+track  : 59, new detections  : 139, cost  : 81, assignment : 1
+track  : 129, new detections  : 59, cost  : 10000, assignment : 0
+track  : 129, new detections  : 50, cost  : 110, assignment : 0
+track  : 129, new detections  : 141, cost  : 28, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+37,50,60,210,28,64,1,-1,-1,-1
+37,59,310,193,52,118,1,-1,-1,-1
+37,129,110,209,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 142, cost  : 7, assignment : 1
+track  : 59, new detections  : 50, cost  : 10000, assignment : 0
+track  : 59, new detections  : 143, cost  : 10000, assignment : 0
+track  : 59, new detections  : 144, cost  : 14, assignment : 1
+track  : 129, new detections  : 50, cost  : 140, assignment : 0
+track  : 129, new detections  : 143, cost  : 23, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+38,50,60,210,28,64,1,-1,-1,-1
+38,59,305,184,56,129,1,-1,-1,-1
+38,129,102,209,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 147, cost  : 10000, assignment : 0
+track  : 50, new detections  : 148, cost  : 106, assignment : 0
+track  : 50, new detections  : 149, cost  : 12, assignment : 1
+track  : 59, new detections  : 147, cost  : 51, assignment : 1
+track  : 129, new detections  : 59, cost  : 184, assignment : 0
+track  : 129, new detections  : 148, cost  : 7, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+39,50,56,205,30,69,1,-1,-1,-1
+39,59,261,176,56,129,1,-1,-1,-1
+39,129,94,209,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 151, cost  : 10000, assignment : 0
+track  : 50, new detections  : 152, cost  : 116, assignment : 0
+track  : 50, new detections  : 153, cost  : 4, assignment : 1
+track  : 59, new detections  : 151, cost  : 10, assignment : 1
+track  : 129, new detections  : 59, cost  : 167, assignment : 0
+track  : 129, new detections  : 152, cost  : 19, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+40,50,51,205,30,69,1,-1,-1,-1
+40,59,261,184,56,129,1,-1,-1,-1
+40,129,94,209,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 155, cost  : 10000, assignment : 0
+track  : 50, new detections  : 156, cost  : 9, assignment : 1
+track  : 59, new detections  : 155, cost  : 9, assignment : 1
+track  : 129, new detections  : 59, cost  : 177, assignment : 0
+track  : 129, new detections  : 50, cost  : 116, assignment : 0
+track  : 129, new detections  : 157, cost  : 18, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+41,50,45,202,33,76,1,-1,-1,-1
+41,59,261,184,56,129,1,-1,-1,-1
+41,129,85,202,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 159, cost  : 10000, assignment : 0
+track  : 50, new detections  : 160, cost  : 112, assignment : 0
+track  : 50, new detections  : 161, cost  : 148, assignment : 0
+track  : 50, new detections  : 162, cost  : 10000, assignment : 0
+track  : 50, new detections  : 163, cost  : 15, assignment : 1
+track  : 59, new detections  : 159, cost  : 9, assignment : 1
+track  : 129, new detections  : 59, cost  : 186, assignment : 0
+track  : 129, new detections  : 160, cost  : 11, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+42,50,46,205,30,69,1,-1,-1,-1
+42,59,261,184,56,129,1,-1,-1,-1
+42,129,85,202,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 164, cost  : 118, assignment : 0
+track  : 50, new detections  : 165, cost  : 10, assignment : 1
+track  : 59, new detections  : 164, cost  : 193, assignment : 0
+track  : 59, new detections  : 50, cost  : 10000, assignment : 0
+track  : 59, new detections  : 166, cost  : 10, assignment : 1
+track  : 129, new detections  : 164, cost  : 10, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+43,50,41,205,30,69,1,-1,-1,-1
+43,59,261,184,56,129,1,-1,-1,-1
+43,129,77,202,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 168, cost  : 133, assignment : 0
+track  : 50, new detections  : 169, cost  : 10000, assignment : 0
+track  : 50, new detections  : 170, cost  : 10000, assignment : 0
+track  : 50, new detections  : 171, cost  : 18, assignment : 1
+track  : 59, new detections  : 168, cost  : 10000, assignment : 0
+track  : 59, new detections  : 169, cost  : 8, assignment : 1
+track  : 129, new detections  : 168, cost  : 22, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+44,50,40,197,33,76,1,-1,-1,-1
+44,59,261,184,56,129,1,-1,-1,-1
+44,129,64,193,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 172, cost  : 128, assignment : 0
+track  : 50, new detections  : 173, cost  : 10000, assignment : 0
+track  : 50, new detections  : 174, cost  : 14, assignment : 1
+track  : 59, new detections  : 172, cost  : 10000, assignment : 0
+track  : 59, new detections  : 173, cost  : 9, assignment : 1
+track  : 129, new detections  : 172, cost  : 13, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+45,50,35,197,33,76,1,-1,-1,-1
+45,59,261,176,56,129,1,-1,-1,-1
+45,129,64,203,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 176, cost  : 112, assignment : 0
+track  : 50, new detections  : 177, cost  : 10000, assignment : 0
+track  : 50, new detections  : 178, cost  : 12, assignment : 1
+track  : 59, new detections  : 176, cost  : 10000, assignment : 0
+track  : 59, new detections  : 177, cost  : 9, assignment : 1
+track  : 129, new detections  : 176, cost  : 18, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+46,50,30,197,33,76,1,-1,-1,-1
+46,59,261,176,56,129,1,-1,-1,-1
+46,129,59,211,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 50, new detections  : 180, cost  : 118, assignment : 0
+track  : 50, new detections  : 181, cost  : 10000, assignment : 0
+track  : 50, new detections  : 182, cost  : 10000, assignment : 1
+track  : 59, new detections  : 180, cost  : 10000, assignment : 0
+track  : 59, new detections  : 181, cost  : 6, assignment : 1
+track  : 129, new detections  : 180, cost  : 20, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+47,50,321,245,28,64,1,-1,-1,-1
+47,59,261,176,56,129,1,-1,-1,-1
+47,129,45,203,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 50, new detections  : 183, cost  : 10000, assignment : 0
+track  : 50, new detections  : 184, cost  : 129, assignment : 0
+track  : 50, new detections  : 185, cost  : 124, assignment : 1
+track  : 59, new detections  : 183, cost  : 10000, assignment : 0
+track  : 59, new detections  : 184, cost  : 8, assignment : 1
+track  : 129, new detections  : 183, cost  : 61, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+48,50,294,164,62,141,1,-1,-1,-1
+48,59,261,176,56,129,1,-1,-1,-1
+48,129,22,174,80,181,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 50, new detections  : 186, cost  : 10000, assignment : 0
+track  : 50, new detections  : 187, cost  : 41, assignment : 0
+track  : 50, new detections  : 188, cost  : 44, assignment : 1
+track  : 59, new detections  : 186, cost  : 10000, assignment : 0
+track  : 59, new detections  : 187, cost  : 21, assignment : 1
+track  : 129, new detections  : 186, cost  : 59, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+49,50,302,193,52,118,1,-1,-1,-1
+49,59,256,174,62,141,1,-1,-1,-1
+49,129,18,210,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 50, new detections  : 189, cost  : 8, assignment : 1
+track  : 59, new detections  : 50, cost  : 70, assignment : 0
+track  : 59, new detections  : 190, cost  : 5, assignment : 1
+track  : 129, new detections  : 50, cost  : 10000, assignment : 0
+track  : 129, new detections  : 59, cost  : 10000, assignment : 0
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+50,50,302,193,52,118,1,-1,-1,-1
+50,59,256,174,62,141,1,-1,-1,-1
+50,129,19,207,69,149,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 50, new detections  : 191, cost  : 166, assignment : 0
+track  : 59, new detections  : 191, cost  : 140, assignment : 1
+track  : 129, new detections  : 59, cost  : 165, assignment : 0
+Current Targets: 3
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 3
+51,50,305,190,48,118,1,-1,-1,-1
+51,59,142,169,52,118,1,-1,-1,-1
+51,129,16,204,76,151,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+52,50,309,189,46,117,1,-1,-1,-1
+52,59,139,169,51,122,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+53,59,138,164,54,121,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+54,59,139,169,57,118,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 59, new detections  : 192, cost  : 142, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+55,59,270,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 59, new detections  : 193, cost  : 35, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+56,59,270,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 59, new detections  : 194, cost  : 41, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+57,59,270,176,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 59, new detections  : 195, cost  : 25, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+58,59,278,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 59, new detections  : 196, cost  : 35, assignment : 0
+track  : 59, new detections  : 197, cost  : 7, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+59,59,270,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 59, new detections  : 198, cost  : 18, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+60,59,275,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 2
+track  : 59, new detections  : 200, cost  : 141, assignment : 0
+track  : 59, new detections  : 201, cost  : 9, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+61,59,275,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 59, new detections  : 203, cost  : 137, assignment : 0
+track  : 59, new detections  : 204, cost  : 4, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+62,59,275,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+Current Targets: 0
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 0
+----------------------------------------
+Target number: 4
+Current Targets: 0
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 0
+----------------------------------------
+Target number: 4
+Current Targets: 0
+New Detections: 2
+New Born Targets: 2
+Updated Targets: 0
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 210, cost  : 0, assignment : 1
+track  : 209, new detections  : 208, cost  : 146, assignment : 0
+track  : 209, new detections  : 211, cost  : 24, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+66,208,243,213,26,59,1,-1,-1,-1
+66,209,314,193,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+67,208,242,216,21,63,1,-1,-1,-1
+67,209,313,194,44,108,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 213, cost  : 19, assignment : 1
+track  : 209, new detections  : 208, cost  : 136, assignment : 0
+Current Targets: 2
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 2
+68,208,239,213,26,59,1,-1,-1,-1
+68,209,311,194,46,109,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 214, cost  : 7, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+69,208,239,217,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 217, cost  : 144, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+70,208,275,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 219, cost  : 47, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+71,208,313,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 220, cost  : 25, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+72,208,318,201,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 223, cost  : 5, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+73,208,318,201,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 225, cost  : 15, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+74,208,326,201,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 227, cost  : 68, assignment : 0
+track  : 208, new detections  : 228, cost  : 82, assignment : 0
+track  : 208, new detections  : 229, cost  : 17, assignment : 1
+Current Targets: 1
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 1
+75,208,322,193,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 231, cost  : 6, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 1
+Updated Targets: 1
+76,208,322,193,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 234, cost  : 27, assignment : 0
+track  : 208, new detections  : 235, cost  : 10000, assignment : 0
+track  : 208, new detections  : 236, cost  : 88, assignment : 1
+track  : 232, new detections  : 234, cost  : 72, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+77,208,395,193,47,108,1,-1,-1,-1
+77,232,334,201,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+78,208,395,195,47,110,1,-1,-1,-1
+78,232,334,199,53,117,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 208, new detections  : 237, cost  : 63, assignment : 0
+track  : 208, new detections  : 238, cost  : 130, assignment : 0
+track  : 208, new detections  : 239, cost  : 14, assignment : 1
+track  : 232, new detections  : 237, cost  : 22, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+79,208,395,193,47,108,1,-1,-1,-1
+79,232,340,193,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 208, new detections  : 240, cost  : 10000, assignment : 0
+track  : 208, new detections  : 241, cost  : 10000, assignment : 1
+track  : 232, new detections  : 240, cost  : 10000, assignment : 0
+track  : 232, new detections  : 208, cost  : 10000, assignment : 0
+track  : 232, new detections  : 242, cost  : 121, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+80,208,187,217,26,59,1,-1,-1,-1
+80,232,321,193,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 208, new detections  : 243, cost  : 53, assignment : 0
+track  : 208, new detections  : 244, cost  : 166, assignment : 0
+track  : 208, new detections  : 245, cost  : 9, assignment : 1
+track  : 232, new detections  : 243, cost  : 105, assignment : 0
+track  : 232, new detections  : 244, cost  : 17, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+81,208,187,217,26,59,1,-1,-1,-1
+81,232,324,192,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 208, new detections  : 247, cost  : 51, assignment : 1
+track  : 232, new detections  : 208, cost  : 120, assignment : 0
+track  : 232, new detections  : 248, cost  : 21, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+82,208,227,221,26,59,1,-1,-1,-1
+82,232,325,193,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 208, new detections  : 249, cost  : 10, assignment : 1
+track  : 232, new detections  : 208, cost  : 101, assignment : 0
+track  : 232, new detections  : 250, cost  : 8, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+83,208,231,221,26,59,1,-1,-1,-1
+83,232,325,193,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 208, new detections  : 251, cost  : 12, assignment : 1
+track  : 232, new detections  : 208, cost  : 100, assignment : 0
+track  : 232, new detections  : 252, cost  : 97, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 1
+Updated Targets: 2
+84,208,227,225,26,59,1,-1,-1,-1
+84,232,296,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 208, new detections  : 255, cost  : 171, assignment : 0
+track  : 208, new detections  : 256, cost  : 6, assignment : 1
+track  : 232, new detections  : 255, cost  : 22, assignment : 0
+track  : 232, new detections  : 208, cost  : 150, assignment : 0
+track  : 232, new detections  : 257, cost  : 195, assignment : 1
+track  : 253, new detections  : 255, cost  : 144, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+85,208,225,219,28,64,1,-1,-1,-1
+85,232,174,210,30,69,1,-1,-1,-1
+85,253,294,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 208, new detections  : 258, cost  : 176, assignment : 0
+track  : 208, new detections  : 259, cost  : 13, assignment : 1
+track  : 232, new detections  : 258, cost  : 10000, assignment : 0
+track  : 232, new detections  : 208, cost  : 61, assignment : 0
+track  : 232, new detections  : 260, cost  : 13, assignment : 1
+track  : 253, new detections  : 258, cost  : 6, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+86,208,225,223,28,64,1,-1,-1,-1
+86,232,174,214,30,69,1,-1,-1,-1
+86,253,294,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 208, new detections  : 261, cost  : 171, assignment : 0
+track  : 208, new detections  : 262, cost  : 53, assignment : 0
+track  : 208, new detections  : 263, cost  : 8, assignment : 1
+track  : 232, new detections  : 261, cost  : 10000, assignment : 0
+track  : 232, new detections  : 262, cost  : 12, assignment : 1
+track  : 253, new detections  : 261, cost  : 14, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+87,208,222,219,30,69,1,-1,-1,-1
+87,232,173,223,28,64,1,-1,-1,-1
+87,253,294,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 208, new detections  : 264, cost  : 167, assignment : 0
+track  : 208, new detections  : 265, cost  : 12, assignment : 0
+track  : 208, new detections  : 266, cost  : 53, assignment : 1
+track  : 232, new detections  : 264, cost  : 10000, assignment : 0
+track  : 232, new detections  : 265, cost  : 61, assignment : 1
+track  : 253, new detections  : 264, cost  : 23, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+88,208,273,223,28,64,1,-1,-1,-1
+88,232,223,229,26,59,1,-1,-1,-1
+88,253,294,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 208, new detections  : 267, cost  : 113, assignment : 0
+track  : 208, new detections  : 268, cost  : 9, assignment : 1
+track  : 232, new detections  : 267, cost  : 171, assignment : 0
+track  : 232, new detections  : 208, cost  : 54, assignment : 0
+track  : 253, new detections  : 267, cost  : 1, assignment : 1
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+89,208,273,223,28,64,1,-1,-1,-1
+89,232,222,228,29,67,1,-1,-1,-1
+89,253,294,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 208, new detections  : 269, cost  : 125, assignment : 0
+track  : 208, new detections  : 270, cost  : 106, assignment : 1
+track  : 253, new detections  : 269, cost  : 7, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+90,208,360,243,33,76,1,-1,-1,-1
+90,253,294,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 208, new detections  : 271, cost  : 125, assignment : 0
+track  : 253, new detections  : 271, cost  : 21, assignment : 1
+Current Targets: 2
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 2
+91,208,359,247,32,69,1,-1,-1,-1
+91,253,296,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 253, new detections  : 272, cost  : 11, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 1
+Updated Targets: 1
+92,253,296,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 274, cost  : 118, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 1
+Updated Targets: 1
+93,273,164,214,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 276, cost  : 10000, assignment : 0
+track  : 273, new detections  : 277, cost  : 10000, assignment : 1
+track  : 275, new detections  : 276, cost  : 15, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+94,273,296,184,56,129,1,-1,-1,-1
+94,275,357,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 278, cost  : 25, assignment : 1
+track  : 275, new detections  : 273, cost  : 76, assignment : 0
+track  : 275, new detections  : 279, cost  : 10000, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+95,273,294,164,62,141,1,-1,-1,-1
+95,275,156,214,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 280, cost  : 17, assignment : 1
+track  : 275, new detections  : 273, cost  : 10000, assignment : 0
+track  : 275, new detections  : 281, cost  : 10000, assignment : 0
+track  : 275, new detections  : 282, cost  : 13, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+96,273,303,164,62,141,1,-1,-1,-1
+96,275,156,214,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 284, cost  : 69, assignment : 0
+track  : 273, new detections  : 285, cost  : 10, assignment : 1
+track  : 275, new detections  : 284, cost  : 10000, assignment : 0
+track  : 275, new detections  : 273, cost  : 10000, assignment : 0
+track  : 275, new detections  : 286, cost  : 18, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 1
+Updated Targets: 2
+97,273,303,164,62,141,1,-1,-1,-1
+97,275,154,202,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 287, cost  : 79, assignment : 0
+track  : 273, new detections  : 288, cost  : 4, assignment : 1
+track  : 275, new detections  : 287, cost  : 10000, assignment : 0
+track  : 275, new detections  : 273, cost  : 10000, assignment : 0
+track  : 275, new detections  : 289, cost  : 10, assignment : 1
+track  : 284, new detections  : 287, cost  : 8, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+98,273,303,164,62,141,1,-1,-1,-1
+98,275,148,202,33,76,1,-1,-1,-1
+98,284,366,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 291, cost  : 90, assignment : 0
+track  : 273, new detections  : 292, cost  : 28, assignment : 1
+track  : 275, new detections  : 291, cost  : 10000, assignment : 0
+track  : 275, new detections  : 273, cost  : 10000, assignment : 0
+track  : 275, new detections  : 293, cost  : 57, assignment : 1
+track  : 284, new detections  : 291, cost  : 14, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+99,273,305,167,56,129,1,-1,-1,-1
+99,275,205,202,33,76,1,-1,-1,-1
+99,284,366,193,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 294, cost  : 76, assignment : 0
+track  : 273, new detections  : 295, cost  : 21, assignment : 1
+track  : 275, new detections  : 294, cost  : 10000, assignment : 0
+track  : 275, new detections  : 273, cost  : 187, assignment : 0
+track  : 275, new detections  : 296, cost  : 7, assignment : 1
+track  : 284, new detections  : 294, cost  : 28, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+100,273,303,164,62,141,1,-1,-1,-1
+100,275,200,202,33,76,1,-1,-1,-1
+100,284,366,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 298, cost  : 181, assignment : 0
+track  : 273, new detections  : 299, cost  : 91, assignment : 0
+track  : 273, new detections  : 300, cost  : 6, assignment : 1
+track  : 275, new detections  : 298, cost  : 11, assignment : 1
+track  : 284, new detections  : 275, cost  : 10000, assignment : 0
+track  : 284, new detections  : 299, cost  : 4, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+101,273,303,164,62,141,1,-1,-1,-1
+101,275,197,198,36,83,1,-1,-1,-1
+101,284,366,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 303, cost  : 184, assignment : 0
+track  : 273, new detections  : 304, cost  : 86, assignment : 0
+track  : 273, new detections  : 305, cost  : 123, assignment : 0
+track  : 273, new detections  : 306, cost  : 8, assignment : 1
+track  : 275, new detections  : 303, cost  : 8, assignment : 1
+track  : 284, new detections  : 275, cost  : 10000, assignment : 0
+track  : 284, new detections  : 304, cost  : 6, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 3
+102,273,303,164,62,141,1,-1,-1,-1
+102,275,191,193,36,83,1,-1,-1,-1
+102,284,366,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 308, cost  : 82, assignment : 0
+track  : 273, new detections  : 309, cost  : 113, assignment : 1
+track  : 275, new detections  : 308, cost  : 10000, assignment : 0
+track  : 275, new detections  : 273, cost  : 155, assignment : 0
+track  : 275, new detections  : 310, cost  : 22, assignment : 1
+track  : 284, new detections  : 308, cost  : 6, assignment : 1
+track  : 305, new detections  : 284, cost  : 159, assignment : 0
+track  : 305, new detections  : 273, cost  : 69, assignment : 0
+track  : 305, new detections  : 275, cost  : 103, assignment : 0
+track  : 305, new detections  : 311, cost  : 8, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+103,273,335,181,26,59,1,-1,-1,-1
+103,275,191,198,36,83,1,-1,-1,-1
+103,284,366,193,52,118,1,-1,-1,-1
+103,305,274,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 312, cost  : 71, assignment : 0
+track  : 273, new detections  : 313, cost  : 10000, assignment : 0
+track  : 273, new detections  : 314, cost  : 120, assignment : 0
+track  : 273, new detections  : 315, cost  : 105, assignment : 1
+track  : 275, new detections  : 312, cost  : 103, assignment : 0
+track  : 275, new detections  : 313, cost  : 61, assignment : 1
+track  : 284, new detections  : 312, cost  : 165, assignment : 0
+track  : 284, new detections  : 275, cost  : 10000, assignment : 0
+track  : 284, new detections  : 314, cost  : 9, assignment : 1
+track  : 305, new detections  : 312, cost  : 7, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+104,273,305,176,56,129,1,-1,-1,-1
+104,275,129,198,36,83,1,-1,-1,-1
+104,284,358,193,52,118,1,-1,-1,-1
+104,305,273,214,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 273, new detections  : 316, cost  : 182, assignment : 0
+track  : 273, new detections  : 317, cost  : 10000, assignment : 0
+track  : 275, new detections  : 316, cost  : 56, assignment : 0
+track  : 275, new detections  : 317, cost  : 8, assignment : 1
+track  : 284, new detections  : 316, cost  : 10000, assignment : 0
+track  : 284, new detections  : 275, cost  : 10000, assignment : 0
+track  : 305, new detections  : 316, cost  : 122, assignment : 1
+Current Targets: 4
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 4
+105,273,307,171,61,127,1,-1,-1,-1
+105,275,123,198,36,83,1,-1,-1,-1
+105,284,354,192,53,117,1,-1,-1,-1
+105,305,177,192,40,90,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 275, new detections  : 318, cost  : 10000, assignment : 0
+track  : 275, new detections  : 319, cost  : 10000, assignment : 0
+track  : 275, new detections  : 320, cost  : 22, assignment : 1
+track  : 305, new detections  : 318, cost  : 10000, assignment : 0
+track  : 305, new detections  : 319, cost  : 10000, assignment : 0
+track  : 305, new detections  : 275, cost  : 70, assignment : 0
+track  : 305, new detections  : 321, cost  : 106, assignment : 0
+track  : 305, new detections  : 322, cost  : 10, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 2
+106,275,112,198,36,83,1,-1,-1,-1
+106,305,171,192,40,90,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 275, new detections  : 323, cost  : 10000, assignment : 0
+track  : 275, new detections  : 324, cost  : 10000, assignment : 0
+track  : 275, new detections  : 325, cost  : 173, assignment : 0
+track  : 275, new detections  : 326, cost  : 5, assignment : 1
+track  : 305, new detections  : 323, cost  : 10000, assignment : 0
+track  : 305, new detections  : 324, cost  : 181, assignment : 1
+track  : 321, new detections  : 323, cost  : 146, assignment : 0
+track  : 321, new detections  : 305, cost  : 105, assignment : 0
+track  : 321, new detections  : 325, cost  : 14, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+107,275,112,198,36,83,1,-1,-1,-1
+107,305,296,176,56,129,1,-1,-1,-1
+107,321,264,219,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 275, new detections  : 327, cost  : 11, assignment : 1
+track  : 305, new detections  : 275, cost  : 10000, assignment : 0
+track  : 305, new detections  : 328, cost  : 3, assignment : 1
+track  : 321, new detections  : 275, cost  : 188, assignment : 0
+track  : 321, new detections  : 305, cost  : 117, assignment : 0
+track  : 321, new detections  : 329, cost  : 157, assignment : 0
+track  : 321, new detections  : 330, cost  : 13, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+108,275,103,198,40,90,1,-1,-1,-1
+108,305,296,176,56,129,1,-1,-1,-1
+108,321,260,214,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 275, new detections  : 331, cost  : 10000, assignment : 0
+track  : 275, new detections  : 332, cost  : 10000, assignment : 0
+track  : 275, new detections  : 333, cost  : 19, assignment : 1
+track  : 305, new detections  : 331, cost  : 66, assignment : 0
+track  : 305, new detections  : 332, cost  : 10, assignment : 1
+track  : 321, new detections  : 331, cost  : 148, assignment : 0
+track  : 321, new detections  : 305, cost  : 117, assignment : 0
+track  : 321, new detections  : 275, cost  : 184, assignment : 0
+track  : 321, new detections  : 334, cost  : 18, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+109,275,91,198,40,90,1,-1,-1,-1
+109,305,296,176,56,129,1,-1,-1,-1
+109,321,246,212,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 275, new detections  : 335, cost  : 10000, assignment : 0
+track  : 275, new detections  : 336, cost  : 10000, assignment : 0
+track  : 275, new detections  : 337, cost  : 19, assignment : 1
+track  : 305, new detections  : 335, cost  : 8, assignment : 1
+track  : 321, new detections  : 305, cost  : 123, assignment : 0
+track  : 321, new detections  : 336, cost  : 166, assignment : 0
+track  : 321, new detections  : 275, cost  : 171, assignment : 0
+track  : 321, new detections  : 338, cost  : 14, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+110,275,85,198,40,90,1,-1,-1,-1
+110,305,296,176,56,129,1,-1,-1,-1
+110,321,248,210,36,83,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 275, new detections  : 340, cost  : 8, assignment : 1
+track  : 305, new detections  : 275, cost  : 10000, assignment : 0
+track  : 305, new detections  : 341, cost  : 11, assignment : 1
+track  : 321, new detections  : 275, cost  : 171, assignment : 0
+track  : 321, new detections  : 305, cost  : 113, assignment : 0
+track  : 321, new detections  : 342, cost  : 132, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+111,275,85,204,40,90,1,-1,-1,-1
+111,305,296,176,56,129,1,-1,-1,-1
+111,321,344,193,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 275, new detections  : 343, cost  : 6, assignment : 1
+track  : 305, new detections  : 275, cost  : 10000, assignment : 0
+track  : 305, new detections  : 344, cost  : 4, assignment : 1
+track  : 321, new detections  : 275, cost  : 10000, assignment : 0
+track  : 321, new detections  : 305, cost  : 68, assignment : 0
+track  : 321, new detections  : 345, cost  : 10000, assignment : 0
+track  : 321, new detections  : 346, cost  : 144, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+112,275,78,204,40,90,1,-1,-1,-1
+112,305,296,176,56,129,1,-1,-1,-1
+112,321,250,219,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 275, new detections  : 348, cost  : 14, assignment : 1
+track  : 305, new detections  : 275, cost  : 10000, assignment : 0
+track  : 305, new detections  : 349, cost  : 8, assignment : 1
+track  : 321, new detections  : 275, cost  : 10000, assignment : 0
+track  : 321, new detections  : 305, cost  : 121, assignment : 0
+track  : 321, new detections  : 350, cost  : 152, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+113,275,72,197,43,99,1,-1,-1,-1
+113,305,296,176,56,129,1,-1,-1,-1
+113,321,342,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 275, new detections  : 352, cost  : 5, assignment : 1
+track  : 305, new detections  : 275, cost  : 10000, assignment : 0
+track  : 305, new detections  : 353, cost  : 24, assignment : 1
+track  : 321, new detections  : 275, cost  : 10000, assignment : 0
+track  : 321, new detections  : 305, cost  : 72, assignment : 0
+track  : 321, new detections  : 354, cost  : 26, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+114,275,66,197,43,99,1,-1,-1,-1
+114,305,294,164,62,141,1,-1,-1,-1
+114,321,340,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 275, new detections  : 356, cost  : 10000, assignment : 0
+track  : 275, new detections  : 357, cost  : 32, assignment : 1
+track  : 305, new detections  : 356, cost  : 7, assignment : 1
+track  : 321, new detections  : 305, cost  : 58, assignment : 0
+track  : 321, new detections  : 275, cost  : 10000, assignment : 0
+track  : 321, new detections  : 358, cost  : 8, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+115,275,62,185,52,118,1,-1,-1,-1
+115,305,294,164,62,141,1,-1,-1,-1
+115,321,340,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 275, new detections  : 360, cost  : 10000, assignment : 0
+track  : 275, new detections  : 361, cost  : 19, assignment : 1
+track  : 305, new detections  : 360, cost  : 27, assignment : 1
+track  : 321, new detections  : 305, cost  : 44, assignment : 0
+track  : 321, new detections  : 275, cost  : 10000, assignment : 0
+track  : 321, new detections  : 362, cost  : 13, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+116,275,57,193,47,108,1,-1,-1,-1
+116,305,296,184,56,129,1,-1,-1,-1
+116,321,342,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 275, new detections  : 363, cost  : 10000, assignment : 0
+track  : 275, new detections  : 364, cost  : 23, assignment : 1
+track  : 305, new detections  : 363, cost  : 10, assignment : 1
+track  : 321, new detections  : 305, cost  : 57, assignment : 0
+track  : 321, new detections  : 275, cost  : 10000, assignment : 0
+track  : 321, new detections  : 365, cost  : 15, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+117,275,46,185,52,118,1,-1,-1,-1
+117,305,296,176,56,129,1,-1,-1,-1
+117,321,340,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 275, new detections  : 367, cost  : 13, assignment : 1
+track  : 305, new detections  : 275, cost  : 10000, assignment : 0
+track  : 305, new detections  : 368, cost  : 21, assignment : 1
+track  : 321, new detections  : 275, cost  : 10000, assignment : 0
+track  : 321, new detections  : 305, cost  : 50, assignment : 0
+track  : 321, new detections  : 369, cost  : 10000, assignment : 0
+track  : 321, new detections  : 370, cost  : 158, assignment : 0
+track  : 321, new detections  : 371, cost  : 11, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+118,275,38,185,52,118,1,-1,-1,-1
+118,305,294,164,62,141,1,-1,-1,-1
+118,321,340,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 275, new detections  : 372, cost  : 10000, assignment : 0
+track  : 275, new detections  : 373, cost  : 10000, assignment : 0
+track  : 275, new detections  : 374, cost  : 10000, assignment : 0
+track  : 275, new detections  : 375, cost  : 85, assignment : 0
+track  : 275, new detections  : 376, cost  : 12, assignment : 1
+track  : 305, new detections  : 372, cost  : 14, assignment : 1
+track  : 321, new detections  : 305, cost  : 77, assignment : 0
+track  : 321, new detections  : 373, cost  : 156, assignment : 0
+track  : 321, new detections  : 374, cost  : 14, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 3
+119,275,38,193,52,118,1,-1,-1,-1
+119,305,291,158,68,154,1,-1,-1,-1
+119,321,342,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 275, new detections  : 377, cost  : 10000, assignment : 0
+track  : 275, new detections  : 378, cost  : 14, assignment : 1
+track  : 305, new detections  : 377, cost  : 43, assignment : 1
+track  : 321, new detections  : 305, cost  : 66, assignment : 0
+track  : 321, new detections  : 275, cost  : 10000, assignment : 0
+track  : 321, new detections  : 379, cost  : 140, assignment : 0
+track  : 321, new detections  : 380, cost  : 10000, assignment : 0
+track  : 321, new detections  : 381, cost  : 22, assignment : 1
+track  : 373, new detections  : 305, cost  : 113, assignment : 0
+track  : 373, new detections  : 275, cost  : 10000, assignment : 0
+track  : 373, new detections  : 379, cost  : 13, assignment : 1
+Current Targets: 4
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 4
+120,275,22,193,52,118,1,-1,-1,-1
+120,305,287,176,56,129,1,-1,-1,-1
+120,321,331,184,56,129,1,-1,-1,-1
+120,373,232,216,40,90,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 275, new detections  : 382, cost  : 10000, assignment : 0
+track  : 275, new detections  : 383, cost  : 10000, assignment : 0
+track  : 275, new detections  : 384, cost  : 70, assignment : 0
+track  : 275, new detections  : 385, cost  : 22, assignment : 1
+track  : 305, new detections  : 382, cost  : 121, assignment : 0
+track  : 305, new detections  : 383, cost  : 8, assignment : 1
+track  : 321, new detections  : 382, cost  : 153, assignment : 1
+track  : 373, new detections  : 321, cost  : 17, assignment : 0
+track  : 373, new detections  : 305, cost  : 110, assignment : 0
+track  : 373, new detections  : 384, cost  : 178, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+121,275,7,193,56,129,1,-1,-1,-1
+121,305,287,176,56,129,1,-1,-1,-1
+121,321,231,215,36,83,1,-1,-1,-1
+121,373,85,193,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 275, new detections  : 386, cost  : 10000, assignment : 0
+track  : 275, new detections  : 387, cost  : 10000, assignment : 0
+track  : 305, new detections  : 386, cost  : 21, assignment : 1
+track  : 321, new detections  : 305, cost  : 117, assignment : 0
+track  : 321, new detections  : 387, cost  : 19, assignment : 1
+track  : 373, new detections  : 305, cost  : 10000, assignment : 0
+track  : 373, new detections  : 321, cost  : 164, assignment : 0
+Current Targets: 4
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 4
+122,275,7,191,59,132,1,-1,-1,-1
+122,305,275,174,62,141,1,-1,-1,-1
+122,321,214,216,40,90,1,-1,-1,-1
+122,373,84,194,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 275, new detections  : 388, cost  : 10000, assignment : 0
+track  : 275, new detections  : 389, cost  : 10000, assignment : 0
+track  : 275, new detections  : 390, cost  : 78, assignment : 0
+track  : 305, new detections  : 388, cost  : 19, assignment : 1
+track  : 321, new detections  : 305, cost  : 118, assignment : 0
+track  : 321, new detections  : 389, cost  : 9, assignment : 1
+track  : 373, new detections  : 305, cost  : 10000, assignment : 0
+track  : 373, new detections  : 321, cost  : 160, assignment : 0
+track  : 373, new detections  : 390, cost  : 60, assignment : 1
+Current Targets: 4
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 4
+123,275,5,197,59,130,1,-1,-1,-1
+123,305,265,174,62,141,1,-1,-1,-1
+123,321,208,216,40,90,1,-1,-1,-1
+123,373,50,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 305, new detections  : 391, cost  : 15, assignment : 1
+track  : 321, new detections  : 305, cost  : 117, assignment : 0
+track  : 321, new detections  : 392, cost  : 20, assignment : 1
+track  : 373, new detections  : 305, cost  : 10000, assignment : 0
+track  : 373, new detections  : 321, cost  : 10000, assignment : 0
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+124,305,256,174,62,141,1,-1,-1,-1
+124,321,197,221,36,83,1,-1,-1,-1
+124,373,44,170,68,155,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 305, new detections  : 393, cost  : 4, assignment : 1
+track  : 321, new detections  : 305, cost  : 145, assignment : 0
+track  : 321, new detections  : 394, cost  : 25, assignment : 1
+track  : 373, new detections  : 305, cost  : 10000, assignment : 0
+track  : 373, new detections  : 321, cost  : 10000, assignment : 0
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+125,305,256,174,62,141,1,-1,-1,-1
+125,321,194,210,43,99,1,-1,-1,-1
+125,373,44,169,73,160,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 305, new detections  : 395, cost  : 8, assignment : 1
+track  : 321, new detections  : 305, cost  : 116, assignment : 0
+track  : 321, new detections  : 396, cost  : 151, assignment : 0
+track  : 321, new detections  : 397, cost  : 19, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 1
+Updated Targets: 2
+126,305,256,174,62,141,1,-1,-1,-1
+126,321,182,208,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 305, new detections  : 398, cost  : 9, assignment : 1
+track  : 321, new detections  : 305, cost  : 125, assignment : 0
+track  : 321, new detections  : 399, cost  : 16, assignment : 1
+track  : 396, new detections  : 305, cost  : 138, assignment : 0
+track  : 396, new detections  : 321, cost  : 185, assignment : 0
+track  : 396, new detections  : 400, cost  : 5, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+127,305,256,174,62,141,1,-1,-1,-1
+127,321,174,193,52,118,1,-1,-1,-1
+127,396,308,249,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 305, new detections  : 401, cost  : 8, assignment : 1
+track  : 321, new detections  : 305, cost  : 116, assignment : 0
+track  : 321, new detections  : 402, cost  : 15, assignment : 1
+track  : 396, new detections  : 305, cost  : 131, assignment : 0
+track  : 396, new detections  : 321, cost  : 176, assignment : 0
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+128,305,256,174,62,141,1,-1,-1,-1
+128,321,174,201,52,118,1,-1,-1,-1
+128,396,305,250,28,68,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 305, new detections  : 403, cost  : 7, assignment : 1
+track  : 321, new detections  : 305, cost  : 113, assignment : 0
+track  : 321, new detections  : 404, cost  : 37, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+129,305,256,174,62,141,1,-1,-1,-1
+129,321,160,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 305, new detections  : 405, cost  : 26, assignment : 1
+track  : 321, new detections  : 305, cost  : 110, assignment : 0
+track  : 321, new detections  : 406, cost  : 21, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+130,305,249,158,68,154,1,-1,-1,-1
+130,321,155,179,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 305, new detections  : 408, cost  : 5, assignment : 1
+track  : 321, new detections  : 305, cost  : 97, assignment : 0
+track  : 321, new detections  : 409, cost  : 6, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+131,305,249,158,68,154,1,-1,-1,-1
+131,321,155,179,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 305, new detections  : 410, cost  : 23, assignment : 1
+track  : 321, new detections  : 305, cost  : 93, assignment : 0
+track  : 321, new detections  : 411, cost  : 12, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+132,305,246,164,62,141,1,-1,-1,-1
+132,321,155,179,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 305, new detections  : 412, cost  : 18, assignment : 1
+track  : 321, new detections  : 305, cost  : 105, assignment : 0
+Current Targets: 2
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 2
+133,305,246,174,62,141,1,-1,-1,-1
+133,321,151,181,71,151,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 305, new detections  : 413, cost  : 17, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 1
+Updated Targets: 1
+134,305,256,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 305, new detections  : 416, cost  : 28, assignment : 0
+track  : 305, new detections  : 417, cost  : 166, assignment : 1
+track  : 415, new detections  : 416, cost  : 66, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+135,305,203,209,26,59,1,-1,-1,-1
+135,415,249,158,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 305, new detections  : 418, cost  : 7, assignment : 1
+track  : 415, new detections  : 305, cost  : 162, assignment : 0
+track  : 415, new detections  : 419, cost  : 22, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+136,305,203,209,26,59,1,-1,-1,-1
+136,415,246,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 305, new detections  : 420, cost  : 10, assignment : 1
+track  : 415, new detections  : 305, cost  : 144, assignment : 0
+track  : 415, new detections  : 421, cost  : 10, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+137,305,203,213,26,59,1,-1,-1,-1
+137,415,246,164,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 305, new detections  : 422, cost  : 5, assignment : 1
+track  : 415, new detections  : 305, cost  : 153, assignment : 0
+Current Targets: 2
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 2
+138,305,203,213,26,59,1,-1,-1,-1
+138,415,247,164,63,142,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 305, new detections  : 423, cost  : 3, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+139,305,199,213,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 305, new detections  : 425, cost  : 15, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+140,305,199,213,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 305, new detections  : 428, cost  : 184, assignment : 0
+track  : 305, new detections  : 429, cost  : 8, assignment : 1
+Current Targets: 1
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 1
+141,305,195,213,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+Current Targets: 0
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 0
+----------------------------------------
+Target number: 3
+Current Targets: 0
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 0
+----------------------------------------
+Target number: 3
+Current Targets: 0
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 0
+----------------------------------------
+Target number: 3
+Current Targets: 0
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 0
+----------------------------------------
+Target number: 3
+Current Targets: 0
+New Detections: 2
+New Born Targets: 1
+Updated Targets: 0
+----------------------------------------
+Target number: 4
+track  : 446, new detections  : 447, cost  : 191, assignment : 0
+track  : 446, new detections  : 448, cost  : 74, assignment : 0
+track  : 446, new detections  : 449, cost  : 0, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 1
+Updated Targets: 1
+147,446,296,193,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 446, new detections  : 450, cost  : 189, assignment : 0
+track  : 446, new detections  : 451, cost  : 42, assignment : 1
+track  : 447, new detections  : 450, cost  : 17, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+148,446,301,217,43,99,1,-1,-1,-1
+148,447,185,207,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 446, new detections  : 453, cost  : 57, assignment : 1
+track  : 447, new detections  : 446, cost  : 182, assignment : 0
+track  : 447, new detections  : 454, cost  : 156, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+149,446,294,184,62,141,1,-1,-1,-1
+149,447,249,158,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 446, new detections  : 455, cost  : 10000, assignment : 0
+track  : 446, new detections  : 456, cost  : 54, assignment : 0
+track  : 446, new detections  : 457, cost  : 10000, assignment : 0
+track  : 446, new detections  : 458, cost  : 31, assignment : 1
+track  : 447, new detections  : 455, cost  : 176, assignment : 0
+track  : 447, new detections  : 456, cost  : 30, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 1
+Updated Targets: 2
+150,446,302,201,52,118,1,-1,-1,-1
+150,447,246,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 446, new detections  : 459, cost  : 183, assignment : 0
+track  : 446, new detections  : 460, cost  : 22, assignment : 1
+track  : 447, new detections  : 459, cost  : 139, assignment : 0
+track  : 447, new detections  : 446, cost  : 59, assignment : 0
+track  : 447, new detections  : 461, cost  : 31, assignment : 1
+track  : 455, new detections  : 459, cost  : 5, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+151,446,296,193,56,129,1,-1,-1,-1
+151,447,249,158,68,154,1,-1,-1,-1
+151,455,193,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 446, new detections  : 463, cost  : 190, assignment : 0
+track  : 446, new detections  : 464, cost  : 83, assignment : 1
+track  : 447, new detections  : 463, cost  : 160, assignment : 0
+track  : 447, new detections  : 446, cost  : 152, assignment : 0
+track  : 447, new detections  : 465, cost  : 183, assignment : 0
+track  : 447, new detections  : 466, cost  : 14, assignment : 1
+track  : 455, new detections  : 463, cost  : 17, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+152,446,314,243,33,76,1,-1,-1,-1
+152,447,249,158,68,154,1,-1,-1,-1
+152,455,185,202,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 446, new detections  : 467, cost  : 9, assignment : 1
+track  : 447, new detections  : 446, cost  : 143, assignment : 0
+track  : 447, new detections  : 468, cost  : 166, assignment : 0
+track  : 447, new detections  : 469, cost  : 5, assignment : 1
+track  : 455, new detections  : 446, cost  : 128, assignment : 0
+track  : 455, new detections  : 468, cost  : 15, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+153,446,308,238,33,76,1,-1,-1,-1
+153,447,249,158,68,154,1,-1,-1,-1
+153,455,180,198,36,83,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 446, new detections  : 471, cost  : 135, assignment : 0
+track  : 446, new detections  : 472, cost  : 14, assignment : 1
+track  : 447, new detections  : 471, cost  : 159, assignment : 0
+track  : 447, new detections  : 446, cost  : 144, assignment : 0
+track  : 447, new detections  : 473, cost  : 31, assignment : 1
+track  : 455, new detections  : 471, cost  : 10, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+154,446,310,238,36,83,1,-1,-1,-1
+154,447,246,174,62,141,1,-1,-1,-1
+154,455,180,198,36,83,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 446, new detections  : 475, cost  : 12, assignment : 1
+track  : 447, new detections  : 446, cost  : 128, assignment : 0
+track  : 447, new detections  : 476, cost  : 148, assignment : 0
+track  : 447, new detections  : 477, cost  : 21, assignment : 1
+track  : 455, new detections  : 446, cost  : 141, assignment : 0
+track  : 455, new detections  : 476, cost  : 11, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+155,446,308,243,33,76,1,-1,-1,-1
+155,447,252,184,56,129,1,-1,-1,-1
+155,455,185,204,36,83,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 446, new detections  : 479, cost  : 128, assignment : 0
+track  : 446, new detections  : 480, cost  : 136, assignment : 0
+track  : 446, new detections  : 481, cost  : 97, assignment : 1
+track  : 447, new detections  : 479, cost  : 21, assignment : 1
+track  : 455, new detections  : 447, cost  : 131, assignment : 0
+track  : 455, new detections  : 480, cost  : 15, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+156,446,294,184,62,141,1,-1,-1,-1
+156,447,246,174,62,141,1,-1,-1,-1
+156,455,180,204,36,83,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 446, new detections  : 482, cost  : 48, assignment : 0
+track  : 446, new detections  : 483, cost  : 113, assignment : 1
+track  : 447, new detections  : 482, cost  : 8, assignment : 1
+track  : 455, new detections  : 447, cost  : 140, assignment : 0
+track  : 455, new detections  : 446, cost  : 143, assignment : 0
+track  : 455, new detections  : 484, cost  : 15, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+157,446,308,248,33,76,1,-1,-1,-1
+157,447,246,174,62,141,1,-1,-1,-1
+157,455,185,212,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 446, new detections  : 485, cost  : 127, assignment : 0
+track  : 446, new detections  : 486, cost  : 80, assignment : 1
+track  : 447, new detections  : 485, cost  : 9, assignment : 1
+track  : 455, new detections  : 447, cost  : 138, assignment : 0
+track  : 455, new detections  : 446, cost  : 172, assignment : 0
+track  : 455, new detections  : 487, cost  : 10, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+158,446,296,193,56,129,1,-1,-1,-1
+158,447,246,174,62,141,1,-1,-1,-1
+158,455,180,204,36,83,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 446, new detections  : 488, cost  : 74, assignment : 0
+track  : 446, new detections  : 489, cost  : 111, assignment : 1
+track  : 447, new detections  : 488, cost  : 15, assignment : 1
+track  : 455, new detections  : 447, cost  : 158, assignment : 0
+track  : 455, new detections  : 446, cost  : 154, assignment : 0
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+159,446,308,262,28,64,1,-1,-1,-1
+159,447,249,168,68,154,1,-1,-1,-1
+159,455,182,207,35,87,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 446, new detections  : 490, cost  : 161, assignment : 0
+track  : 447, new detections  : 490, cost  : 13, assignment : 1
+Current Targets: 2
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 2
+160,446,306,259,27,56,1,-1,-1,-1
+160,447,249,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 446, new detections  : 491, cost  : 164, assignment : 0
+track  : 447, new detections  : 491, cost  : 145, assignment : 1
+Current Targets: 2
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 2
+161,446,308,262,31,53,1,-1,-1,-1
+161,447,183,204,40,90,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 492, cost  : 9, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+162,447,183,204,40,90,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 494, cost  : 127, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+163,447,246,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 496, cost  : 8, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+164,447,246,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 497, cost  : 14, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+165,447,249,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 499, cost  : 14, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 2
+Updated Targets: 1
+166,447,249,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 502, cost  : 16, assignment : 1
+track  : 500, new detections  : 447, cost  : 192, assignment : 0
+track  : 500, new detections  : 503, cost  : 8, assignment : 1
+track  : 501, new detections  : 447, cost  : 79, assignment : 0
+track  : 501, new detections  : 500, cost  : 10000, assignment : 0
+track  : 501, new detections  : 504, cost  : 157, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+167,447,256,174,62,141,1,-1,-1,-1
+167,500,94,177,52,118,1,-1,-1,-1
+167,501,180,197,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 505, cost  : 19, assignment : 1
+track  : 500, new detections  : 447, cost  : 199, assignment : 0
+track  : 500, new detections  : 506, cost  : 12, assignment : 1
+track  : 501, new detections  : 447, cost  : 144, assignment : 0
+track  : 501, new detections  : 500, cost  : 106, assignment : 0
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+168,447,249,168,68,154,1,-1,-1,-1
+168,500,94,177,52,118,1,-1,-1,-1
+168,501,181,198,43,96,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 507, cost  : 10, assignment : 1
+track  : 500, new detections  : 447, cost  : 10000, assignment : 0
+track  : 500, new detections  : 508, cost  : 82, assignment : 0
+track  : 500, new detections  : 509, cost  : 19, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+169,447,249,168,68,154,1,-1,-1,-1
+169,500,94,176,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 510, cost  : 8, assignment : 1
+track  : 500, new detections  : 447, cost  : 194, assignment : 0
+track  : 500, new detections  : 511, cost  : 87, assignment : 0
+track  : 500, new detections  : 512, cost  : 16, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+170,447,249,168,68,154,1,-1,-1,-1
+170,500,85,167,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 513, cost  : 140, assignment : 0
+track  : 447, new detections  : 514, cost  : 7, assignment : 1
+track  : 500, new detections  : 513, cost  : 100, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+171,447,249,168,68,154,1,-1,-1,-1
+171,500,167,193,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 515, cost  : 132, assignment : 0
+track  : 447, new detections  : 516, cost  : 139, assignment : 0
+track  : 447, new detections  : 517, cost  : 13, assignment : 1
+track  : 500, new detections  : 515, cost  : 13, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+172,447,249,158,68,154,1,-1,-1,-1
+172,500,166,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 518, cost  : 148, assignment : 0
+track  : 447, new detections  : 519, cost  : 136, assignment : 1
+track  : 500, new detections  : 518, cost  : 9, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+173,447,256,179,28,64,1,-1,-1,-1
+173,500,158,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 447, new detections  : 520, cost  : 148, assignment : 0
+track  : 447, new detections  : 521, cost  : 145, assignment : 0
+track  : 447, new detections  : 522, cost  : 122, assignment : 1
+track  : 500, new detections  : 520, cost  : 6, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+174,447,319,243,33,76,1,-1,-1,-1
+174,500,158,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 523, cost  : 131, assignment : 0
+track  : 447, new detections  : 524, cost  : 10000, assignment : 0
+track  : 447, new detections  : 525, cost  : 17, assignment : 1
+track  : 500, new detections  : 523, cost  : 131, assignment : 0
+track  : 500, new detections  : 524, cost  : 7, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+175,447,316,248,30,69,1,-1,-1,-1
+175,500,158,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 527, cost  : 145, assignment : 0
+track  : 447, new detections  : 528, cost  : 16, assignment : 1
+track  : 500, new detections  : 527, cost  : 129, assignment : 0
+track  : 500, new detections  : 447, cost  : 10000, assignment : 0
+track  : 500, new detections  : 529, cost  : 128, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+176,447,321,248,30,69,1,-1,-1,-1
+176,500,60,147,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 530, cost  : 10000, assignment : 0
+track  : 447, new detections  : 531, cost  : 160, assignment : 1
+track  : 500, new detections  : 530, cost  : 119, assignment : 0
+track  : 500, new detections  : 447, cost  : 198, assignment : 0
+track  : 500, new detections  : 532, cost  : 65, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+177,447,249,168,68,154,1,-1,-1,-1
+177,500,62,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 533, cost  : 164, assignment : 0
+track  : 447, new detections  : 534, cost  : 137, assignment : 0
+track  : 447, new detections  : 535, cost  : 22, assignment : 1
+track  : 500, new detections  : 533, cost  : 10000, assignment : 0
+track  : 500, new detections  : 534, cost  : 95, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+178,447,256,174,62,141,1,-1,-1,-1
+178,500,147,176,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 536, cost  : 10000, assignment : 0
+track  : 447, new detections  : 537, cost  : 9, assignment : 1
+track  : 500, new detections  : 536, cost  : 154, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+179,447,256,164,62,141,1,-1,-1,-1
+179,500,71,233,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 538, cost  : 117, assignment : 1
+track  : 500, new detections  : 447, cost  : 155, assignment : 0
+Current Targets: 2
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 2
+180,447,141,174,62,141,1,-1,-1,-1
+180,500,75,233,32,78,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+181,447,137,173,63,146,1,-1,-1,-1
+181,500,75,231,34,84,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 539, cost  : 10, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+182,447,141,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 541, cost  : 134, assignment : 0
+track  : 447, new detections  : 542, cost  : 10000, assignment : 0
+track  : 447, new detections  : 543, cost  : 11, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+183,447,131,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 544, cost  : 143, assignment : 0
+track  : 447, new detections  : 545, cost  : 53, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+184,447,120,162,80,181,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 546, cost  : 171, assignment : 0
+track  : 447, new detections  : 547, cost  : 17, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+185,447,123,173,74,168,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 549, cost  : 145, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+186,447,249,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 447, new detections  : 550, cost  : 79, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+187,447,305,176,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 447, new detections  : 551, cost  : 10000, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+188,447,111,173,74,168,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 447, new detections  : 552, cost  : 10000, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+189,447,303,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 447, new detections  : 553, cost  : 8, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+190,447,305,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 447, new detections  : 555, cost  : 15, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+191,447,303,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 447, new detections  : 557, cost  : 20, assignment : 1
+Current Targets: 1
+New Detections: 4
+New Born Targets: 2
+Updated Targets: 1
+192,447,313,193,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 558, new detections  : 561, cost  : 76, assignment : 0
+track  : 558, new detections  : 562, cost  : 185, assignment : 0
+track  : 558, new detections  : 563, cost  : 0, assignment : 1
+track  : 560, new detections  : 561, cost  : 10000, assignment : 0
+track  : 560, new detections  : 562, cost  : 4, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+193,558,260,168,68,154,1,-1,-1,-1
+193,560,199,217,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 558, new detections  : 565, cost  : 81, assignment : 1
+track  : 560, new detections  : 558, cost  : 10000, assignment : 0
+track  : 560, new detections  : 566, cost  : 183, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+194,558,313,193,56,129,1,-1,-1,-1
+194,560,260,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 558, new detections  : 567, cost  : 10000, assignment : 0
+track  : 558, new detections  : 568, cost  : 19, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+195,558,303,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 558, new detections  : 569, cost  : 198, assignment : 0
+track  : 558, new detections  : 570, cost  : 10000, assignment : 0
+track  : 558, new detections  : 571, cost  : 189, assignment : 0
+track  : 558, new detections  : 572, cost  : 2, assignment : 1
+Current Targets: 1
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 1
+196,558,303,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 558, new detections  : 573, cost  : 199, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+197,558,193,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 558, new detections  : 575, cost  : 9, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+198,558,190,210,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 558, new detections  : 577, cost  : 8, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+199,558,193,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 558, new detections  : 579, cost  : 153, assignment : 0
+track  : 558, new detections  : 580, cost  : 11, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+200,558,188,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 558, new detections  : 581, cost  : 13, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+201,558,190,210,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 584, cost  : 5, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+202,558,191,213,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 586, cost  : 179, assignment : 0
+track  : 558, new detections  : 587, cost  : 37, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+203,558,165,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 588, cost  : 8, assignment : 1
+Current Targets: 1
+New Detections: 4
+New Born Targets: 1
+Updated Targets: 1
+204,558,165,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 592, cost  : 187, assignment : 0
+track  : 558, new detections  : 593, cost  : 28, assignment : 1
+track  : 591, new detections  : 592, cost  : 181, assignment : 0
+track  : 591, new detections  : 558, cost  : 28, assignment : 0
+track  : 591, new detections  : 594, cost  : 4, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+205,558,163,209,26,59,1,-1,-1,-1
+205,591,191,209,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 595, cost  : 18, assignment : 1
+track  : 591, new detections  : 558, cost  : 34, assignment : 0
+track  : 591, new detections  : 596, cost  : 182, assignment : 0
+track  : 591, new detections  : 597, cost  : 30, assignment : 0
+track  : 591, new detections  : 598, cost  : 8, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 2
+206,558,160,210,28,64,1,-1,-1,-1
+206,591,187,209,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 600, cost  : 10000, assignment : 0
+track  : 558, new detections  : 601, cost  : 6, assignment : 1
+track  : 591, new detections  : 600, cost  : 185, assignment : 0
+track  : 591, new detections  : 558, cost  : 35, assignment : 0
+track  : 591, new detections  : 602, cost  : 37, assignment : 0
+track  : 591, new detections  : 603, cost  : 12, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 2
+207,558,155,210,30,69,1,-1,-1,-1
+207,591,184,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 605, cost  : 39, assignment : 0
+track  : 558, new detections  : 606, cost  : 10000, assignment : 0
+track  : 558, new detections  : 607, cost  : 10000, assignment : 0
+track  : 558, new detections  : 608, cost  : 11, assignment : 1
+track  : 591, new detections  : 605, cost  : 7, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+208,558,155,210,30,69,1,-1,-1,-1
+208,591,188,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 609, cost  : 10000, assignment : 0
+track  : 558, new detections  : 610, cost  : 40, assignment : 1
+track  : 591, new detections  : 609, cost  : 172, assignment : 0
+track  : 591, new detections  : 558, cost  : 10, assignment : 0
+track  : 591, new detections  : 611, cost  : 140, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+209,558,185,207,33,76,1,-1,-1,-1
+209,591,321,252,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 612, cost  : 172, assignment : 0
+track  : 558, new detections  : 613, cost  : 16, assignment : 1
+track  : 591, new detections  : 612, cost  : 139, assignment : 0
+track  : 591, new detections  : 558, cost  : 159, assignment : 0
+track  : 591, new detections  : 614, cost  : 131, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 1
+Updated Targets: 2
+210,558,185,204,36,83,1,-1,-1,-1
+210,591,214,204,36,83,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 615, cost  : 166, assignment : 0
+track  : 558, new detections  : 616, cost  : 31, assignment : 1
+track  : 591, new detections  : 615, cost  : 124, assignment : 0
+track  : 591, new detections  : 558, cost  : 73, assignment : 0
+track  : 591, new detections  : 617, cost  : 42, assignment : 1
+track  : 612, new detections  : 615, cost  : 0, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+211,558,154,207,33,76,1,-1,-1,-1
+211,591,185,207,33,76,1,-1,-1,-1
+211,612,265,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 618, cost  : 9, assignment : 1
+track  : 591, new detections  : 558, cost  : 41, assignment : 0
+track  : 591, new detections  : 619, cost  : 10, assignment : 1
+track  : 612, new detections  : 558, cost  : 10000, assignment : 0
+track  : 612, new detections  : 591, cost  : 155, assignment : 0
+track  : 612, new detections  : 620, cost  : 4, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+212,558,151,210,30,69,1,-1,-1,-1
+212,591,185,204,36,83,1,-1,-1,-1
+212,612,265,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 558, new detections  : 622, cost  : 13, assignment : 1
+track  : 591, new detections  : 558, cost  : 47, assignment : 0
+track  : 591, new detections  : 623, cost  : 8, assignment : 1
+track  : 612, new detections  : 558, cost  : 191, assignment : 0
+track  : 612, new detections  : 591, cost  : 151, assignment : 0
+track  : 612, new detections  : 624, cost  : 15, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+213,558,154,207,33,76,1,-1,-1,-1
+213,591,185,204,36,83,1,-1,-1,-1
+213,612,275,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 626, cost  : 18, assignment : 1
+track  : 591, new detections  : 558, cost  : 53, assignment : 0
+track  : 591, new detections  : 627, cost  : 11, assignment : 1
+track  : 612, new detections  : 558, cost  : 10000, assignment : 0
+track  : 612, new detections  : 591, cost  : 176, assignment : 0
+track  : 612, new detections  : 628, cost  : 49, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+214,558,151,205,30,69,1,-1,-1,-1
+214,591,185,207,33,76,1,-1,-1,-1
+214,612,322,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 629, cost  : 50, assignment : 0
+track  : 558, new detections  : 630, cost  : 14, assignment : 1
+track  : 591, new detections  : 629, cost  : 14, assignment : 1
+track  : 612, new detections  : 591, cost  : 10000, assignment : 0
+track  : 612, new detections  : 558, cost  : 10000, assignment : 0
+track  : 612, new detections  : 631, cost  : 47, assignment : 0
+track  : 612, new detections  : 632, cost  : 17, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+215,558,148,202,33,76,1,-1,-1,-1
+215,591,185,207,33,76,1,-1,-1,-1
+215,612,322,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 634, cost  : 40, assignment : 0
+track  : 558, new detections  : 635, cost  : 5, assignment : 1
+track  : 591, new detections  : 634, cost  : 13, assignment : 1
+track  : 612, new detections  : 591, cost  : 10000, assignment : 0
+track  : 612, new detections  : 558, cost  : 10000, assignment : 0
+track  : 612, new detections  : 636, cost  : 47, assignment : 0
+track  : 612, new detections  : 637, cost  : 15, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+216,558,151,205,30,69,1,-1,-1,-1
+216,591,185,202,33,76,1,-1,-1,-1
+216,612,322,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 639, cost  : 24, assignment : 1
+track  : 591, new detections  : 558, cost  : 46, assignment : 0
+track  : 591, new detections  : 640, cost  : 173, assignment : 1
+track  : 612, new detections  : 558, cost  : 10000, assignment : 0
+track  : 612, new detections  : 591, cost  : 49, assignment : 0
+track  : 612, new detections  : 641, cost  : 17, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+217,558,146,204,36,83,1,-1,-1,-1
+217,591,275,174,62,141,1,-1,-1,-1
+217,612,332,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 642, cost  : 10000, assignment : 0
+track  : 558, new detections  : 643, cost  : 6, assignment : 1
+track  : 591, new detections  : 642, cost  : 3, assignment : 1
+track  : 612, new detections  : 591, cost  : 66, assignment : 0
+track  : 612, new detections  : 558, cost  : 10000, assignment : 0
+track  : 612, new detections  : 644, cost  : 10000, assignment : 0
+track  : 612, new detections  : 645, cost  : 9, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 3
+218,558,146,204,36,83,1,-1,-1,-1
+218,591,275,174,62,141,1,-1,-1,-1
+218,612,332,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 647, cost  : 11, assignment : 1
+track  : 591, new detections  : 558, cost  : 10000, assignment : 0
+track  : 591, new detections  : 648, cost  : 93, assignment : 1
+track  : 612, new detections  : 558, cost  : 10000, assignment : 0
+track  : 612, new detections  : 591, cost  : 150, assignment : 0
+track  : 612, new detections  : 649, cost  : 140, assignment : 1
+track  : 644, new detections  : 558, cost  : 10000, assignment : 0
+track  : 644, new detections  : 591, cost  : 10000, assignment : 0
+track  : 644, new detections  : 612, cost  : 10000, assignment : 0
+Current Targets: 4
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 4
+219,558,146,198,40,90,1,-1,-1,-1
+219,591,270,193,36,83,1,-1,-1,-1
+219,612,312,181,30,69,1,-1,-1,-1
+219,644,-24,118,125,284,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 650, cost  : 15, assignment : 1
+track  : 591, new detections  : 558, cost  : 125, assignment : 0
+track  : 591, new detections  : 651, cost  : 96, assignment : 1
+track  : 612, new detections  : 558, cost  : 174, assignment : 0
+track  : 612, new detections  : 591, cost  : 119, assignment : 0
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+220,558,146,204,36,83,1,-1,-1,-1
+220,591,270,168,68,154,1,-1,-1,-1
+220,612,310,185,37,74,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 558, new detections  : 652, cost  : 133, assignment : 0
+track  : 558, new detections  : 653, cost  : 10, assignment : 1
+track  : 591, new detections  : 652, cost  : 102, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+221,558,140,204,36,83,1,-1,-1,-1
+221,591,272,192,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 654, cost  : 14, assignment : 1
+track  : 591, new detections  : 558, cost  : 142, assignment : 0
+track  : 591, new detections  : 655, cost  : 93, assignment : 0
+track  : 591, new detections  : 656, cost  : 86, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+222,558,140,198,40,90,1,-1,-1,-1
+222,591,203,209,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 657, cost  : 198, assignment : 1
+track  : 591, new detections  : 558, cost  : 178, assignment : 0
+track  : 591, new detections  : 658, cost  : 171, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+223,558,275,164,62,141,1,-1,-1,-1
+223,591,338,238,36,83,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 659, cost  : 35, assignment : 1
+track  : 591, new detections  : 558, cost  : 134, assignment : 0
+track  : 591, new detections  : 660, cost  : 150, assignment : 0
+track  : 591, new detections  : 661, cost  : 26, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 1
+Updated Targets: 2
+224,558,270,168,68,154,1,-1,-1,-1
+224,591,340,248,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 558, new detections  : 663, cost  : 8, assignment : 1
+track  : 591, new detections  : 558, cost  : 148, assignment : 0
+track  : 591, new detections  : 664, cost  : 8, assignment : 1
+track  : 660, new detections  : 558, cost  : 187, assignment : 0
+track  : 660, new detections  : 591, cost  : 136, assignment : 0
+track  : 660, new detections  : 665, cost  : 107, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+225,558,281,168,68,154,1,-1,-1,-1
+225,591,340,252,30,69,1,-1,-1,-1
+225,660,135,198,36,83,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 666, cost  : 149, assignment : 0
+track  : 591, new detections  : 667, cost  : 124, assignment : 1
+track  : 660, new detections  : 666, cost  : 10000, assignment : 0
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 668, cost  : 110, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+226,591,322,174,62,141,1,-1,-1,-1
+226,660,226,210,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 669, cost  : 54, assignment : 0
+track  : 591, new detections  : 670, cost  : 174, assignment : 0
+track  : 591, new detections  : 671, cost  : 31, assignment : 1
+track  : 660, new detections  : 669, cost  : 143, assignment : 0
+track  : 660, new detections  : 670, cost  : 8, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 2
+227,591,323,168,68,154,1,-1,-1,-1
+227,660,226,207,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 674, cost  : 44, assignment : 0
+track  : 591, new detections  : 675, cost  : 10000, assignment : 0
+track  : 591, new detections  : 676, cost  : 9, assignment : 1
+track  : 660, new detections  : 674, cost  : 156, assignment : 0
+track  : 660, new detections  : 675, cost  : 50, assignment : 0
+track  : 660, new detections  : 591, cost  : 198, assignment : 0
+track  : 660, new detections  : 677, cost  : 77, assignment : 0
+track  : 660, new detections  : 678, cost  : 24, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 2
+228,591,323,168,68,154,1,-1,-1,-1
+228,660,221,197,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 679, cost  : 53, assignment : 0
+track  : 591, new detections  : 680, cost  : 188, assignment : 0
+track  : 591, new detections  : 681, cost  : 17, assignment : 1
+track  : 660, new detections  : 679, cost  : 122, assignment : 0
+track  : 660, new detections  : 680, cost  : 38, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+229,591,322,174,62,141,1,-1,-1,-1
+229,660,225,198,36,83,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 682, cost  : 10000, assignment : 0
+track  : 591, new detections  : 683, cost  : 44, assignment : 1
+track  : 660, new detections  : 682, cost  : 121, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+230,591,284,164,62,141,1,-1,-1,-1
+230,660,113,197,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 684, cost  : 10000, assignment : 0
+track  : 591, new detections  : 685, cost  : 8, assignment : 1
+track  : 660, new detections  : 684, cost  : 7, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+231,591,275,164,62,141,1,-1,-1,-1
+231,660,113,197,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 688, cost  : 10000, assignment : 0
+track  : 591, new detections  : 689, cost  : 18, assignment : 1
+track  : 660, new detections  : 688, cost  : 11, assignment : 1
+Current Targets: 2
+New Detections: 7
+New Born Targets: 1
+Updated Targets: 2
+232,591,284,174,62,141,1,-1,-1,-1
+232,660,109,193,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 695, cost  : 10000, assignment : 0
+track  : 591, new detections  : 696, cost  : 19, assignment : 1
+track  : 660, new detections  : 695, cost  : 16, assignment : 1
+track  : 690, new detections  : 660, cost  : 99, assignment : 0
+track  : 690, new detections  : 591, cost  : 128, assignment : 0
+track  : 690, new detections  : 697, cost  : 15, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 3
+233,591,284,164,62,141,1,-1,-1,-1
+233,660,101,193,47,108,1,-1,-1,-1
+233,690,174,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 701, cost  : 23, assignment : 1
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 702, cost  : 24, assignment : 1
+track  : 690, new detections  : 591, cost  : 150, assignment : 0
+track  : 690, new detections  : 660, cost  : 77, assignment : 0
+track  : 690, new detections  : 703, cost  : 192, assignment : 0
+track  : 690, new detections  : 704, cost  : 57, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 3
+234,591,281,168,68,154,1,-1,-1,-1
+234,660,102,185,52,118,1,-1,-1,-1
+234,690,147,204,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 707, cost  : 10000, assignment : 0
+track  : 591, new detections  : 708, cost  : 20, assignment : 1
+track  : 660, new detections  : 707, cost  : 14, assignment : 1
+track  : 690, new detections  : 660, cost  : 70, assignment : 0
+track  : 690, new detections  : 591, cost  : 193, assignment : 0
+track  : 690, new detections  : 709, cost  : 101, assignment : 0
+track  : 690, new detections  : 710, cost  : 22, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+235,591,284,174,62,141,1,-1,-1,-1
+235,660,94,185,52,118,1,-1,-1,-1
+235,690,138,193,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 712, cost  : 4, assignment : 1
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 713, cost  : 7, assignment : 1
+track  : 690, new detections  : 591, cost  : 188, assignment : 0
+track  : 690, new detections  : 660, cost  : 57, assignment : 0
+track  : 690, new detections  : 714, cost  : 79, assignment : 0
+track  : 690, new detections  : 715, cost  : 10000, assignment : 0
+track  : 690, new detections  : 716, cost  : 88, assignment : 0
+track  : 690, new detections  : 717, cost  : 25, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 3
+236,591,284,174,62,141,1,-1,-1,-1
+236,660,94,185,52,118,1,-1,-1,-1
+236,690,126,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 718, cost  : 10000, assignment : 0
+track  : 591, new detections  : 719, cost  : 15, assignment : 1
+track  : 660, new detections  : 718, cost  : 15, assignment : 1
+track  : 690, new detections  : 660, cost  : 41, assignment : 0
+track  : 690, new detections  : 591, cost  : 10000, assignment : 0
+track  : 690, new detections  : 720, cost  : 10000, assignment : 0
+track  : 690, new detections  : 721, cost  : 9, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 3
+237,591,281,168,68,154,1,-1,-1,-1
+237,660,86,185,52,118,1,-1,-1,-1
+237,690,134,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 724, cost  : 10000, assignment : 0
+track  : 591, new detections  : 725, cost  : 9, assignment : 1
+track  : 660, new detections  : 724, cost  : 31, assignment : 1
+track  : 690, new detections  : 660, cost  : 80, assignment : 0
+track  : 690, new detections  : 591, cost  : 192, assignment : 0
+track  : 690, new detections  : 726, cost  : 93, assignment : 0
+track  : 690, new detections  : 727, cost  : 10000, assignment : 0
+track  : 690, new detections  : 728, cost  : 82, assignment : 0
+track  : 690, new detections  : 729, cost  : 12, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 3
+238,591,281,168,68,154,1,-1,-1,-1
+238,660,74,174,62,141,1,-1,-1,-1
+238,690,134,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 730, cost  : 61, assignment : 0
+track  : 591, new detections  : 731, cost  : 27, assignment : 1
+track  : 660, new detections  : 730, cost  : 10000, assignment : 0
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 732, cost  : 161, assignment : 0
+track  : 660, new detections  : 733, cost  : 165, assignment : 0
+track  : 660, new detections  : 734, cost  : 10, assignment : 1
+track  : 690, new detections  : 730, cost  : 10000, assignment : 0
+track  : 690, new detections  : 591, cost  : 181, assignment : 0
+track  : 690, new detections  : 732, cost  : 84, assignment : 0
+track  : 690, new detections  : 733, cost  : 86, assignment : 0
+track  : 690, new detections  : 660, cost  : 87, assignment : 0
+track  : 690, new detections  : 735, cost  : 14, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 3
+239,591,284,174,62,141,1,-1,-1,-1
+239,660,64,174,62,141,1,-1,-1,-1
+239,690,126,185,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 736, cost  : 5, assignment : 1
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 737, cost  : 4, assignment : 1
+track  : 690, new detections  : 591, cost  : 10000, assignment : 0
+track  : 690, new detections  : 660, cost  : 80, assignment : 0
+track  : 690, new detections  : 738, cost  : 10000, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+240,591,284,174,62,141,1,-1,-1,-1
+240,660,64,174,62,141,1,-1,-1,-1
+240,690,323,158,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 739, cost  : 10000, assignment : 0
+track  : 591, new detections  : 740, cost  : 18, assignment : 1
+track  : 660, new detections  : 739, cost  : 16, assignment : 1
+track  : 690, new detections  : 660, cost  : 10000, assignment : 0
+track  : 690, new detections  : 591, cost  : 46, assignment : 0
+track  : 690, new detections  : 741, cost  : 12, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+241,591,281,168,68,154,1,-1,-1,-1
+241,660,55,174,62,141,1,-1,-1,-1
+241,690,323,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 744, cost  : 15, assignment : 1
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 745, cost  : 10000, assignment : 0
+track  : 660, new detections  : 746, cost  : 49, assignment : 0
+track  : 660, new detections  : 747, cost  : 10000, assignment : 0
+track  : 660, new detections  : 748, cost  : 20, assignment : 1
+track  : 690, new detections  : 591, cost  : 67, assignment : 0
+track  : 690, new detections  : 745, cost  : 29, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+242,591,270,168,68,154,1,-1,-1,-1
+242,660,50,176,56,129,1,-1,-1,-1
+242,690,322,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 749, cost  : 14, assignment : 1
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 750, cost  : 10000, assignment : 0
+track  : 660, new detections  : 751, cost  : 68, assignment : 1
+track  : 690, new detections  : 591, cost  : 59, assignment : 0
+track  : 690, new detections  : 750, cost  : 9, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+243,591,281,168,68,154,1,-1,-1,-1
+243,660,103,184,62,141,1,-1,-1,-1
+243,690,322,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 752, cost  : 26, assignment : 1
+track  : 660, new detections  : 591, cost  : 186, assignment : 0
+track  : 660, new detections  : 753, cost  : 10000, assignment : 0
+track  : 660, new detections  : 754, cost  : 80, assignment : 0
+track  : 660, new detections  : 755, cost  : 136, assignment : 0
+track  : 660, new detections  : 756, cost  : 9, assignment : 1
+track  : 690, new detections  : 591, cost  : 39, assignment : 0
+track  : 690, new detections  : 753, cost  : 22, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 3
+244,591,284,184,62,141,1,-1,-1,-1
+244,660,93,184,62,141,1,-1,-1,-1
+244,690,312,179,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 758, cost  : 32, assignment : 1
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 759, cost  : 114, assignment : 0
+track  : 660, new detections  : 760, cost  : 10000, assignment : 0
+track  : 660, new detections  : 761, cost  : 3, assignment : 1
+track  : 690, new detections  : 591, cost  : 29, assignment : 0
+track  : 690, new detections  : 759, cost  : 10000, assignment : 0
+track  : 690, new detections  : 760, cost  : 14, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 3
+245,591,291,179,68,154,1,-1,-1,-1
+245,660,93,184,62,141,1,-1,-1,-1
+245,690,322,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 764, cost  : 10000, assignment : 0
+track  : 591, new detections  : 765, cost  : 18, assignment : 1
+track  : 660, new detections  : 764, cost  : 114, assignment : 1
+track  : 690, new detections  : 660, cost  : 10000, assignment : 0
+track  : 690, new detections  : 591, cost  : 53, assignment : 0
+track  : 690, new detections  : 766, cost  : 10000, assignment : 0
+track  : 690, new detections  : 767, cost  : 10, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+246,591,281,168,68,154,1,-1,-1,-1
+246,660,152,227,36,83,1,-1,-1,-1
+246,690,322,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 768, cost  : 3, assignment : 1
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 769, cost  : 46, assignment : 1
+track  : 690, new detections  : 591, cost  : 51, assignment : 0
+track  : 690, new detections  : 660, cost  : 10000, assignment : 0
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+247,591,281,168,68,154,1,-1,-1,-1
+247,660,138,222,47,108,1,-1,-1,-1
+247,690,323,173,63,143,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 770, cost  : 61, assignment : 0
+track  : 591, new detections  : 771, cost  : 10000, assignment : 0
+track  : 591, new detections  : 772, cost  : 10000, assignment : 0
+track  : 591, new detections  : 773, cost  : 9, assignment : 1
+track  : 660, new detections  : 770, cost  : 10000, assignment : 0
+track  : 660, new detections  : 771, cost  : 93, assignment : 1
+track  : 690, new detections  : 770, cost  : 23, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+248,591,281,168,68,154,1,-1,-1,-1
+248,660,74,174,62,141,1,-1,-1,-1
+248,690,322,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 774, cost  : 58, assignment : 0
+track  : 591, new detections  : 775, cost  : 27, assignment : 1
+track  : 660, new detections  : 774, cost  : 10000, assignment : 0
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 776, cost  : 93, assignment : 0
+track  : 660, new detections  : 777, cost  : 27, assignment : 1
+track  : 690, new detections  : 774, cost  : 9, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+249,591,284,184,62,141,1,-1,-1,-1
+249,660,60,168,68,154,1,-1,-1,-1
+249,690,322,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 591, new detections  : 779, cost  : 43, assignment : 0
+track  : 591, new detections  : 780, cost  : 23, assignment : 1
+track  : 660, new detections  : 779, cost  : 10000, assignment : 0
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 781, cost  : 118, assignment : 1
+track  : 690, new detections  : 779, cost  : 7, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+250,591,281,168,68,154,1,-1,-1,-1
+250,660,131,222,47,108,1,-1,-1,-1
+250,690,322,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 591, new detections  : 782, cost  : 55, assignment : 0
+track  : 591, new detections  : 783, cost  : 9, assignment : 1
+track  : 660, new detections  : 782, cost  : 10000, assignment : 0
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 660, new detections  : 784, cost  : 13, assignment : 1
+track  : 690, new detections  : 782, cost  : 12, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+251,591,281,168,68,154,1,-1,-1,-1
+251,660,123,222,47,108,1,-1,-1,-1
+251,690,322,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 591, new detections  : 785, cost  : 56, assignment : 0
+track  : 591, new detections  : 786, cost  : 11, assignment : 1
+track  : 660, new detections  : 785, cost  : 10000, assignment : 0
+track  : 660, new detections  : 591, cost  : 10000, assignment : 0
+track  : 690, new detections  : 785, cost  : 10, assignment : 1
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+252,591,281,168,68,154,1,-1,-1,-1
+252,660,122,224,49,103,1,-1,-1,-1
+252,690,322,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 591, new detections  : 787, cost  : 54, assignment : 0
+track  : 591, new detections  : 788, cost  : 5, assignment : 1
+track  : 690, new detections  : 787, cost  : 5, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 1
+Updated Targets: 2
+253,591,281,168,68,154,1,-1,-1,-1
+253,690,322,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 591, new detections  : 791, cost  : 7, assignment : 1
+track  : 690, new detections  : 591, cost  : 53, assignment : 0
+track  : 690, new detections  : 792, cost  : 10000, assignment : 0
+track  : 690, new detections  : 793, cost  : 175, assignment : 1
+track  : 789, new detections  : 591, cost  : 122, assignment : 0
+track  : 789, new detections  : 792, cost  : 164, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+254,591,281,168,68,154,1,-1,-1,-1
+254,690,169,173,74,168,1,-1,-1,-1
+254,789,63,162,86,196,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 591, new detections  : 794, cost  : 31, assignment : 0
+track  : 591, new detections  : 795, cost  : 33, assignment : 1
+track  : 690, new detections  : 794, cost  : 131, assignment : 1
+track  : 789, new detections  : 690, cost  : 10000, assignment : 0
+track  : 789, new detections  : 591, cost  : 10000, assignment : 0
+track  : 789, new detections  : 796, cost  : 116, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+255,591,312,168,68,154,1,-1,-1,-1
+255,690,275,174,62,141,1,-1,-1,-1
+255,789,169,173,74,168,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 591, new detections  : 797, cost  : 35, assignment : 1
+track  : 690, new detections  : 591, cost  : 59, assignment : 0
+track  : 690, new detections  : 798, cost  : 38, assignment : 1
+track  : 789, new detections  : 591, cost  : 186, assignment : 0
+track  : 789, new detections  : 690, cost  : 109, assignment : 0
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+256,591,322,193,56,129,1,-1,-1,-1
+256,690,271,161,74,168,1,-1,-1,-1
+256,789,170,173,69,167,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 591, new detections  : 799, cost  : 60, assignment : 0
+track  : 690, new detections  : 799, cost  : 48, assignment : 1
+Current Targets: 2
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 2
+257,591,323,186,62,129,1,-1,-1,-1
+257,690,275,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 800, cost  : 18, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+258,690,270,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 801, cost  : 15, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+259,690,271,161,74,168,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 803, cost  : 39, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+260,690,275,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 805, cost  : 17, assignment : 1
+Current Targets: 1
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 1
+261,690,278,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 808, cost  : 13, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+262,690,275,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 809, cost  : 14, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+263,690,275,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 810, cost  : 42, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+264,690,260,161,74,168,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 811, cost  : 11, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+265,690,260,161,74,168,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 812, cost  : 1, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+266,690,260,161,74,168,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 813, cost  : 38, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+267,690,265,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 814, cost  : 12, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+268,690,265,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 815, cost  : 33, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+269,690,270,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 816, cost  : 20, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+270,690,265,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 817, cost  : 22, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+271,690,260,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 818, cost  : 26, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+272,690,265,164,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 819, cost  : 4, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+273,690,265,164,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 820, cost  : 18, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+274,690,260,158,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 821, cost  : 18, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+275,690,265,164,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 822, cost  : 17, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+276,690,260,158,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 823, cost  : 28, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+277,690,265,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 824, cost  : 6, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+278,690,265,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 825, cost  : 24, assignment : 1
+Current Targets: 1
+New Detections: 1
+New Born Targets: 0
+Updated Targets: 1
+279,690,261,184,56,129,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 826, cost  : 166, assignment : 0
+track  : 690, new detections  : 827, cost  : 120, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+280,690,279,261,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 828, cost  : 173, assignment : 0
+track  : 690, new detections  : 829, cost  : 112, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 1
+281,690,183,209,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 3
+track  : 690, new detections  : 830, cost  : 10000, assignment : 0
+track  : 690, new detections  : 831, cost  : 17, assignment : 1
+Current Targets: 1
+New Detections: 2
+New Born Targets: 1
+Updated Targets: 1
+282,690,183,209,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 832, cost  : 10000, assignment : 0
+track  : 690, new detections  : 833, cost  : 4, assignment : 1
+track  : 830, new detections  : 832, cost  : 0, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+283,690,183,213,26,59,1,-1,-1,-1
+283,830,260,158,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 834, cost  : 10000, assignment : 0
+track  : 690, new detections  : 835, cost  : 13, assignment : 1
+track  : 830, new detections  : 834, cost  : 14, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+284,690,183,213,26,59,1,-1,-1,-1
+284,830,260,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 836, cost  : 199, assignment : 0
+track  : 690, new detections  : 837, cost  : 7, assignment : 1
+track  : 830, new detections  : 836, cost  : 13, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+285,690,187,217,26,59,1,-1,-1,-1
+285,830,260,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 838, cost  : 197, assignment : 0
+track  : 690, new detections  : 839, cost  : 4, assignment : 1
+track  : 830, new detections  : 838, cost  : 5, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+286,690,187,217,26,59,1,-1,-1,-1
+286,830,260,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 841, cost  : 192, assignment : 0
+track  : 690, new detections  : 842, cost  : 15, assignment : 1
+track  : 830, new detections  : 841, cost  : 25, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+287,690,187,221,26,59,1,-1,-1,-1
+287,830,265,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 844, cost  : 10000, assignment : 0
+track  : 690, new detections  : 845, cost  : 6, assignment : 1
+track  : 830, new detections  : 844, cost  : 27, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+288,690,191,217,26,59,1,-1,-1,-1
+288,830,270,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 690, new detections  : 846, cost  : 17, assignment : 1
+track  : 830, new detections  : 690, cost  : 191, assignment : 0
+track  : 830, new detections  : 847, cost  : 20, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+289,690,195,214,28,64,1,-1,-1,-1
+289,830,275,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 690, new detections  : 849, cost  : 8, assignment : 1
+track  : 830, new detections  : 690, cost  : 175, assignment : 0
+track  : 830, new detections  : 850, cost  : 14, assignment : 1
+Current Targets: 2
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 2
+290,690,199,214,28,64,1,-1,-1,-1
+290,830,270,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 690, new detections  : 853, cost  : 182, assignment : 0
+track  : 690, new detections  : 854, cost  : 7, assignment : 1
+track  : 830, new detections  : 853, cost  : 24, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+291,690,207,217,26,59,1,-1,-1,-1
+291,830,284,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 690, new detections  : 856, cost  : 13, assignment : 1
+track  : 830, new detections  : 690, cost  : 175, assignment : 0
+track  : 830, new detections  : 857, cost  : 7, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 2
+292,690,208,214,28,64,1,-1,-1,-1
+292,830,284,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 690, new detections  : 861, cost  : 172, assignment : 0
+track  : 690, new detections  : 862, cost  : 7, assignment : 1
+track  : 830, new detections  : 861, cost  : 13, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 2
+Updated Targets: 2
+293,690,208,214,28,64,1,-1,-1,-1
+293,830,284,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 690, new detections  : 866, cost  : 188, assignment : 0
+track  : 690, new detections  : 867, cost  : 9, assignment : 1
+track  : 830, new detections  : 866, cost  : 12, assignment : 1
+track  : 863, new detections  : 830, cost  : 10000, assignment : 0
+track  : 863, new detections  : 690, cost  : 10000, assignment : 0
+track  : 863, new detections  : 868, cost  : 6, assignment : 1
+track  : 865, new detections  : 830, cost  : 10000, assignment : 0
+track  : 865, new detections  : 690, cost  : 80, assignment : 0
+track  : 865, new detections  : 863, cost  : 10000, assignment : 0
+track  : 865, new detections  : 869, cost  : 57, assignment : 0
+track  : 865, new detections  : 870, cost  : 92, assignment : 0
+track  : 865, new detections  : 871, cost  : 4, assignment : 1
+Current Targets: 4
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 4
+294,690,207,210,30,69,1,-1,-1,-1
+294,830,294,174,62,141,1,-1,-1,-1
+294,863,497,235,40,90,1,-1,-1,-1
+294,865,139,213,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 872, cost  : 198, assignment : 0
+track  : 690, new detections  : 873, cost  : 10000, assignment : 0
+track  : 690, new detections  : 874, cost  : 16, assignment : 1
+track  : 830, new detections  : 872, cost  : 12, assignment : 1
+track  : 863, new detections  : 830, cost  : 10000, assignment : 0
+track  : 863, new detections  : 873, cost  : 8, assignment : 1
+track  : 865, new detections  : 830, cost  : 10000, assignment : 0
+track  : 865, new detections  : 863, cost  : 10000, assignment : 0
+track  : 865, new detections  : 690, cost  : 76, assignment : 0
+track  : 865, new detections  : 875, cost  : 4, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+295,690,211,217,26,59,1,-1,-1,-1
+295,830,291,168,68,154,1,-1,-1,-1
+295,863,503,235,40,90,1,-1,-1,-1
+295,865,139,217,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 876, cost  : 6, assignment : 1
+track  : 830, new detections  : 690, cost  : 190, assignment : 0
+track  : 830, new detections  : 877, cost  : 27, assignment : 1
+track  : 863, new detections  : 690, cost  : 10000, assignment : 0
+track  : 863, new detections  : 830, cost  : 10000, assignment : 0
+track  : 863, new detections  : 878, cost  : 10000, assignment : 0
+track  : 863, new detections  : 879, cost  : 9, assignment : 1
+track  : 865, new detections  : 690, cost  : 82, assignment : 0
+track  : 865, new detections  : 830, cost  : 10000, assignment : 0
+track  : 865, new detections  : 878, cost  : 8, assignment : 1
+Current Targets: 4
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 4
+296,690,212,214,28,64,1,-1,-1,-1
+296,830,294,161,74,168,1,-1,-1,-1
+296,863,509,235,40,90,1,-1,-1,-1
+296,865,143,217,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 881, cost  : 192, assignment : 0
+track  : 690, new detections  : 882, cost  : 18, assignment : 1
+track  : 830, new detections  : 881, cost  : 33, assignment : 1
+track  : 863, new detections  : 830, cost  : 10000, assignment : 0
+track  : 863, new detections  : 690, cost  : 10000, assignment : 0
+track  : 863, new detections  : 883, cost  : 20, assignment : 1
+track  : 865, new detections  : 830, cost  : 10000, assignment : 0
+track  : 865, new detections  : 690, cost  : 80, assignment : 0
+track  : 865, new detections  : 863, cost  : 10000, assignment : 0
+track  : 865, new detections  : 884, cost  : 2, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+297,690,221,214,28,64,1,-1,-1,-1
+297,830,303,174,62,141,1,-1,-1,-1
+297,863,522,235,40,90,1,-1,-1,-1
+297,865,147,217,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 885, cost  : 9, assignment : 1
+track  : 830, new detections  : 690, cost  : 186, assignment : 0
+track  : 830, new detections  : 886, cost  : 10000, assignment : 0
+track  : 830, new detections  : 887, cost  : 39, assignment : 1
+track  : 863, new detections  : 690, cost  : 10000, assignment : 0
+track  : 863, new detections  : 886, cost  : 17, assignment : 1
+track  : 865, new detections  : 690, cost  : 81, assignment : 0
+track  : 865, new detections  : 863, cost  : 10000, assignment : 0
+track  : 865, new detections  : 830, cost  : 10000, assignment : 0
+Current Targets: 4
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 4
+298,690,223,213,26,59,1,-1,-1,-1
+298,830,306,161,74,168,1,-1,-1,-1
+298,863,534,235,40,90,1,-1,-1,-1
+298,865,144,218,30,60,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 888, cost  : 73, assignment : 0
+track  : 690, new detections  : 889, cost  : 15, assignment : 1
+track  : 830, new detections  : 888, cost  : 10000, assignment : 0
+track  : 830, new detections  : 690, cost  : 10000, assignment : 0
+track  : 830, new detections  : 890, cost  : 10000, assignment : 0
+track  : 830, new detections  : 891, cost  : 19, assignment : 1
+track  : 863, new detections  : 888, cost  : 10000, assignment : 0
+track  : 863, new detections  : 690, cost  : 10000, assignment : 0
+track  : 863, new detections  : 890, cost  : 10000, assignment : 1
+track  : 865, new detections  : 888, cost  : 5, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+299,690,231,213,26,59,1,-1,-1,-1
+299,830,312,168,68,154,1,-1,-1,-1
+299,863,251,213,26,59,1,-1,-1,-1
+299,865,151,217,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 892, cost  : 19, assignment : 1
+track  : 830, new detections  : 690, cost  : 10000, assignment : 0
+track  : 830, new detections  : 893, cost  : 146, assignment : 0
+track  : 830, new detections  : 894, cost  : 10000, assignment : 0
+track  : 863, new detections  : 690, cost  : 48, assignment : 0
+track  : 863, new detections  : 893, cost  : 114, assignment : 1
+track  : 865, new detections  : 690, cost  : 90, assignment : 0
+track  : 865, new detections  : 863, cost  : 10000, assignment : 0
+track  : 865, new detections  : 894, cost  : 2, assignment : 1
+Current Targets: 4
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 4
+300,690,226,210,30,69,1,-1,-1,-1
+300,830,307,167,70,160,1,-1,-1,-1
+300,863,356,184,28,64,1,-1,-1,-1
+300,865,151,213,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 895, cost  : 10, assignment : 1
+track  : 863, new detections  : 690, cost  : 143, assignment : 0
+track  : 863, new detections  : 896, cost  : 154, assignment : 1
+track  : 865, new detections  : 690, cost  : 83, assignment : 0
+track  : 865, new detections  : 863, cost  : 10000, assignment : 0
+track  : 865, new detections  : 897, cost  : 6, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+301,690,226,210,30,69,1,-1,-1,-1
+301,863,317,161,74,168,1,-1,-1,-1
+301,865,151,213,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 898, cost  : 4, assignment : 1
+track  : 863, new detections  : 690, cost  : 10000, assignment : 0
+track  : 863, new detections  : 899, cost  : 5, assignment : 1
+track  : 865, new detections  : 690, cost  : 99, assignment : 0
+track  : 865, new detections  : 863, cost  : 10000, assignment : 0
+track  : 865, new detections  : 900, cost  : 10000, assignment : 0
+track  : 865, new detections  : 901, cost  : 10000, assignment : 0
+track  : 865, new detections  : 902, cost  : 11, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 3
+302,690,226,210,30,69,1,-1,-1,-1
+302,863,317,161,74,168,1,-1,-1,-1
+302,865,147,213,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 903, cost  : 17, assignment : 1
+track  : 863, new detections  : 690, cost  : 10000, assignment : 0
+track  : 863, new detections  : 904, cost  : 26, assignment : 1
+track  : 865, new detections  : 690, cost  : 92, assignment : 0
+track  : 865, new detections  : 863, cost  : 10000, assignment : 0
+track  : 865, new detections  : 905, cost  : 5, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+303,690,226,207,33,76,1,-1,-1,-1
+303,863,323,168,68,154,1,-1,-1,-1
+303,865,151,213,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 907, cost  : 179, assignment : 0
+track  : 690, new detections  : 908, cost  : 99, assignment : 0
+track  : 690, new detections  : 909, cost  : 13, assignment : 1
+track  : 863, new detections  : 907, cost  : 28, assignment : 1
+track  : 865, new detections  : 863, cost  : 10000, assignment : 0
+track  : 865, new detections  : 908, cost  : 10, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+304,690,231,210,30,69,1,-1,-1,-1
+304,863,322,174,62,141,1,-1,-1,-1
+304,865,151,213,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 910, cost  : 87, assignment : 0
+track  : 690, new detections  : 911, cost  : 10000, assignment : 0
+track  : 690, new detections  : 912, cost  : 21, assignment : 1
+track  : 863, new detections  : 910, cost  : 10000, assignment : 0
+track  : 863, new detections  : 911, cost  : 32, assignment : 1
+track  : 865, new detections  : 910, cost  : 9, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+305,690,231,204,36,83,1,-1,-1,-1
+305,863,333,168,68,154,1,-1,-1,-1
+305,865,155,217,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 690, new detections  : 913, cost  : 9, assignment : 1
+track  : 863, new detections  : 690, cost  : 192, assignment : 0
+track  : 863, new detections  : 914, cost  : 23, assignment : 1
+track  : 865, new detections  : 690, cost  : 112, assignment : 0
+track  : 865, new detections  : 863, cost  : 10000, assignment : 0
+Current Targets: 3
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 3
+306,690,236,204,36,83,1,-1,-1,-1
+306,863,341,174,62,141,1,-1,-1,-1
+306,865,157,213,25,58,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 690, new detections  : 915, cost  : 185, assignment : 0
+track  : 690, new detections  : 916, cost  : 6, assignment : 1
+track  : 863, new detections  : 915, cost  : 17, assignment : 1
+Current Targets: 2
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 2
+307,690,242,204,36,83,1,-1,-1,-1
+307,863,351,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 690, new detections  : 918, cost  : 10000, assignment : 0
+track  : 690, new detections  : 919, cost  : 3, assignment : 1
+track  : 863, new detections  : 918, cost  : 17, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 2
+308,690,242,204,36,83,1,-1,-1,-1
+308,863,354,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 923, cost  : 193, assignment : 0
+track  : 690, new detections  : 924, cost  : 11, assignment : 1
+track  : 863, new detections  : 923, cost  : 17, assignment : 1
+track  : 921, new detections  : 863, cost  : 47, assignment : 0
+track  : 921, new detections  : 690, cost  : 10000, assignment : 0
+track  : 921, new detections  : 925, cost  : 10000, assignment : 0
+track  : 921, new detections  : 926, cost  : 10, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+309,690,248,204,36,83,1,-1,-1,-1
+309,863,361,174,62,141,1,-1,-1,-1
+309,921,418,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 927, cost  : 187, assignment : 0
+track  : 690, new detections  : 928, cost  : 6, assignment : 1
+track  : 863, new detections  : 927, cost  : 6, assignment : 1
+track  : 921, new detections  : 863, cost  : 62, assignment : 0
+track  : 921, new detections  : 690, cost  : 10000, assignment : 0
+track  : 921, new detections  : 929, cost  : 12, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+310,690,248,204,36,83,1,-1,-1,-1
+310,863,361,174,62,141,1,-1,-1,-1
+310,921,418,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 930, cost  : 10000, assignment : 0
+track  : 690, new detections  : 931, cost  : 7, assignment : 1
+track  : 863, new detections  : 930, cost  : 16, assignment : 1
+track  : 921, new detections  : 863, cost  : 69, assignment : 0
+track  : 921, new detections  : 690, cost  : 10000, assignment : 0
+track  : 921, new detections  : 932, cost  : 10, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+311,690,242,204,36,83,1,-1,-1,-1
+311,863,365,168,68,154,1,-1,-1,-1
+311,921,418,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 933, cost  : 12, assignment : 1
+track  : 863, new detections  : 690, cost  : 198, assignment : 0
+track  : 863, new detections  : 934, cost  : 26, assignment : 1
+track  : 921, new detections  : 690, cost  : 10000, assignment : 0
+track  : 921, new detections  : 863, cost  : 75, assignment : 0
+track  : 921, new detections  : 935, cost  : 10000, assignment : 0
+track  : 921, new detections  : 936, cost  : 46, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+312,690,245,204,40,90,1,-1,-1,-1
+312,863,363,161,74,168,1,-1,-1,-1
+312,921,420,150,74,168,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 937, cost  : 10000, assignment : 0
+track  : 690, new detections  : 938, cost  : 6, assignment : 1
+track  : 863, new detections  : 937, cost  : 24, assignment : 1
+track  : 921, new detections  : 863, cost  : 73, assignment : 0
+track  : 921, new detections  : 690, cost  : 10000, assignment : 0
+track  : 921, new detections  : 939, cost  : 48, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+313,690,245,204,40,90,1,-1,-1,-1
+313,863,365,168,68,154,1,-1,-1,-1
+313,921,437,174,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 940, cost  : 10000, assignment : 0
+track  : 690, new detections  : 941, cost  : 5, assignment : 1
+track  : 863, new detections  : 940, cost  : 18, assignment : 0
+track  : 863, new detections  : 690, cost  : 194, assignment : 0
+track  : 863, new detections  : 942, cost  : 188, assignment : 1
+track  : 921, new detections  : 940, cost  : 74, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+314,690,251,198,40,90,1,-1,-1,-1
+314,863,291,210,28,64,1,-1,-1,-1
+314,921,375,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 943, cost  : 10, assignment : 1
+track  : 863, new detections  : 690, cost  : 51, assignment : 0
+track  : 863, new detections  : 944, cost  : 10000, assignment : 0
+track  : 863, new detections  : 945, cost  : 6, assignment : 1
+track  : 921, new detections  : 690, cost  : 10000, assignment : 0
+track  : 921, new detections  : 944, cost  : 9, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+315,690,253,198,36,83,1,-1,-1,-1
+315,863,291,210,28,64,1,-1,-1,-1
+315,921,375,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 947, cost  : 10000, assignment : 0
+track  : 690, new detections  : 948, cost  : 31, assignment : 1
+track  : 863, new detections  : 947, cost  : 10000, assignment : 0
+track  : 863, new detections  : 690, cost  : 71, assignment : 0
+track  : 863, new detections  : 949, cost  : 124, assignment : 0
+track  : 863, new detections  : 950, cost  : 8, assignment : 1
+track  : 921, new detections  : 947, cost  : 8, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 3
+316,690,248,197,43,99,1,-1,-1,-1
+316,863,291,210,28,64,1,-1,-1,-1
+316,921,375,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 952, cost  : 4, assignment : 1
+track  : 863, new detections  : 690, cost  : 76, assignment : 0
+track  : 863, new detections  : 953, cost  : 10000, assignment : 0
+track  : 863, new detections  : 954, cost  : 124, assignment : 1
+track  : 921, new detections  : 690, cost  : 198, assignment : 0
+track  : 921, new detections  : 953, cost  : 15, assignment : 1
+track  : 949, new detections  : 690, cost  : 124, assignment : 0
+track  : 949, new detections  : 921, cost  : 10000, assignment : 0
+track  : 949, new detections  : 863, cost  : 4, assignment : 0
+track  : 949, new detections  : 955, cost  : 36, assignment : 1
+Current Targets: 4
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 4
+317,690,248,197,43,99,1,-1,-1,-1
+317,863,175,213,26,59,1,-1,-1,-1
+317,921,375,168,68,154,1,-1,-1,-1
+317,949,139,209,26,59,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 957, cost  : 10000, assignment : 0
+track  : 690, new detections  : 958, cost  : 9, assignment : 1
+track  : 863, new detections  : 957, cost  : 10000, assignment : 0
+track  : 863, new detections  : 690, cost  : 124, assignment : 0
+track  : 863, new detections  : 959, cost  : 54, assignment : 0
+track  : 863, new detections  : 960, cost  : 80, assignment : 1
+track  : 921, new detections  : 957, cost  : 17, assignment : 1
+track  : 949, new detections  : 921, cost  : 10000, assignment : 0
+track  : 949, new detections  : 690, cost  : 161, assignment : 0
+track  : 949, new detections  : 959, cost  : 11, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+318,690,248,197,43,99,1,-1,-1,-1
+318,863,214,198,40,90,1,-1,-1,-1
+318,921,386,168,68,154,1,-1,-1,-1
+318,949,134,210,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 961, cost  : 10000, assignment : 0
+track  : 690, new detections  : 962, cost  : 10, assignment : 1
+track  : 863, new detections  : 961, cost  : 10000, assignment : 0
+track  : 863, new detections  : 690, cost  : 50, assignment : 0
+track  : 863, new detections  : 963, cost  : 114, assignment : 0
+track  : 921, new detections  : 961, cost  : 7, assignment : 1
+track  : 949, new detections  : 921, cost  : 10000, assignment : 0
+track  : 949, new detections  : 690, cost  : 158, assignment : 0
+track  : 949, new detections  : 963, cost  : 13, assignment : 1
+Current Targets: 4
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 4
+319,690,248,204,43,99,1,-1,-1,-1
+319,863,215,198,39,86,1,-1,-1,-1
+319,921,386,168,68,154,1,-1,-1,-1
+319,949,130,214,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 964, cost  : 10000, assignment : 0
+track  : 690, new detections  : 965, cost  : 164, assignment : 0
+track  : 690, new detections  : 966, cost  : 8, assignment : 1
+track  : 921, new detections  : 964, cost  : 21, assignment : 1
+track  : 949, new detections  : 921, cost  : 10000, assignment : 0
+track  : 949, new detections  : 965, cost  : 10, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+320,690,248,204,43,99,1,-1,-1,-1
+320,921,389,184,62,141,1,-1,-1,-1
+320,949,125,219,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 968, cost  : 10000, assignment : 0
+track  : 690, new detections  : 969, cost  : 162, assignment : 0
+track  : 690, new detections  : 970, cost  : 14, assignment : 1
+track  : 921, new detections  : 968, cost  : 7, assignment : 1
+track  : 949, new detections  : 921, cost  : 10000, assignment : 0
+track  : 949, new detections  : 969, cost  : 9, assignment : 1
+Current Targets: 3
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 3
+321,690,241,200,47,108,1,-1,-1,-1
+321,921,389,184,62,141,1,-1,-1,-1
+321,949,122,214,30,69,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 972, cost  : 199, assignment : 0
+track  : 690, new detections  : 973, cost  : 17, assignment : 1
+track  : 921, new detections  : 972, cost  : 22, assignment : 1
+track  : 949, new detections  : 921, cost  : 10000, assignment : 0
+track  : 949, new detections  : 690, cost  : 164, assignment : 0
+track  : 949, new detections  : 974, cost  : 15, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 3
+322,690,248,204,43,99,1,-1,-1,-1
+322,921,386,168,68,154,1,-1,-1,-1
+322,949,117,207,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 977, cost  : 23, assignment : 1
+track  : 921, new detections  : 690, cost  : 196, assignment : 0
+track  : 921, new detections  : 978, cost  : 8, assignment : 1
+track  : 949, new detections  : 690, cost  : 177, assignment : 0
+track  : 949, new detections  : 921, cost  : 10000, assignment : 0
+track  : 949, new detections  : 979, cost  : 130, assignment : 0
+track  : 949, new detections  : 980, cost  : 6, assignment : 1
+track  : 975, new detections  : 690, cost  : 132, assignment : 0
+track  : 975, new detections  : 921, cost  : 10000, assignment : 0
+track  : 975, new detections  : 979, cost  : 85, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+323,690,238,193,52,118,1,-1,-1,-1
+323,921,386,168,68,154,1,-1,-1,-1
+323,949,112,204,36,83,1,-1,-1,-1
+323,975,204,200,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 8
+track  : 690, new detections  : 981, cost  : 196, assignment : 0
+track  : 690, new detections  : 982, cost  : 15, assignment : 1
+track  : 921, new detections  : 981, cost  : 11, assignment : 1
+track  : 949, new detections  : 921, cost  : 10000, assignment : 0
+track  : 949, new detections  : 690, cost  : 170, assignment : 0
+track  : 949, new detections  : 983, cost  : 133, assignment : 0
+track  : 949, new detections  : 984, cost  : 100, assignment : 1
+track  : 975, new detections  : 921, cost  : 10000, assignment : 0
+track  : 975, new detections  : 690, cost  : 40, assignment : 0
+track  : 975, new detections  : 983, cost  : 7, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+324,690,241,200,47,108,1,-1,-1,-1
+324,921,386,168,68,154,1,-1,-1,-1
+324,949,183,221,26,59,1,-1,-1,-1
+324,975,204,200,47,108,1,-1,-1,-1
+----------------------------------------
+Target number: 9
+track  : 690, new detections  : 985, cost  : 18, assignment : 1
+track  : 921, new detections  : 690, cost  : 196, assignment : 0
+track  : 921, new detections  : 986, cost  : 17, assignment : 1
+track  : 949, new detections  : 690, cost  : 132, assignment : 0
+track  : 949, new detections  : 921, cost  : 10000, assignment : 0
+track  : 949, new detections  : 987, cost  : 92, assignment : 0
+track  : 975, new detections  : 690, cost  : 47, assignment : 0
+track  : 975, new detections  : 921, cost  : 10000, assignment : 0
+track  : 975, new detections  : 987, cost  : 18, assignment : 1
+Current Targets: 4
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 4
+325,690,238,193,52,118,1,-1,-1,-1
+325,921,396,179,68,154,1,-1,-1,-1
+325,949,182,222,27,60,1,-1,-1,-1
+325,975,198,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 9
+track  : 690, new detections  : 988, cost  : 188, assignment : 0
+track  : 690, new detections  : 989, cost  : 9, assignment : 1
+track  : 921, new detections  : 988, cost  : 16, assignment : 1
+track  : 975, new detections  : 921, cost  : 10000, assignment : 0
+track  : 975, new detections  : 690, cost  : 51, assignment : 0
+track  : 975, new detections  : 990, cost  : 10, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+326,690,238,193,52,118,1,-1,-1,-1
+326,921,399,184,62,141,1,-1,-1,-1
+326,975,190,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 690, new detections  : 991, cost  : 190, assignment : 0
+track  : 690, new detections  : 992, cost  : 9, assignment : 0
+track  : 690, new detections  : 993, cost  : 63, assignment : 1
+track  : 921, new detections  : 991, cost  : 3, assignment : 1
+track  : 975, new detections  : 921, cost  : 10000, assignment : 0
+track  : 975, new detections  : 992, cost  : 40, assignment : 1
+Current Targets: 3
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 3
+327,690,262,207,33,76,1,-1,-1,-1
+327,921,399,184,62,141,1,-1,-1,-1
+327,975,230,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 690, new detections  : 994, cost  : 68, assignment : 0
+track  : 690, new detections  : 995, cost  : 10000, assignment : 0
+track  : 690, new detections  : 996, cost  : 42, assignment : 0
+track  : 690, new detections  : 997, cost  : 10000, assignment : 0
+track  : 690, new detections  : 998, cost  : 9, assignment : 1
+track  : 921, new detections  : 994, cost  : 10000, assignment : 0
+track  : 921, new detections  : 995, cost  : 5, assignment : 1
+track  : 975, new detections  : 994, cost  : 6, assignment : 1
+Current Targets: 3
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 3
+328,690,262,207,33,76,1,-1,-1,-1
+328,921,399,184,62,141,1,-1,-1,-1
+328,975,230,193,52,118,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 690, new detections  : 999, cost  : 78, assignment : 0
+track  : 690, new detections  : 1000, cost  : 10000, assignment : 0
+track  : 690, new detections  : 1001, cost  : 10000, assignment : 0
+track  : 690, new detections  : 1002, cost  : 35, assignment : 1
+track  : 921, new detections  : 999, cost  : 193, assignment : 0
+track  : 921, new detections  : 1000, cost  : 8, assignment : 1
+track  : 975, new detections  : 999, cost  : 18, assignment : 1
+track  : 997, new detections  : 975, cost  : 10000, assignment : 0
+track  : 997, new detections  : 921, cost  : 67, assignment : 0
+track  : 997, new detections  : 1001, cost  : 0, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+329,690,287,204,36,83,1,-1,-1,-1
+329,921,399,184,62,141,1,-1,-1,-1
+329,975,226,184,56,129,1,-1,-1,-1
+329,997,466,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 690, new detections  : 1003, cost  : 98, assignment : 0
+track  : 690, new detections  : 1004, cost  : 10000, assignment : 0
+track  : 690, new detections  : 1005, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1003, cost  : 198, assignment : 0
+track  : 921, new detections  : 1004, cost  : 34, assignment : 1
+track  : 975, new detections  : 1003, cost  : 9, assignment : 1
+track  : 997, new detections  : 975, cost  : 10000, assignment : 0
+track  : 997, new detections  : 921, cost  : 99, assignment : 0
+track  : 997, new detections  : 1005, cost  : 15, assignment : 1
+Current Targets: 4
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 4
+330,690,287,206,36,86,1,-1,-1,-1
+330,921,397,161,74,168,1,-1,-1,-1
+330,975,226,184,56,129,1,-1,-1,-1
+330,997,466,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 690, new detections  : 1006, cost  : 10000, assignment : 0
+track  : 690, new detections  : 1007, cost  : 110, assignment : 0
+track  : 921, new detections  : 1006, cost  : 3, assignment : 1
+track  : 975, new detections  : 921, cost  : 10000, assignment : 0
+track  : 975, new detections  : 1007, cost  : 15, assignment : 1
+track  : 997, new detections  : 921, cost  : 83, assignment : 0
+track  : 997, new detections  : 975, cost  : 10000, assignment : 0
+Current Targets: 4
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 4
+331,690,286,206,37,81,1,-1,-1,-1
+331,921,397,161,74,168,1,-1,-1,-1
+331,975,217,184,56,129,1,-1,-1,-1
+331,997,460,184,60,145,1,-1,-1,-1
+----------------------------------------
+Target number: 7
+track  : 921, new detections  : 1008, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1009, cost  : 13, assignment : 1
+track  : 975, new detections  : 1008, cost  : 22, assignment : 1
+Current Targets: 2
+New Detections: 2
+New Born Targets: 0
+Updated Targets: 2
+332,921,397,161,74,168,1,-1,-1,-1
+332,975,217,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1010, cost  : 24, assignment : 1
+track  : 975, new detections  : 921, cost  : 10000, assignment : 0
+track  : 975, new detections  : 1011, cost  : 10, assignment : 1
+Current Targets: 2
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 2
+333,921,396,168,68,154,1,-1,-1,-1
+333,975,208,184,62,141,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1015, cost  : 14, assignment : 1
+Current Targets: 1
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 1
+334,921,396,168,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1020, cost  : 15, assignment : 1
+Current Targets: 1
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 1
+335,921,397,161,74,168,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1026, cost  : 9, assignment : 1
+Current Targets: 1
+New Detections: 5
+New Born Targets: 1
+Updated Targets: 1
+336,921,397,161,74,168,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1031, cost  : 5, assignment : 1
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1032, cost  : 5, assignment : 1
+Current Targets: 2
+New Detections: 7
+New Born Targets: 1
+Updated Targets: 2
+337,921,397,161,74,168,1,-1,-1,-1
+337,1027,246,212,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1038, cost  : 8, assignment : 1
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1039, cost  : 4, assignment : 0
+track  : 1027, new detections  : 1040, cost  : 145, assignment : 1
+track  : 1036, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1039, cost  : 50, assignment : 1
+Current Targets: 3
+New Detections: 6
+New Born Targets: 1
+Updated Targets: 3
+338,921,397,161,74,168,1,-1,-1,-1
+338,1027,180,173,74,168,1,-1,-1,-1
+338,1036,246,212,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1044, cost  : 24, assignment : 1
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1045, cost  : 130, assignment : 0
+track  : 1027, new detections  : 1046, cost  : 29, assignment : 1
+track  : 1036, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1045, cost  : 11, assignment : 1
+track  : 1041, new detections  : 921, cost  : 74, assignment : 0
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1027, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1047, cost  : 155, assignment : 0
+track  : 1041, new detections  : 1048, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1049, cost  : 0, assignment : 1
+Current Targets: 4
+New Detections: 7
+New Born Targets: 0
+Updated Targets: 4
+339,921,396,168,68,154,1,-1,-1,-1
+339,1027,169,162,80,181,1,-1,-1,-1
+339,1036,242,210,36,83,1,-1,-1,-1
+339,1041,470,179,68,154,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1051, cost  : 19, assignment : 1
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1052, cost  : 155, assignment : 0
+track  : 1027, new detections  : 1053, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1054, cost  : 176, assignment : 0
+track  : 1027, new detections  : 1055, cost  : 22, assignment : 1
+track  : 1036, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1052, cost  : 3, assignment : 1
+track  : 1041, new detections  : 921, cost  : 90, assignment : 0
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1053, cost  : 158, assignment : 1
+Current Targets: 4
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 4
+340,921,397,161,74,168,1,-1,-1,-1
+340,1027,169,161,74,168,1,-1,-1,-1
+340,1036,242,210,36,83,1,-1,-1,-1
+340,1041,577,216,40,90,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1056, cost  : 5, assignment : 1
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1057, cost  : 137, assignment : 0
+track  : 1027, new detections  : 1058, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1059, cost  : 58, assignment : 1
+track  : 1036, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1057, cost  : 9, assignment : 1
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1058, cost  : 25, assignment : 1
+Current Targets: 4
+New Detections: 7
+New Born Targets: 0
+Updated Targets: 4
+341,921,397,161,74,168,1,-1,-1,-1
+341,1027,157,162,86,196,1,-1,-1,-1
+341,1036,236,210,36,83,1,-1,-1,-1
+341,1041,577,228,33,76,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1063, cost  : 5, assignment : 1
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1064, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1065, cost  : 175, assignment : 0
+track  : 1027, new detections  : 1066, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1067, cost  : 42, assignment : 1
+track  : 1036, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1064, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1065, cost  : 6, assignment : 1
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1064, cost  : 34, assignment : 1
+Current Targets: 4
+New Detections: 7
+New Born Targets: 0
+Updated Targets: 4
+342,921,397,161,74,168,1,-1,-1,-1
+342,1027,157,161,74,168,1,-1,-1,-1
+342,1036,231,210,36,83,1,-1,-1,-1
+342,1041,571,210,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1070, cost  : 26, assignment : 1
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1071, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1072, cost  : 150, assignment : 0
+track  : 1027, new detections  : 1073, cost  : 36, assignment : 1
+track  : 1036, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1071, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1072, cost  : 2, assignment : 1
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1071, cost  : 16, assignment : 1
+Current Targets: 4
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 4
+343,921,407,168,68,154,1,-1,-1,-1
+343,1027,143,148,86,196,1,-1,-1,-1
+343,1036,231,210,36,83,1,-1,-1,-1
+343,1041,571,210,40,90,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1076, cost  : 16, assignment : 1
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1077, cost  : 190, assignment : 0
+track  : 1027, new detections  : 1078, cost  : 91, assignment : 0
+track  : 1027, new detections  : 1079, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1080, cost  : 64, assignment : 1
+track  : 1036, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1077, cost  : 18, assignment : 1
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1078, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1079, cost  : 20, assignment : 1
+Current Targets: 4
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 4
+344,921,407,158,68,154,1,-1,-1,-1
+344,1027,124,146,104,236,1,-1,-1,-1
+344,1036,236,204,36,83,1,-1,-1,-1
+344,1041,564,204,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1081, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1082, cost  : 18, assignment : 1
+track  : 1027, new detections  : 1081, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1083, cost  : 15, assignment : 1
+track  : 1036, new detections  : 1081, cost  : 14, assignment : 1
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1027, cost  : 10000, assignment : 0
+Current Targets: 4
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 4
+345,921,396,168,68,154,1,-1,-1,-1
+345,1027,124,130,104,236,1,-1,-1,-1
+345,1036,226,204,40,90,1,-1,-1,-1
+345,1041,561,206,39,99,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1084, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1085, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1086, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1087, cost  : 14, assignment : 1
+track  : 1027, new detections  : 1084, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1085, cost  : 18, assignment : 1
+track  : 1036, new detections  : 1084, cost  : 12, assignment : 1
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1027, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1086, cost  : 15, assignment : 1
+Current Targets: 4
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 4
+346,921,396,179,68,154,1,-1,-1,-1
+346,1027,108,130,104,236,1,-1,-1,-1
+346,1036,226,204,40,90,1,-1,-1,-1
+346,1041,564,210,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1090, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1091, cost  : 29, assignment : 1
+track  : 1027, new detections  : 1090, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1092, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1093, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1094, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1095, cost  : 67, assignment : 1
+track  : 1036, new detections  : 1090, cost  : 6, assignment : 1
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1092, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1093, cost  : 49, assignment : 1
+Current Targets: 4
+New Detections: 6
+New Born Targets: 0
+Updated Targets: 4
+347,921,397,161,74,168,1,-1,-1,-1
+347,1027,92,118,125,284,1,-1,-1,-1
+347,1036,220,204,40,90,1,-1,-1,-1
+347,1041,565,241,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1096, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1097, cost  : 8, assignment : 1
+track  : 1027, new detections  : 1096, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1098, cost  : 10000, assignment : 1
+track  : 1036, new detections  : 1096, cost  : 10, assignment : 1
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1027, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1099, cost  : 49, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+348,921,397,161,74,168,1,-1,-1,-1
+348,1027,248,193,47,108,1,-1,-1,-1
+348,1036,220,210,40,90,1,-1,-1,-1
+348,1041,557,210,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1100, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1101, cost  : 14, assignment : 1
+track  : 1027, new detections  : 1100, cost  : 40, assignment : 0
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1102, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1103, cost  : 10, assignment : 1
+track  : 1036, new detections  : 1100, cost  : 12, assignment : 1
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1102, cost  : 58, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+349,921,396,168,68,154,1,-1,-1,-1
+349,1027,241,193,47,108,1,-1,-1,-1
+349,1036,214,204,43,99,1,-1,-1,-1
+349,1041,556,245,28,64,1,-1,-1,-1
+----------------------------------------
+Target number: 6
+track  : 921, new detections  : 1104, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1105, cost  : 29, assignment : 1
+track  : 1027, new detections  : 1104, cost  : 51, assignment : 0
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1106, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1107, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1108, cost  : 13, assignment : 1
+track  : 1036, new detections  : 1104, cost  : 16, assignment : 1
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1106, cost  : 62, assignment : 1
+Current Targets: 4
+New Detections: 5
+New Born Targets: 0
+Updated Targets: 4
+350,921,386,168,68,154,1,-1,-1,-1
+350,1027,234,193,47,108,1,-1,-1,-1
+350,1036,207,197,43,99,1,-1,-1,-1
+350,1041,544,204,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 921, new detections  : 1109, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1110, cost  : 27, assignment : 1
+track  : 1027, new detections  : 1109, cost  : 45, assignment : 0
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1111, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1109, cost  : 8, assignment : 1
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1111, cost  : 12, assignment : 1
+Current Targets: 4
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 4
+351,921,386,161,74,168,1,-1,-1,-1
+351,1027,233,189,47,107,1,-1,-1,-1
+351,1036,200,204,43,99,1,-1,-1,-1
+351,1041,537,204,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 921, new detections  : 1112, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1113, cost  : 14, assignment : 1
+track  : 1027, new detections  : 1112, cost  : 66, assignment : 0
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1114, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1115, cost  : 11, assignment : 1
+track  : 1036, new detections  : 1112, cost  : 17, assignment : 1
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1114, cost  : 14, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+352,921,386,168,68,154,1,-1,-1,-1
+352,1027,241,193,47,108,1,-1,-1,-1
+352,1036,194,204,43,99,1,-1,-1,-1
+352,1041,537,204,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 5
+track  : 921, new detections  : 1116, cost  : 10000, assignment : 0
+track  : 921, new detections  : 1117, cost  : 12, assignment : 1
+track  : 1027, new detections  : 1116, cost  : 63, assignment : 0
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1118, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1119, cost  : 19, assignment : 1
+track  : 1036, new detections  : 1116, cost  : 5, assignment : 1
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 921, cost  : 189, assignment : 0
+track  : 1041, new detections  : 1118, cost  : 17, assignment : 1
+Current Targets: 4
+New Detections: 4
+New Born Targets: 0
+Updated Targets: 4
+353,921,386,168,68,154,1,-1,-1,-1
+353,1027,230,193,52,118,1,-1,-1,-1
+353,1036,194,204,43,99,1,-1,-1,-1
+353,1041,531,210,43,99,1,-1,-1,-1
+----------------------------------------
+Target number: 4
+track  : 921, new detections  : 1120, cost  : 14, assignment : 1
+track  : 1027, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1027, new detections  : 1121, cost  : 68, assignment : 0
+track  : 1027, new detections  : 1122, cost  : 79, assignment : 1
+track  : 1036, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1036, new detections  : 1121, cost  : 7, assignment : 1
+track  : 1041, new detections  : 921, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1036, cost  : 10000, assignment : 0
+track  : 1041, new detections  : 1027, cost  : 10000, assignment : 0
+Current Targets: 4
+New Detections: 3
+New Born Targets: 0
+Updated Targets: 4
+354,921,386,161,74,168,1,-1,-1,-1
+354,1027,241,238,30,69,1,-1,-1,-1
+354,1036,194,204,43,99,1,-1,-1,-1
+354,1041,532,208,38,105,1,-1,-1,-1
+----------------------------------------

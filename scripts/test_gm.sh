@@ -9,6 +9,6 @@ do
     do
         mkdir -p ../build/results/$OUTPUT_DIRECTORY/$dataset/train/
         echo $dataset,$sequence
-        /bin/bash $PWD/start_gm.sh $dataset train $sequence  > ../build/results/$OUTPUT_DIRECTORY/$dataset/train/$sequence.txt
+        /bin/bash $PWD/start_gm.sh $dataset train $sequence 0 > ../build/results/$OUTPUT_DIRECTORY/$dataset/train/$sequence.txt
     done <./data/$dataset/train/sequences.lst
 done
