@@ -17,12 +17,11 @@ class TestDPP
 public:
 	TestDPP();
 	TestDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile,
-		double _epsilon, double _mu, double _lambda, int _npart);
-	void run();
+		double _epsilon, double _mu, double _lambda);
+	void run(bool verbose);
 private:
 	//int numFrames;
 	string firstFrameFileName, groundTruthFileName, preDetectionFile;
-	int npart;
 	double epsilon, mu, lambda;
 	ImageGenerator generator;
 };

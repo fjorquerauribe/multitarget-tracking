@@ -37,8 +37,8 @@ public:
    ~PHDGaussianMixture();
     PHDGaussianMixture(bool verbose = false);
     PHDGaussianMixture();
-    void initialize(Mat& current_frame, vector<Rect> detections);
-    void update(Mat& image, vector<Rect> detections);
+    void initialize(Mat& current_frame, vector<Rect> detections, MatrixXd features);
+    void update(Mat& image, vector<Rect> detections, MatrixXd features);
     void predict();
     bool is_initialized();
     vector<Target> estimate(Mat& image, bool draw = false);

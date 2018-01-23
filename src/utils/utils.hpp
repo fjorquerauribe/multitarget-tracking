@@ -23,6 +23,7 @@ typedef struct{
 	double dx;
 	double dy;
 	double survival_rate;
+	VectorXd feature;
 	//int conf;
 } Target;
 

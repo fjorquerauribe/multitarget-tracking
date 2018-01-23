@@ -1,7 +1,7 @@
 #include "image_generator.hpp"
 
 #ifndef PARAMS
-  const int FEATURES_NUM = 15872;
+  const int FEATURES_NUM = 128; // HOG:15872 | CNN:128 
 #endif
 
 using namespace std;

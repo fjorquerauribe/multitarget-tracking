@@ -24,6 +24,7 @@ void TestGMPHDFilter::run(bool verbose=false)
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
 		vector<Rect> preDetections = this->generator.getDetections(i);
+		MatrixXd features = this->generator.getDetectionFeatures(i);
 		//VectorXd weights = this->generator.getDetectionWeights(i);
 		vector<Target> estimates;
 		
@@ -31,12 +32,12 @@ void TestGMPHDFilter::run(bool verbose=false)
 
 		if (!filter.is_initialized() &&  preDetections.size()>0)
 		{
-			filter.initialize(currentFrame, preDetections);
+			filter.initialize(currentFrame, preDetections, features);
 		}
 		else
 		{
 			filter.predict();
-			filter.update(currentFrame, preDetections);
+			filter.update(currentFrame, preDetections, features);
 			estimates = filter.estimate(currentFrame, true);
 		}
 

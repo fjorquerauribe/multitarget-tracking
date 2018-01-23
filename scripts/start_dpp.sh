@@ -1,1 +1,1 @@
-../build/dpp -img data/$1/$2/$3/img1/000001.jpg -gt data/$1/$2/$3/gt/gt.txt -det data/DETS_SSD/$1/$2/no_nms/$3.txt -epsilon $4 -mu $5 -lambda $6 -npart $7
+../build/dpp -img data/$1/$2/$3/img1/000001.jpg -gt data/$1/$2/$3/gt/gt.txt -det data/raw_detections/CNN/$1/$2/$3.txt -epsilon $4 -mu $5 -lambda $6 -verbose $7
