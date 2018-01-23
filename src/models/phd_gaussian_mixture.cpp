@@ -8,7 +8,7 @@
 #ifndef PARAMS
     const float POS_STD = 3.0;
     const float SCALE_STD = 3.0;
-    const float THRESHOLD = 1000;
+    const float THRESHOLD = 80;
     const float SURVIVAL_RATE = 1.0;
     const float CLUTTER_RATE = 2.0;
     const float BIRTH_RATE = 0.9;
@@ -34,7 +34,7 @@ PHDGaussianMixture::PHDGaussianMixture(bool verbose) {
     this->birth_model.clear();
     this->labels.clear();
     unsigned seed1 = std::chrono::system_clock::now().time_since_epoch().count();
-    this->generator.seed(seed1);
+    this->generator.seed(12345);
     this->theta_x.clear();
     RowVectorXd theta_x_pos(2);
     theta_x_pos << POS_STD, POS_STD;
@@ -162,7 +162,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
                         << ", cost  : " << m[i][j]
                          << ", assignment : " << p.assignment[i][j] << endl;
                 }
-                if (p.assignment[i][j] == HUNGARIAN_ASSIGNED && m[i][j]!=1000)
+                if (p.assignment[i][j] == HUNGARIAN_ASSIGNED && m[i][j]<=THRESHOLD)
                 {
                     //new_labels.erase(new_tracks.at(j).label);
                     new_detections.at(j).label = this->tracks.at(i).label;
@@ -174,7 +174,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
                 this->labels.insert(new_detections.at(j).label);
             }
             if(no_assignment_count==(int)new_detections.size()) {
-                this->tracks.at(i).survival_rate=exp(4*(-1.0+this->tracks.at(i).survival_rate*0.9));
+                this->tracks.at(i).survival_rate=exp(10*(-1.0+this->tracks.at(i).survival_rate*0.9));
                 new_tracks.push_back(this->tracks.at(i));
             }  
         }

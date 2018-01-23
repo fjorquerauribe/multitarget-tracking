@@ -19,9 +19,6 @@ typedef struct{
 	int label;
   	Scalar color;
 	Rect bbox;
-	Rect velocity;
-	double dx;
-	double dy;
 	double survival_rate;
 	//int conf;
 } Target;

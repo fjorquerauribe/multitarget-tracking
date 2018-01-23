@@ -24,7 +24,8 @@ void TestGMPHDFilter::run(bool verbose=false)
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
 		vector<Rect> preDetections = this->generator.getDetections(i);
-		//VectorXd weights = this->generator.getDetectionWeights(i);
+		VectorXd detectionWeights = this->generator.getDetectionWeights(i);
+		MatrixXd features = this->generator.getDetectionFeatures(i);
 		vector<Target> estimates;
 		
 		if(verbose)	cout << "Target number: " << gt.size() << endl;
