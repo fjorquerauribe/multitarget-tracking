@@ -29,16 +29,9 @@ SET( COMMON_SOURCES
     src/libs/libhungarian/hungarian.c
 )
 
-if(MAKE_LR_DETECTOR)
-    add_executable(lr_detector src/test_lr_detector.cpp src/detectors/CPU_LR_hog_detector.cpp src/likelihood/CPU_logistic_regression.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/dpp/dpp.cpp ${COMMON_SOURCES})
-    target_link_libraries( lr_detector ${OpenCV_LIBS} fhog)
-endif()
-
 if(MAKE_GM_PHD)
     add_executable( gm_phd src/test_gm_phd.cpp src/models/phd_gaussian_mixture.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
     target_link_libraries( gm_phd ${OpenCV_LIBS} -lpthread)
-    #target_compile_definitions( gm_phd PRIVATE -DWITH_SEQUENTIAL_IMAGE_GENERATOR )
-    target_compile_definitions( gm_phd PRIVATE )
 endif()
 
 

@@ -6,12 +6,7 @@
 #include <cstdlib>
 #include <opencv2/opencv.hpp>
 
-#ifdef WITH_SEQUENTIAL_IMAGE_GENERATOR
-	#include "utils/sequential_image_generator.hpp"
-#else
-	#include "utils/image_generator.hpp"
-#endif
-
+#include "utils/image_generator.hpp"
 #include "utils/utils.hpp"
 #include "models/phd_gaussian_mixture.hpp"
 
@@ -26,13 +21,8 @@ public:
 	 string _preDetectionFile);
 	void run(bool verbose);
 private:
-	string firstFrameFileName, groundTruthFileName, preDetectionFile;
-	
-#ifdef WITH_SEQUENTIAL_IMAGE_GENERATOR
-	SequentialImageGenerator generator;
-#else
+	string firstFrameFileName, groundTruthFileName, preDetectionFile;	
 	ImageGenerator generator;
-#endif
 };
 
 #endif

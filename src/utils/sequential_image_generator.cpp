@@ -139,12 +139,12 @@ void SequentialImageGenerator::readDetections(int frame){
       this->detection_weights.conservativeResize( this->detection_weights.size() + 1 );
       this->detection_weights(this->detection_weights.size() - 1) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
   
-      for(int j = 1; j < 3; j++){
+      for(int j = 0; j < 3; j++){
         pos1 = pos2;
         pos2 = line.find(",", pos1 + 1);
       }
   
-      for(int j = 1; j < FEATURES_DIM; j++){
+      for(int j = 0; j < FEATURES_DIM; j++){
         pos1 = pos2;
         pos2 = line.find(",", pos1 + 1);
         row(j) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));

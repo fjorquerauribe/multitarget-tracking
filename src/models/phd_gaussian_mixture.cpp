@@ -8,7 +8,7 @@
 #ifndef PARAMS
     const float POS_STD = 3.0;
     const float SCALE_STD = 3.0;
-    const float THRESHOLD = 600;
+    const float THRESHOLD = 120;
     const float SURVIVAL_RATE = 1.0;
     const float CLUTTER_RATE = 2.0;
     const float BIRTH_RATE = 0.9;

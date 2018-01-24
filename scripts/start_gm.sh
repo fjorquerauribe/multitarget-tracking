@@ -12,5 +12,4 @@ then
 else
     # public features
     ../build/gm_phd -img $1/$2/$3/img1/000001.jpg -gt $1/$2/$3/gt/gt.txt -det $1/$2/$3/det/det.txt  -verbose $5
-
 fi
