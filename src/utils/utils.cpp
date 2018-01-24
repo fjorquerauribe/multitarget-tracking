@@ -12,9 +12,13 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 			Point2f pointEstimated(new_tracks.at(j).bbox.x + new_tracks.at(j).bbox.width/2,
 			new_tracks.at(j).bbox.y + new_tracks.at(j).bbox.height/2);
 			Point2f scaleEstimated( new_tracks.at(j).bbox.width,new_tracks.at(j).bbox.height);
-			double cost= (norm(pointTracked - pointEstimated)+norm(scaleTracked-scaleEstimated));
-			cost_matrix[i][j] = (cost < 100)? cost : 1000;
-			//cost_matrix[i][j] = cost;
+			double cost = ( norm(pointTracked - pointEstimated) 
+						+ norm(scaleTracked - scaleEstimated) 
+						+ (tracks.at(i).feature - new_tracks.at(j).feature).norm() );
+			//cout << "sqrtNorm: " << (tracks.at(i).feature - new_tracks.at(j).feature).squaredNorm() << endl;
+			//cout << "norm: " << (tracks.at(i).feature - new_tracks.at(j).feature).norm() << endl;
+			//cost_matrix[i][j] = (cost < 100) ? cost : 1000;
+			cost_matrix[i][j] = cost;
 			//cout << "cost i: " << i << ", j : " << j << ", c : " << cost_matrix[i][j] << endl; 
 		}
 	}

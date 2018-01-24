@@ -20,6 +20,7 @@ typedef struct{
   	Scalar color;
 	Rect bbox;
 	double survival_rate;
+	VectorXd feature;
 	//int conf;
 } Target;
 

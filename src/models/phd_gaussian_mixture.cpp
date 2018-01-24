@@ -8,7 +8,7 @@
 #ifndef PARAMS
     const float POS_STD = 3.0;
     const float SCALE_STD = 3.0;
-    const float THRESHOLD = 80;
+    const float THRESHOLD = 600;
     const float SURVIVAL_RATE = 1.0;
     const float CLUTTER_RATE = 2.0;
     const float BIRTH_RATE = 0.9;
@@ -34,7 +34,7 @@ PHDGaussianMixture::PHDGaussianMixture(bool verbose) {
     this->birth_model.clear();
     this->labels.clear();
     unsigned seed1 = std::chrono::system_clock::now().time_since_epoch().count();
-    this->generator.seed(12345);
+    this->generator.seed(seed1);
     this->theta_x.clear();
     RowVectorXd theta_x_pos(2);
     theta_x_pos << POS_STD, POS_STD;
@@ -47,7 +47,7 @@ PHDGaussianMixture::PHDGaussianMixture(bool verbose) {
     this->initialized = false;
 }
 
-void PHDGaussianMixture::initialize(Mat& current_frame, vector<Rect> detections) {
+void PHDGaussianMixture::initialize(Mat& current_frame, vector<Rect> detections, MatrixXd features) {
     if(detections.size() > 0){
         this->img_size = current_frame.size();
         this->tracks.clear();
@@ -60,9 +60,8 @@ void PHDGaussianMixture::initialize(Mat& current_frame, vector<Rect> detections)
                 target.label = i;
                 target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
                 target.bbox = detections.at(i);
-                target.dx=0.0f;
-                target.dy=0.0f;
                 target.survival_rate = SURVIVAL_RATE;
+                target.feature = features.row(i);
                 this->tracks.push_back(target);
                 this->labels.insert(i);
         }
@@ -101,8 +100,6 @@ void PHDGaussianMixture::predict(){
                 && _width > 0 
                 && _height > 0 
                 && unif(this->generator) < track.survival_rate){
-                track.dx=_x-track.bbox.x;
-                track.dy=_y-track.bbox.y;
                 track.bbox.x = _x;
                 track.bbox.y = _y;
                 track.bbox.width = _width;
@@ -122,7 +119,7 @@ void PHDGaussianMixture::predict(){
 }
 
 
-void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
+void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd features)
 {
     uniform_real_distribution<double> unif(0.0,1.0);
     this->birth_model.clear();
@@ -140,6 +137,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
             target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
             target.bbox = detections[j];
             target.survival_rate = SURVIVAL_RATE;
+            target.feature = features.row(j);
             while( this->labels.find(label)!=this->labels.end() ) label++;
             target.label = label;
             this->labels.insert(label);
@@ -162,7 +160,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections)
                         << ", cost  : " << m[i][j]
                          << ", assignment : " << p.assignment[i][j] << endl;
                 }
-                if (p.assignment[i][j] == HUNGARIAN_ASSIGNED && m[i][j]<=THRESHOLD)
+                if (p.assignment[i][j] == HUNGARIAN_ASSIGNED && m[i][j] < THRESHOLD)
                 {
                     //new_labels.erase(new_tracks.at(j).label);
                     new_detections.at(j).label = this->tracks.at(i).label;

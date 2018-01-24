@@ -19,12 +19,10 @@ INCLUDE_DIRECTORIES( "src/libs/nms/" )
 add_subdirectory( "src/libs/piotr_fhog/" )
 
 OPTION(MAKE_GM_PHD "Make GM PHD" ON)
-OPTION(MAKE_PHD "Make PHD" OFF)
-OPTION(MAKE_DPP "Make DPP" OFF)
-OPTION(MAKE_LR_DETECTOR "Make LR_DETECTOR" OFF)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp
+    src/utils/sequential_image_generator.cpp
     src/utils/utils.cpp
     src/utils/c_utils.cpp
     src/em.cpp
@@ -39,33 +37,8 @@ endif()
 if(MAKE_GM_PHD)
     add_executable( gm_phd src/test_gm_phd.cpp src/models/phd_gaussian_mixture.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
     target_link_libraries( gm_phd ${OpenCV_LIBS} -lpthread)
+    #target_compile_definitions( gm_phd PRIVATE -DWITH_SEQUENTIAL_IMAGE_GENERATOR )
+    target_compile_definitions( gm_phd PRIVATE )
 endif()
 
-if(CUDA_FOUND)
-    INCLUDE_DIRECTORIES( ${CUDA_TOOLKIT_INCLUDE} )
-    
-    if(MAKE_PHD)
-        add_executable( phd src/test_phd.cpp src/likelihood/logistic_regression.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
-        target_link_libraries( phd ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
-        target_compile_definitions( phd PRIVATE -DWITH_CUDA )
-    endif()
 
-    if(MAKE_DPP)
-        add_executable( dpp src/test_dpp.cpp src/dpp/dpp.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
-        target_link_libraries( dpp ${OpenCV_LIBS} ${CUDA_LIBRARIES} ${CUDA_cublas_LIBRARY} -lpthread)
-        target_compile_definitions( dpp PRIVATE -DWITH_CUDA )
-    endif()
-
-else()
-
-    if(MAKE_PHD)
-        add_executable( phd src/test_phd.cpp src/detectors/hog_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
-        target_link_libraries( phd ${OpenCV_LIBS} -lpthread)
-    endif()
-
-    if(MAKE_DPP)
-        add_executable( dpp src/test_dpp.cpp src/dpp/dpp.cpp src/detectors/hog_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp src/models/phd_particle_filter.cpp ${COMMON_SOURCES})
-        target_link_libraries( dpp ${OpenCV_LIBS} -lpthread)
-    endif()
-
-endif()

@@ -9,7 +9,7 @@ DPP::DPP(){}
 
 vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, MatrixXd &featureValues, double epsilon, double mu, double lambda)
 {
-	vector<Rect> respDPP;
+	vector<Rect> results;
 
 	if(preDetections.size() > 0){
 		VectorXd area(preDetections.size());
@@ -35,24 +35,25 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 			for (unsigned int j = 0; j < rIntersectionArea.cols(); ++j)
 			{
 				if(rIntersectionArea(i,j) == 1)
+					cout << rIntersectionArea(i,j) << endl;
 					nContain(i) += 1;
 			}
 		}
-		
 		nContain = nContain.array() - 1;
-		VectorXd nPenalty = nContain.array().exp().pow(-lambda);
+		//cout << "nContain: " << nContain.transpose() << endl;
 		
+		VectorXd nPenalty = nContain.array().exp().pow(-lambda);
 		VectorXd qualityTerm = getQualityTerm(detectionWeights, nPenalty);
 		MatrixXd similarityTerm = getSimilarityTerm(featureValues, intersectionArea, sqrtArea, mu);
 		vector<int> top = solve(qualityTerm, similarityTerm, epsilon);
 
 		for (size_t i = 0; i < top.size(); ++i)
 		{
-			respDPP.push_back(preDetections.at(top.at(i)));
+			results.push_back(preDetections.at(top.at(i)));
 		}
 	}
 	
-	return respDPP;
+	return results;
 }
 
 VectorXd DPP::getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty){
@@ -117,7 +118,6 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 			newS.block(0, newS.cols() - 1, newS.rows() - 1, 1) << tmp;
 			newS.block(newS.rows() - 1, 0, 1, newS.cols() - 1) << tmp.transpose();
 			double obj_ = qualityTerm(remained(i)) * newS.determinant();
-			
 			if (obj_ > maxObj_)
 			{
 				selected = i;
@@ -126,8 +126,9 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 			}
 		}
 
-		double maxObj = prodQ * maxObj_ ;
-		if ( (maxObj / oldObj) > (1 + epsilon) )
+		double maxObj = prodQ * maxObj_;
+		cout << maxObj << endl;
+		if ( (maxObj / oldObj) > epsilon )
 		//if ( (maxObj / oldObj) > epsilon )
 		{
 			top.push_back(remained(selected));

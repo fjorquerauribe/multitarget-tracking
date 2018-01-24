@@ -1,42 +1,26 @@
-#include "image_generator.hpp"
+#include "sequential_image_generator.hpp"
 
 #ifndef PARAMS
-  const int FEATURES_NUM = 128; // HOG:15872 | CNN:128 
+  const int FEATURES_DIM = 128; // HOG:15872 | CNN:128 
 #endif
 
 using namespace std;
 using namespace cv;
 
-ImageGenerator::ImageGenerator(){
+SequentialImageGenerator::SequentialImageGenerator(){
 }
 
-ImageGenerator::ImageGenerator(string _firstFrameFilename, string _groundTruthFile){
+SequentialImageGenerator::SequentialImageGenerator(string _firstFrameFilename, string _groundTruthFile, string _detectionsFile){
   this->frame_id = 0;
+  this->detectionsFileName = _detectionsFile;
   string FrameFilename, gtFilename;
   FrameFilename = _firstFrameFilename;
   gtFilename = _groundTruthFile;
   Mat current_frame = imread(FrameFilename);
   this->images.push_back(current_frame);
-  while(1){
-    getNextFilename(FrameFilename);
-    current_frame = imread(FrameFilename );
-    if(current_frame.empty()){
-      break;
-    }
-    else{
-      this->images.push_back(current_frame);
-    }
-  }
-  readGroundTruth(_groundTruthFile);
-}
 
-ImageGenerator::ImageGenerator(string _firstFrameFilename, string _groundTruthFile, string _detectionsFile){
-  this->frame_id = 0;
-  string FrameFilename, gtFilename, detFilename;
-  FrameFilename = _firstFrameFilename;
-  gtFilename = _groundTruthFile;
-  Mat current_frame = imread(FrameFilename);
-  this->images.push_back(current_frame);
+  this->dt_file = ifstream(this->detectionsFileName.c_str(), ios::in);
+
   while(1){
     getNextFilename(FrameFilename);
     current_frame = imread(FrameFilename);
@@ -47,32 +31,32 @@ ImageGenerator::ImageGenerator(string _firstFrameFilename, string _groundTruthFi
       this->images.push_back(current_frame);
     }
   }
-  readDetections(_detectionsFile);
+  
   readGroundTruth(_groundTruthFile);
 }
 
-Mat ImageGenerator::getFrame(int frame_num){
+Mat SequentialImageGenerator::getFrame(int frame_num){
   Mat current_frame = this->images[frame_num].clone();
   return current_frame;
 }
 
-vector<Rect> ImageGenerator::getDetections(int frame_num){
-  return this->detections[frame_num];
+vector<Rect> SequentialImageGenerator::getDetections(){
+  return this->detections;
 }
 
-VectorXd ImageGenerator::getDetectionWeights(int frame_num){
-  return this->detection_weights[frame_num];
+VectorXd SequentialImageGenerator::getDetectionWeights(){
+  return this->detection_weights;
 }
 
-vector<Target> ImageGenerator::getGroundTruth(int frame_num){
+MatrixXd SequentialImageGenerator::getDetectionFeatures(){
+  return this->features;
+}
+
+vector<Target> SequentialImageGenerator::getGroundTruth(int frame_num){
   return this->ground_truth[frame_num];
 }
 
-MatrixXd ImageGenerator::getDetectionFeatures(int frame_num){
-  return this->features[frame_num];
-}
-
-bool ImageGenerator::hasEnded(){
+bool SequentialImageGenerator::hasEnded(){
   if(frame_id >= (int) this->images.size()){
     return true;
   }else{
@@ -80,21 +64,21 @@ bool ImageGenerator::hasEnded(){
   }
 }
 
-void ImageGenerator::moveNext(){
+void SequentialImageGenerator::moveNext(){
   this->frame_id++;
 }
 
-size_t ImageGenerator::getDatasetSize(){
+size_t SequentialImageGenerator::getDatasetSize(){
   return this->images.size();
 }
 
-void ImageGenerator::getNextFilename(string& fn){
+void SequentialImageGenerator::getNextFilename(string& fn){
     size_t index = fn.find_last_of("/");
     if(index == string::npos) {
         index = fn.find_last_of("\\");
     }
     size_t index2 = fn.find_last_of(".");
-    string prefix = fn.substr(0,index+1);
+    string prefix = fn.substr(0, index + 1);
     string suffix = fn.substr(index2);
     string frameNumberString = fn.substr(index + 1, index2 - index - 1);
     istringstream iss(frameNumberString);
@@ -108,24 +92,33 @@ void ImageGenerator::getNextFilename(string& fn){
     fn.assign(nextFrameFilename);
 }
 
-void ImageGenerator::readDetections(string detFilename){
-  ifstream dt_file(detFilename.c_str(), ios::in);
+void SequentialImageGenerator::readDetections(int frame){
   string line;
-  this->detections.resize(getDatasetSize());
-  this->detection_weights.resize(getDatasetSize());
-  this->features.resize(getDatasetSize());
 
-  vector<double> coords(4,0);
+  this->detections.clear();
+  this->detection_weights.resize(0);
+  this->features.conservativeResize(0, FEATURES_DIM);
   int frame_num;
-  
-  VectorXd row=VectorXd::Zero(FEATURES_NUM);
+  vector<double> coords(4,0);
+  VectorXd row(FEATURES_DIM);
 
-  while (getline(dt_file, line)) {
+  while(true){
+    this->pointerPos = this->dt_file.tellg();
+
+    getline(this->dt_file, line);
+
     Rect rect;
     size_t pos2 = line.find(",");
     size_t pos1 = 0;
-    if(pos2>pos1){
-      frame_num=stoi(line.substr(pos1, pos2)) - 1;
+
+    if(pos2 > pos1){
+      frame_num = stoi(line.substr(pos1, pos2)) - 1;
+
+      if(frame_num != frame){
+        this->dt_file.seekg(this->pointerPos ,std::ios_base::beg);
+        break;
+      }
+
       pos1 = line.find(",",pos2 + 1);
       pos2 = line.find(",",pos1 + 1);
       coords[0] = stoi(line.substr(pos1 + 1, pos2 - pos1 - 1));
@@ -138,30 +131,32 @@ void ImageGenerator::readDetections(string detFilename){
       rect.y = coords[1];
       rect.width = coords[2];
       rect.height = coords[3];
-      this->detections[frame_num].push_back(rect);
-      
+
+      this->detections.push_back(rect);
+
       pos1 = pos2;
       pos2 = line.find(",", pos1 + 1);
-      this->detection_weights[frame_num].conservativeResize( this->detection_weights[frame_num].size() + 1 );
-      this->detection_weights[frame_num](this->detection_weights[frame_num].size() - 1) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
+      this->detection_weights.conservativeResize( this->detection_weights.size() + 1 );
+      this->detection_weights(this->detection_weights.size() - 1) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
   
       for(int j = 1; j < 3; j++){
         pos1 = pos2;
         pos2 = line.find(",", pos1 + 1);
       }
   
-      for(int j = 1; j < FEATURES_NUM; j++){
+      for(int j = 1; j < FEATURES_DIM; j++){
         pos1 = pos2;
         pos2 = line.find(",", pos1 + 1);
         row(j) = stod(line.substr(pos1 + 1, pos2 - pos1 - 1));
       }
-      this->features[frame_num].conservativeResize(this->features[frame_num].rows() + 1, FEATURES_NUM);
-      this->features[frame_num].row(this->features[frame_num].rows() - 1 ) = row; 
+      this->features.conservativeResize(this->features.rows() + 1, FEATURES_DIM);
+      this->features.row(this->features.rows() - 1 ) = row;
+
     }
   }
 }
 
-void ImageGenerator::readGroundTruth(string gtFilename){
+void SequentialImageGenerator::readGroundTruth(string gtFilename){
   ifstream gt_file(gtFilename.c_str(), ios::in);
   string line;
   this->ground_truth.resize(getDatasetSize());

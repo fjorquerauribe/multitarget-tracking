@@ -8,7 +8,13 @@ TestGMPHDFilter::TestGMPHDFilter(string _firstFrameFileName,
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
 	this->preDetectionFile = _preDetectionFile;
+
+#ifdef WITH_SEQUENTIAL_IMAGE_GENERATOR
+	this->generator = SequentialImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
+#else
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
+#endif
+
 }
 
 void TestGMPHDFilter::run(bool verbose=false)
@@ -23,21 +29,30 @@ void TestGMPHDFilter::run(bool verbose=false)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
+
+#ifdef WITH_SEQUENTIAL_IMAGE_GENERATOR
+		this->generator.readDetections(i);
+		vector<Rect> preDetections = this->generator.getDetections();
+		MatrixXd features = this->generator.getDetectionFeatures();
+		//VectorXd weights = this->generator.getDetectionWeights();
+#else
 		vector<Rect> preDetections = this->generator.getDetections(i);
-		VectorXd detectionWeights = this->generator.getDetectionWeights(i);
 		MatrixXd features = this->generator.getDetectionFeatures(i);
+		//VectorXd weights = this->generator.getDetectionWeights(i);
+#endif
+
 		vector<Target> estimates;
 		
 		if(verbose)	cout << "Target number: " << gt.size() << endl;
 
 		if (!filter.is_initialized() &&  preDetections.size()>0)
 		{
-			filter.initialize(currentFrame, preDetections);
+			filter.initialize(currentFrame, preDetections, features);
 		}
 		else
 		{
 			filter.predict();
-			filter.update(currentFrame, preDetections);
+			filter.update(currentFrame, preDetections, features);
 			estimates = filter.estimate(currentFrame, true);
 		}
 
@@ -54,7 +69,7 @@ void TestGMPHDFilter::run(bool verbose=false)
 		if(verbose) {
             cout << "----------------------------------------" << endl;
 			imshow("PHD Gaussian Mixture", currentFrame);
-			imwrite("gm_phd_"+to_string(i)+".png", currentFrame);
+			//imwrite("gm_phd_"+to_string(i)+".png", currentFrame);
 			waitKey(100);
 		}
 	}

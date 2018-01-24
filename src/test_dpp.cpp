@@ -3,23 +3,21 @@
 TestDPP::TestDPP(){}
 
 TestDPP::TestDPP(string _firstFrameFileName, string _groundTruthFileName, string _preDetectionFile,
-	double _epsilon, double _mu, double _lambda, int _npart)
+	double _epsilon, double _mu, double _lambda)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
 	this->preDetectionFile = _preDetectionFile;
-	this->npart = _npart;
 	this->epsilon = _epsilon;
 	this->mu = _mu;
 	this->lambda = _lambda;
 	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
 }
 
-void TestDPP::run()
+void TestDPP::run(bool verbose = false)
 {
-	//namedWindow("MTT", WINDOW_NORMAL);
+	if(verbose) namedWindow("MTT", WINDOW_NORMAL);
 
-	PHDParticleFilter filter(this->npart);
 	DPP dpp = DPP();
 
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
@@ -34,48 +32,51 @@ void TestDPP::run()
 		preDetections = this->generator.getDetections(i);
 		detectionWeights = this->generator.getDetectionWeights(i);
 		features = this->generator.getDetectionFeatures(i);
-		//preDetections = this->generator.getDetections(i);
 
+
+		if(verbose) {
+			cout << "frame: " << i << " | det size: " << preDetections.size() << " | weights size: " << detectionWeights.size() 
+			 << " | features size: " << features.rows() << "," << features.cols() << endl;
+		
+			for(size_t j = 0; j < preDetections.size(); j++){
+				rectangle( currentFrame, preDetections.at(j), Scalar(255, 0, 0), 3, LINE_8  );
+			}
+			imshow("MTT", currentFrame);
+			waitKey(1);
+		}
+		/*cout << "before dpp" << endl;
+		cout << "preDetections number: " << preDetections.size() << endl;
 		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
+		cout << "after dpp" << endl;
 
-		//cout << "Target number: " << gt.size() << endl;
-
-		vector<Target> estimates;
-		if (!filter.is_initialized())
-		{
-			filter.initialize(currentFrame, detections);
-			filter.draw_particles(currentFrame, Scalar(255, 255, 255));
-			estimates = filter.estimate(currentFrame, true);
-		}
-		else
-		{
-			filter.predict();
-			filter.update(currentFrame, detections);
-			estimates = filter.estimate(currentFrame, true);
-		}
-
-		for(size_t j = 0; j < estimates.size(); j++){
-			cout << i + 1
-			<< "," << estimates.at(j).label
-			<< "," << estimates.at(j).bbox.x
-			<< "," << estimates.at(j).bbox.y
-			<< "," << estimates.at(j).bbox.width
-			<< "," << estimates.at(j).bbox.height
+		for(size_t j = 0; j < detections.size(); j++){
+			cout << i + 1 
+			<< ",-1"
+			<< "," << detections.at(j).x
+			<< "," << detections.at(j).y
+			<< "," << detections.at(j).width
+			<< "," << detections.at(j).height
 			<< ",1,-1,-1,-1" << endl;
+			rectangle( currentFrame, detections.at(j), Scalar(255, 0, 0), 3, LINE_8  );
 		}
 		
-		//cout << "----------------------------------------" << endl;
+		if(verbose) {
+			cout << "Target number: " << gt.size() << endl;
+			cout << "Detections number: " << detections.size() << endl;
+			cout << "----------------------------------------" << endl;
 
-		/*imshow("MTT", currentFrame);
-		waitKey(1);*/
+			imshow("MTT", currentFrame);
+			waitKey(1);
+		}*/
 	}
 }
 
 int main(int argc, char const *argv[])
 {
 	string _firstFrameFileName, _gtFileName, _preDetectionFile;
-	int _npart;
 	double _epsilon, _mu, _lambda;
+	bool verbose;
+	
 	if(argc != 15)
 	{
 		cout << "Incorrect input list" << endl;
@@ -144,17 +145,11 @@ int main(int argc, char const *argv[])
 	  		cout << "exiting..." << endl;
 	  		return EXIT_FAILURE;
 	  	}
-	  	if (strcmp(argv[13], "-npart") == 0)
+	  	if (strcmp(argv[13], "-verbose") == 0)
 	  	{
-	  		_npart = atoi(argv[14]);
-	  	}
-	  	else
-	  	{
-	  		cout << "No particles number given" << endl;
-	  		cout << "exiting..." << endl;
-	  		return EXIT_FAILURE;
-	  	}
-	  	TestDPP tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _epsilon, _mu, _lambda, _npart);
-	  	tracker.run();
+	  		verbose = (stoi(argv[14]) == 1) ? true : false;
+		}
+	  	TestDPP tracker(_firstFrameFileName, _gtFileName, _preDetectionFile, _epsilon, _mu, _lambda);
+	  	tracker.run(verbose);
 	}
 }
