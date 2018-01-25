@@ -14,13 +14,14 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 			Point2f pointEstimated(new_tracks.at(j).bbox.x + new_tracks.at(j).bbox.width/2,
 			new_tracks.at(j).bbox.y + new_tracks.at(j).bbox.height/2);
 			Point2f scaleEstimated( new_tracks.at(j).bbox.width,new_tracks.at(j).bbox.height);
-			double feature_cost=1.0+(tracks.at(i).feature - new_tracks.at(j).feature).squaredNorm();
-			double position_cost=1.0+norm(pointTracked - pointEstimated)/Ql;
-			double scale_cost=1.0+norm(scaleTracked - scaleEstimated)/Qs;
-			double cost =position_cost * scale_cost * feature_cost;
+			double feature_cost = 1.0 + (tracks.at(i).feature - new_tracks.at(j).feature).squaredNorm();
+			double position_cost = 1.0 + norm(pointTracked - pointEstimated)/Ql;
+			double scale_cost = 1.0 + norm(scaleTracked - scaleEstimated)/Qs;
+			cout << "featCost: " << feature_cost << " | position_cost: " << position_cost << " | scale_cost: " << scale_cost << endl;
+			double cost = position_cost * scale_cost * feature_cost;
 			cost_matrix[i][j] = cost;
-			max_cost=max(max_cost,cost);
-			min_cost=min(min_cost,cost);
+			max_cost = max(max_cost,cost);
+			min_cost = min(min_cost,cost);
 		}
 	}
 	for (size_t i = 0; i < tracks.size(); ++i)
@@ -28,7 +29,7 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 		norm_cost_matrix[i] = new int[new_tracks.size()];
 		for (size_t j = 0; j < new_tracks.size(); ++j)
 		{
-			double x_std=(cost_matrix[i][j]-min_cost)/(max_cost-min_cost);
+			double x_std = (cost_matrix[i][j]-min_cost)/(max_cost-min_cost);
 			norm_cost_matrix[i][j] = 100*x_std;
 		}
 	}

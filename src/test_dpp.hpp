@@ -7,7 +7,7 @@
 #include "utils/image_generator.hpp"
 #include "utils/utils.hpp"
 #include "dpp/dpp.hpp"
-#include "models/phd_particle_filter.hpp"
+#include "models/phd_gaussian_mixture.hpp"
 
 using namespace std;
 using namespace cv;
@@ -20,7 +20,6 @@ public:
 		double _epsilon, double _mu, double _lambda);
 	void run(bool verbose);
 private:
-	//int numFrames;
 	string firstFrameFileName, groundTruthFileName, preDetectionFile;
 	double epsilon, mu, lambda;
 	ImageGenerator generator;

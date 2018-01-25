@@ -19,6 +19,7 @@ INCLUDE_DIRECTORIES( "src/libs/nms/" )
 add_subdirectory( "src/libs/piotr_fhog/" )
 
 OPTION(MAKE_GM_PHD "Make GM PHD" ON)
+OPTION(MAKE_DPP "Make DPP" ON)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp
@@ -34,4 +35,7 @@ if(MAKE_GM_PHD)
     target_link_libraries( gm_phd ${OpenCV_LIBS} -lpthread)
 endif()
 
-
+if(MAKE_DPP)
+    add_executable( dpp src/test_dpp.cpp src/dpp/dpp.cpp src/models/phd_gaussian_mixture.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
+    target_link_libraries( dpp ${OpenCV_LIBS} -lpthread)
+endif()

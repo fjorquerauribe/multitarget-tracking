@@ -35,7 +35,6 @@ vector<Rect> DPP::run(vector<Rect> preDetections, VectorXd &detectionWeights, Ma
 			for (unsigned int j = 0; j < rIntersectionArea.cols(); ++j)
 			{
 				if(rIntersectionArea(i,j) == 1)
-					cout << rIntersectionArea(i,j) << endl;
 					nContain(i) += 1;
 			}
 		}
@@ -61,7 +60,7 @@ VectorXd DPP::getQualityTerm(VectorXd &detectionWeights, VectorXd &nPenalty){
 	 ***	Get quality term 
 	 ***	qt = alpha * log(1 + s) + beta
 	 ***/
-
+	cout << detectionWeights << endl;
 	VectorXd qt = detectionWeights.cwiseProduct(nPenalty);
 	qt = qt.array() / qt.maxCoeff();
 	qt = qt.array() + 1;
@@ -107,7 +106,6 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 		MatrixXd S_top(top.size(), similarityTerm.cols());
 		for (size_t i = 0; i < top.size(); ++i)
 		{
-			//S_top.row(i) << similarityTerm.row(i);
 			S_top.row(i) << similarityTerm.row(top.at(i));
 		}
 
@@ -127,8 +125,9 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 		}
 
 		double maxObj = prodQ * maxObj_;
-		cout << maxObj << endl;
-		if ( (maxObj / oldObj) > epsilon )
+		//cout << (maxObj / oldObj) << endl;
+		
+		if ( (maxObj / oldObj) > (1 + epsilon) )
 		//if ( (maxObj / oldObj) > epsilon )
 		{
 			top.push_back(remained(selected));

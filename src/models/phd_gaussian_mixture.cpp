@@ -138,9 +138,9 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
             target.bbox = detections[j];
             target.survival_rate = SURVIVAL_RATE;
             target.feature = features.row(j);
-            while( this->labels.find(label)!=this->labels.end() ) label++;
+            /*while( this->labels.find(label)!=this->labels.end() ) label++;
             target.label = label;
-            this->labels.insert(label);
+            this->labels.insert(label);*/
             new_detections.push_back(target);
         }
         hungarian_problem_t p;
@@ -158,8 +158,8 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
             {
                 if(this->verbose){
                     cout << "track  : " << this->tracks.at(i).label 
-                        << ", new detections  : " << new_detections.at(j).label
-                        << ", cost  : " << m[i][j]
+                         << ", new detections  : " << new_detections.at(j).label
+                         << ", cost  : " << m[i][j]
                          << ", assignment : " << p.assignment[i][j] << endl;
                 }
                 if (p.assignment[i][j] == HUNGARIAN_ASSIGNED && m[i][j] < THRESHOLD)
@@ -172,7 +172,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
                     break;
                 }
                 no_assignment_count++;
-                this->labels.insert(new_detections.at(j).label);
+                //this->labels.insert(new_detections.at(j).label);
             }
             if(no_assignment_count==(int)new_detections.size()) {
                 this->tracks.at(i).survival_rate=exp(10.0*(-1.0+this->tracks.at(i).survival_rate*0.9));
@@ -191,6 +191,9 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
                 no_assignment_count++;
             }
             if(no_assignment_count==(int)this->tracks.size() && unif(this->generator)> BIRTH_RATE) {
+                while( this->labels.find(label) != this->labels.end() ) label++;
+                new_detections.at(j).label = label;
+                this->labels.insert(label);
                 birth_model.push_back(new_detections.at(j));
             }  
         }

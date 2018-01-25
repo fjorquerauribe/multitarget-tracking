@@ -33,22 +33,8 @@ void TestDPP::run(bool verbose = false)
 		detectionWeights = this->generator.getDetectionWeights(i);
 		features = this->generator.getDetectionFeatures(i);
 
-
-		if(verbose) {
-			cout << "frame: " << i << " | det size: " << preDetections.size() << " | weights size: " << detectionWeights.size() 
-			 << " | features size: " << features.rows() << "," << features.cols() << endl;
-		
-			for(size_t j = 0; j < preDetections.size(); j++){
-				rectangle( currentFrame, preDetections.at(j), Scalar(255, 0, 0), 3, LINE_8  );
-			}
-			imshow("MTT", currentFrame);
-			waitKey(1);
-		}
-		/*cout << "before dpp" << endl;
-		cout << "preDetections number: " << preDetections.size() << endl;
 		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
-		cout << "after dpp" << endl;
-
+		
 		for(size_t j = 0; j < detections.size(); j++){
 			cout << i + 1 
 			<< ",-1"
@@ -62,12 +48,14 @@ void TestDPP::run(bool verbose = false)
 		
 		if(verbose) {
 			cout << "Target number: " << gt.size() << endl;
+			cout << "preDetections number: " << preDetections.size() << endl;
 			cout << "Detections number: " << detections.size() << endl;
 			cout << "----------------------------------------" << endl;
 
 			imshow("MTT", currentFrame);
 			waitKey(1);
-		}*/
+		}
+
 	}
 }
 
