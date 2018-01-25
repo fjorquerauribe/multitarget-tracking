@@ -1,10 +1,12 @@
 #include "utils.hpp"
 
-int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_tracks){
-	int** cost_matrix = new int*[tracks.size()];
+int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_tracks, double Ql, double Qs){
+	double** cost_matrix = new double*[tracks.size()];
+	int** norm_cost_matrix = new int*[tracks.size()];
+	double max_cost=0.0f,min_cost=1000000.0f;
 	for (size_t i = 0; i < tracks.size(); ++i)
 	{
-		cost_matrix[i] = new int[new_tracks.size()];
+		cost_matrix[i] = new double[new_tracks.size()];
 		Point2f pointTracked(tracks.at(i).bbox.x + tracks.at(i).bbox.width/2, tracks.at(i).bbox.y + tracks.at(i).bbox.height/2);
 		Point2f scaleTracked(tracks.at(i).bbox.width, tracks.at(i).bbox.height);
 		for (size_t j = 0; j < new_tracks.size(); ++j)
@@ -12,17 +14,25 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 			Point2f pointEstimated(new_tracks.at(j).bbox.x + new_tracks.at(j).bbox.width/2,
 			new_tracks.at(j).bbox.y + new_tracks.at(j).bbox.height/2);
 			Point2f scaleEstimated( new_tracks.at(j).bbox.width,new_tracks.at(j).bbox.height);
-			double cost = ( norm(pointTracked - pointEstimated) 
-						+ norm(scaleTracked - scaleEstimated) 
-						+ (tracks.at(i).feature - new_tracks.at(j).feature).norm() );
-			//cout << "sqrtNorm: " << (tracks.at(i).feature - new_tracks.at(j).feature).squaredNorm() << endl;
-			//cout << "norm: " << (tracks.at(i).feature - new_tracks.at(j).feature).norm() << endl;
-			//cost_matrix[i][j] = (cost < 100) ? cost : 1000;
+			double feature_cost=1.0+(tracks.at(i).feature - new_tracks.at(j).feature).squaredNorm();
+			double position_cost=1.0+norm(pointTracked - pointEstimated)/Ql;
+			double scale_cost=1.0+norm(scaleTracked - scaleEstimated)/Qs;
+			double cost =position_cost * scale_cost * feature_cost;
 			cost_matrix[i][j] = cost;
-			//cout << "cost i: " << i << ", j : " << j << ", c : " << cost_matrix[i][j] << endl; 
+			max_cost=max(max_cost,cost);
+			min_cost=min(min_cost,cost);
 		}
 	}
-	return cost_matrix;
+	for (size_t i = 0; i < tracks.size(); ++i)
+	{
+		norm_cost_matrix[i] = new int[new_tracks.size()];
+		for (size_t j = 0; j < new_tracks.size(); ++j)
+		{
+			double x_std=(cost_matrix[i][j]-min_cost)/(max_cost-min_cost);
+			norm_cost_matrix[i][j] = 100*x_std;
+		}
+	}
+	return norm_cost_matrix;
 }
 
 int** Utils::compute_overlap_matrix(vector<Target> tracks, vector<Target> new_tracks){
