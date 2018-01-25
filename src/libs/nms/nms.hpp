@@ -2,6 +2,9 @@
 #include <opencv2/opencv.hpp>
 #include <assert.h>
 
+#include <opencv2/core.hpp>
+#include "utils.hpp"
+using namespace Eigen;
 /**
  * @brief nms
  * Non maximum suppression
@@ -124,6 +127,149 @@ inline void nms2(
 
             float intArea = (rect1 & rect2).area();
             float unionArea = rect1.area() + rect2.area() - intArea;
+            float overlap = intArea / unionArea;
+
+            // if there is sufficient overlap, suppress the current bounding box
+            if (overlap > thresh)
+            {
+                scoresSum += pos->first;
+                pos = idxs.erase(pos);
+                ++neigborsCount;
+            }
+            else
+            {
+                ++pos;
+            }
+        }
+        if (neigborsCount >= neighbors &&
+                scoresSum >= minScoresSum)
+        {
+            resRects.push_back(rect1);
+        }
+    }
+}
+
+/**
+ * @brief nms with vector of targets
+ * Non maximum suppression
+ * @param srcRects
+ * @param resRects
+ * @param thresh
+ * @param neighbors
+ */
+inline void nms3(
+        const std::vector<Target>& srcRects,
+        std::vector<Target>& resRects,
+        float thresh,
+        int neighbors = 0
+    )
+{
+    resRects.clear();
+
+    const size_t size = srcRects.size();
+    if (!size)
+    {
+        return;
+    }
+
+    // Sort the bounding boxes by the bottom - right y - coordinate of the bounding box
+    std::multimap<int, size_t> idxs;
+    for (size_t i = 0; i < size; ++i)
+    {
+        idxs.insert(std::pair<int, size_t>(srcRects[i].bbox.br().y, i));
+    }
+
+    // keep looping while some indexes still remain in the indexes list
+    while (idxs.size() > 0)
+    {
+        // grab the last rectangle
+        auto lastElem = --std::end(idxs);
+        Target rect1 = srcRects[lastElem->second];
+
+        int neigborsCount = 0;
+
+        idxs.erase(lastElem);
+
+        for (auto pos = std::begin(idxs); pos != std::end(idxs); )
+        {
+            // grab the current rectangle
+            Target rect2 = srcRects[pos->second];
+
+            float intArea = (rect1.bbox & rect2.bbox).area();
+            float unionArea = rect1.bbox.area() + rect2.bbox.area() - intArea;
+            float overlap = intArea / unionArea;
+
+            // if there is sufficient overlap, suppress the current bounding box
+            if (overlap > thresh)
+            {
+                pos = idxs.erase(pos);
+                ++neigborsCount;
+            }
+            else
+            {
+                ++pos;
+            }
+        }
+        if (neigborsCount >= neighbors)
+        {
+            resRects.push_back(rect1);
+        }
+    }
+}
+
+/**
+ * @brief nms4
+ * Non maximum suppression with detection scores and vector of targets
+ * @param srcRects
+ * @param scores
+ * @param resRects
+ * @param thresh
+ * @param neighbors
+ */
+inline void nms4(
+        const std::vector<Target>& srcRects,
+        std::vector<Target>& resRects,
+        float thresh,
+        int neighbors = 0,
+        float minScoresSum = 0.f
+        )
+{
+    resRects.clear();
+
+    const size_t size = srcRects.size();
+    if (!size)
+    {
+        return;
+    }
+
+    //assert(srcRects.size() == (unsigned int)scores.size());
+
+    // Sort the bounding boxes by the detection score
+    std::multimap<float, size_t> idxs;
+    for (size_t i = 0; i < size; ++i)
+    {
+        idxs.insert(std::pair<float, size_t>(srcRects[i].score, i));
+    }
+
+    // keep looping while some indexes still remain in the indexes list
+    while (idxs.size() > 0)
+    {
+        // grab the last rectangle
+        auto lastElem = --std::end(idxs);
+        Target rect1 = srcRects[lastElem->second];
+
+        int neigborsCount = 0;
+        float scoresSum = lastElem->first;
+
+        idxs.erase(lastElem);
+
+        for (auto pos = std::begin(idxs); pos != std::end(idxs); )
+        {
+            // grab the current rectangle
+            Target rect2 = srcRects[pos->second];
+
+            float intArea = (rect1.bbox & rect2.bbox).area();
+            float unionArea = rect1.bbox.area() + rect2.bbox.area() - intArea;
             float overlap = intArea / unionArea;
 
             // if there is sufficient overlap, suppress the current bounding box

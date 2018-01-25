@@ -16,10 +16,10 @@ INCLUDE_DIRECTORIES( "src/features/" )
 INCLUDE_DIRECTORIES( "src/libs/libhungarian/" )
 INCLUDE_DIRECTORIES( "src/libs/nms/" )
 
-add_subdirectory( "src/libs/piotr_fhog/" )
+#add_subdirectory( "src/libs/piotr_fhog/" )
 
 OPTION(MAKE_GM_PHD "Make GM PHD" ON)
-OPTION(MAKE_DPP "Make DPP" ON)
+OPTION(MAKE_DPP "Make DPP" OFF)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp

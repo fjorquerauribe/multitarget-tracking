@@ -8,6 +8,7 @@
 #include "utils/utils.hpp"
 #include "dpp/dpp.hpp"
 #include "models/phd_gaussian_mixture.hpp"
+#include "nms.hpp"
 
 using namespace std;
 using namespace cv;

@@ -21,7 +21,7 @@ typedef struct{
 	Rect bbox;
 	double survival_rate;
 	VectorXd feature;
-	//int conf;
+	double score;
 } Target;
 
 class Utils{

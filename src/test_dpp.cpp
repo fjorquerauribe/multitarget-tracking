@@ -33,8 +33,12 @@ void TestDPP::run(bool verbose = false)
 		detectionWeights = this->generator.getDetectionWeights(i);
 		features = this->generator.getDetectionFeatures(i);
 
-		vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
+		//vector<Rect> detections = dpp.run(preDetections, detectionWeights, features, this->epsilon, this->mu, this->lambda);
 		
+		vector<Rect> detections;
+		vector<double> scores(detectionWeights.data(), detectionWeights.data() + detectionWeights.size());
+		nms2(preDetections, scores, detections, 0.8);
+
 		for(size_t j = 0; j < detections.size(); j++){
 			cout << i + 1 
 			<< ",-1"

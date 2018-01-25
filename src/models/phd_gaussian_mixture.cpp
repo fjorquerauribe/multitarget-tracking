@@ -47,7 +47,7 @@ PHDGaussianMixture::PHDGaussianMixture(bool verbose) {
     this->initialized = false;
 }
 
-void PHDGaussianMixture::initialize(Mat& current_frame, vector<Rect> detections, MatrixXd features) {
+void PHDGaussianMixture::initialize(Mat& current_frame, vector<Rect> detections, MatrixXd features, VectorXd detectionsWeights) {
     if(detections.size() > 0){
         this->img_size = current_frame.size();
         this->tracks.clear();
@@ -62,6 +62,7 @@ void PHDGaussianMixture::initialize(Mat& current_frame, vector<Rect> detections,
                 target.bbox = detections.at(i);
                 target.survival_rate = SURVIVAL_RATE;
                 target.feature = features.row(i);
+                target.score = detectionsWeights(i);
                 this->tracks.push_back(target);
                 this->labels.insert(i);
         }
@@ -119,7 +120,7 @@ void PHDGaussianMixture::predict(){
 }
 
 
-void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd features)
+void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd features, VectorXd detectionsWeights)
 {
     uniform_real_distribution<double> unif(0.0,1.0);
     this->birth_model.clear();
@@ -138,22 +139,23 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
             target.bbox = detections[j];
             target.survival_rate = SURVIVAL_RATE;
             target.feature = features.row(j);
+            target.score = detectionsWeights(j);
             /*while( this->labels.find(label)!=this->labels.end() ) label++;
             target.label = label;
             this->labels.insert(label);*/
             new_detections.push_back(target);
         }
         hungarian_problem_t p;
-        double diagonal=sqrt( pow(image.rows,2)+pow(image.cols,2));
-        double area=image.rows*image.cols;
-        int **m = Utils::compute_cost_matrix(this->tracks, new_detections,diagonal,area);
+        double diagonal = sqrt( pow(image.rows,2) + pow(image.cols,2));
+        double area = image.rows * image.cols;
+        int **m = Utils::compute_cost_matrix(this->tracks, new_detections, diagonal, area);
         hungarian_init(&p, m, this->tracks.size(), new_detections.size(), HUNGARIAN_MODE_MINIMIZE_COST);
         /*int **m = Utils::compute_overlap_matrix(this->tracks, new_detections);
         hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);*/
         hungarian_solve(&p);    
         for (size_t i = 0; i < this->tracks.size(); ++i)
         {
-            int no_assignment_count=0;
+            int no_assignment_count = 0;
             for (size_t j = 0; j < new_detections.size(); ++j)
             {
                 if(this->verbose){
@@ -164,7 +166,6 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
                 }
                 if (p.assignment[i][j] == HUNGARIAN_ASSIGNED && m[i][j] < THRESHOLD)
                 {
-                    //new_labels.erase(new_tracks.at(j).label);
                     new_detections.at(j).label = this->tracks.at(i).label;
                     new_detections.at(j).color = this->tracks.at(i).color;
                     //new_detections.at(j).feature.noalias()=0.1*new_detections.at(j).feature.array()+0.9*this->tracks.at(i).feature.array();
@@ -174,14 +175,14 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
                 no_assignment_count++;
                 //this->labels.insert(new_detections.at(j).label);
             }
-            if(no_assignment_count==(int)new_detections.size()) {
-                this->tracks.at(i).survival_rate=exp(10.0*(-1.0+this->tracks.at(i).survival_rate*0.9));
+            if(no_assignment_count == (int)new_detections.size()) {
+                this->tracks.at(i).survival_rate = exp(10.0 * (-1.0 + this->tracks.at(i).survival_rate * 0.9));
                 new_tracks.push_back(this->tracks.at(i));
             }  
         }
         for (size_t j = 0; j < new_detections.size(); ++j)
         {
-            int no_assignment_count=0;
+            int no_assignment_count = 0;
             for (size_t i = 0; i < this->tracks.size(); ++i)
             {
                 if (p.assignment[i][j] == HUNGARIAN_ASSIGNED)
@@ -190,7 +191,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
                 }
                 no_assignment_count++;
             }
-            if(no_assignment_count==(int)this->tracks.size() && unif(this->generator)> BIRTH_RATE) {
+            if(no_assignment_count == (int)this->tracks.size() && unif(this->generator) > BIRTH_RATE) {
                 while( this->labels.find(label) != this->labels.end() ) label++;
                 new_detections.at(j).label = label;
                 this->labels.insert(label);
@@ -203,7 +204,10 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
             cout << "New Born Targets: "<< this->birth_model.size() << endl;
             cout << "Updated Targets: "<< new_tracks.size() << endl;
         }
-        this->tracks.swap(new_tracks);
+
+        nms4(new_tracks, this->tracks, 0.3);
+        //this->tracks.swap(new_tracks);
+        
         new_tracks.clear();
         new_labels.clear();
     }
@@ -213,12 +217,13 @@ vector <Target> PHDGaussianMixture::estimate(Mat& image, bool draw)
 {
     if (draw){
         for (size_t i = 0; i < this->tracks.size(); ++i){
-            Rect current_estimate=this->tracks.at(i).bbox;
-            rectangle( image,current_estimate, this->tracks.at(i).color, 3, LINE_8  );
-            rectangle( image,Point(current_estimate.x,current_estimate.y-10),
-                Point(current_estimate.x+current_estimate.width,current_estimate.y+20),
-                this->tracks.at(i).color, -1,8,0 );
-            putText(image,to_string( this->tracks.at(i).label),Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.5,Scalar(255,255,255),1);
+            Rect current_estimate = this->tracks.at(i).bbox;
+            rectangle( image, current_estimate, this->tracks.at(i).color, 3, LINE_8  );
+            rectangle( image, Point(current_estimate.x, current_estimate.y - 10),
+                Point(current_estimate.x + current_estimate.width, current_estimate.y + 20),
+                this->tracks.at(i).color, -1, 8, 0 );
+            putText(image,to_string( this->tracks.at(i).label), Point(current_estimate.x + 5, 
+                current_estimate.y + 12), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 255, 255), 1 );
             //putText(image,to_string( this->tracks.at(i).survival_rate),Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.5,Scalar(255,255,255),1);
         }
     }

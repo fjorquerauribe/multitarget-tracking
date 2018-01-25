@@ -11,6 +11,7 @@
 #include "../utils/image_generator.hpp"
 #include "../utils/utils.hpp"
 #include "hungarian.h"
+#include "nms.hpp"
 
 #ifdef WITH_NMS
     #include "../libs/nms/nms.hpp"
@@ -30,15 +31,14 @@ using namespace cv;
 using namespace std;
 using namespace Eigen;
 
-
 class PHDGaussianMixture {
 public:
     int n_particles;
    ~PHDGaussianMixture();
     PHDGaussianMixture(bool verbose = false);
     PHDGaussianMixture();
-    void initialize(Mat& current_frame, vector<Rect> detections, MatrixXd features);
-    void update(Mat& image, vector<Rect> detections, MatrixXd features);
+    void initialize(Mat& current_frame, vector<Rect> detections, MatrixXd features, VectorXd detectionsWeights);
+    void update(Mat& image, vector<Rect> detections, MatrixXd features, VectorXd detectionsWeights);
     void predict();
     bool is_initialized();
     vector<Target> estimate(Mat& image, bool draw = false);

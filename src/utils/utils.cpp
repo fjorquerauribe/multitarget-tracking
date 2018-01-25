@@ -17,7 +17,7 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 			double feature_cost = 1.0 + (tracks.at(i).feature - new_tracks.at(j).feature).squaredNorm();
 			double position_cost = 1.0 + norm(pointTracked - pointEstimated)/Ql;
 			double scale_cost = 1.0 + norm(scaleTracked - scaleEstimated)/Qs;
-			cout << "featCost: " << feature_cost << " | position_cost: " << position_cost << " | scale_cost: " << scale_cost << endl;
+			//cout << "featCost: " << feature_cost << " | position_cost: " << position_cost << " | scale_cost: " << scale_cost << endl;
 			double cost = position_cost * scale_cost * feature_cost;
 			cost_matrix[i][j] = cost;
 			max_cost = max(max_cost,cost);
