@@ -12,10 +12,7 @@
 #include "../utils/utils.hpp"
 #include "hungarian.h"
 #include "nms.hpp"
-
-#ifdef WITH_NMS
-    #include "../libs/nms/nms.hpp"
-#endif
+#include "dpp.hpp"
 
 #include <time.h>
 #include <float.h>

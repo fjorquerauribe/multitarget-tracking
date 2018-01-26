@@ -14,6 +14,9 @@
     const float BIRTH_RATE = 0.9;
     const float DETECTION_RATE = 0.5;
     const float POSITION_LIKELIHOOD_STD = 30.0;
+
+    const bool WITH_NMS = false;
+    const bool WITH_DPP = true;
 #endif 
 
 PHDGaussianMixture::PHDGaussianMixture() {
@@ -205,8 +208,17 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
             cout << "Updated Targets: "<< new_tracks.size() << endl;
         }
 
-        nms4(new_tracks, this->tracks, 0.3);
-        //this->tracks.swap(new_tracks);
+
+        if(WITH_NMS){
+            nms4(new_tracks, this->tracks, 0.3);
+        }
+        else if(WITH_DPP){
+            DPP dpp = DPP();
+            this->tracks = dpp.run(new_tracks, 0.1, 0.5, 0.1);
+        }
+        else {
+            this->tracks.swap(new_tracks);
+        }
         
         new_tracks.clear();
         new_labels.clear();
