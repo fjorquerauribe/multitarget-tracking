@@ -9,6 +9,10 @@ elif [ "$features" == "cnn" ];
 then
     # CNN features
     ../build/gm_phd -img $1/$2/$3/img1/000001.jpg -gt $1/$2/$3/gt/gt.txt -det data/CNN/$1/$2/$3.txt  -verbose $5
+elif [ "$features" == "frcnn" ];
+then
+    # FRCNN features
+    ../build/gm_phd -img $1/$2/$3/img1/000001.jpg -gt $1/$2/$3/gt/gt.txt -det data/FRCNN/$1/$2/$3_det.txt  -verbose $5
 else
     # public features
     ../build/gm_phd -img $1/$2/$3/img1/000001.jpg -gt $1/$2/$3/gt/gt.txt -det $1/$2/$3/det/det.txt  -verbose $5

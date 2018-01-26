@@ -29,7 +29,7 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 		norm_cost_matrix[i] = new int[new_tracks.size()];
 		for (size_t j = 0; j < new_tracks.size(); ++j)
 		{
-			double x_std = (cost_matrix[i][j]-min_cost)/(max_cost-min_cost);
+			double x_std =((int)new_tracks.size()>1) ? (cost_matrix[i][j]-min_cost)/(max_cost-min_cost) : cost_matrix[i][j];
 			norm_cost_matrix[i][j] = 100*x_std;
 		}
 	}

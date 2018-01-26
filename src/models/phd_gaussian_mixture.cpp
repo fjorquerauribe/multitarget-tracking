@@ -10,8 +10,9 @@
     const float SCALE_STD = 3.0;
     const float THRESHOLD = 10;
     const float SURVIVAL_RATE = 1.0;
+    const float SURVIVAL_DECAY = 1.0;
     const float CLUTTER_RATE = 2.0;
-    const float BIRTH_RATE = 0.9;
+    const float BIRTH_RATE = 0.1;
     const float DETECTION_RATE = 0.5;
     const float POSITION_LIKELIHOOD_STD = 30.0;
 #endif 
@@ -176,7 +177,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
                 //this->labels.insert(new_detections.at(j).label);
             }
             if(no_assignment_count == (int)new_detections.size()) {
-                this->tracks.at(i).survival_rate = exp(10.0 * (-1.0 + this->tracks.at(i).survival_rate * 0.9));
+                this->tracks.at(i).survival_rate = exp(SURVIVAL_DECAY * (-1.0 + this->tracks.at(i).survival_rate * 0.9));
                 new_tracks.push_back(this->tracks.at(i));
             }  
         }
@@ -222,9 +223,9 @@ vector <Target> PHDGaussianMixture::estimate(Mat& image, bool draw)
             rectangle( image, Point(current_estimate.x, current_estimate.y - 10),
                 Point(current_estimate.x + current_estimate.width, current_estimate.y + 20),
                 this->tracks.at(i).color, -1, 8, 0 );
-            putText(image,to_string( this->tracks.at(i).label), Point(current_estimate.x + 5, 
-                current_estimate.y + 12), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 255, 255), 1 );
-            //putText(image,to_string( this->tracks.at(i).survival_rate),Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.5,Scalar(255,255,255),1);
+            string disp=to_string(this->tracks.at(i).label)+","+to_string( this->tracks.at(i).survival_rate).substr(0,3);
+            //putText(image,to_string( this->tracks.at(i).label), Point(current_estimate.x + 5,current_estimate.y + 12), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 255, 255), 1 );
+            putText(image,disp,Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.3,Scalar(255,255,255),1);
         }
     }
     return this->tracks;
