@@ -15,6 +15,7 @@ INCLUDE_DIRECTORIES( "src/models/" )
 INCLUDE_DIRECTORIES( "src/features/" )
 INCLUDE_DIRECTORIES( "src/libs/libhungarian/" )
 INCLUDE_DIRECTORIES( "src/libs/nms/" )
+INCLUDE_DIRECTORIES( "src/dpp/")
 
 #add_subdirectory( "src/libs/piotr_fhog/" )
 
@@ -31,7 +32,7 @@ SET( COMMON_SOURCES
 )
 
 if(MAKE_GM_PHD)
-    add_executable( gm_phd src/test_gm_phd.cpp src/models/phd_gaussian_mixture.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
+    add_executable( gm_phd src/test_gm_phd.cpp src/models/phd_gaussian_mixture.cpp src/dpp/dpp.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
     target_link_libraries( gm_phd ${OpenCV_LIBS} -lpthread)
 endif()
 

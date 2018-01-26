@@ -1,6 +1,7 @@
 declare -a datasets=(MOT16)
 declare -a types=(train)
-OUTPUT_DIRECTORY=$1
+FEATURE=$1
+OUTPUT_DIRECTORY=$2
 
 for dataset in "${datasets[@]}"
 do
@@ -12,7 +13,7 @@ do
         while read sequence;
         do
             echo $dataset,$sequence
-            /bin/bash $PWD/start_gm_phd.sh $dataset $type $sequence $OUTPUT_DIRECTORY 0 > ../build/results/$OUTPUT_DIRECTORY/$dataset/$type/$sequence.txt
+            /bin/bash $PWD/start_gm_phd.sh $dataset $type $sequence $FEATURE 0 > ../build/results/$OUTPUT_DIRECTORY/$dataset/$type/$sequence.txt
         done <./data/$dataset/$type/sequences.lst
     done
 done
