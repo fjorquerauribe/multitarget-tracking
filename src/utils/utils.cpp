@@ -36,6 +36,28 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 	return norm_cost_matrix;
 }
 
+int** Utils::compute_affinity_matrix(vector<Target> tracks, vector<Target> new_tracks){
+	int** cost_matrix = new int*[tracks.size()];
+	for(size_t i = 0; i < tracks.size(); i++){
+		cost_matrix[i] = new int[new_tracks.size()];
+		Target track = tracks.at(i);
+		for(size_t j = 0; j < new_tracks.size(); j++){
+			Target new_track = new_tracks.at(j);
+			double appearance_affinity = track.feature.dot(new_track.feature) / (track.feature.norm() * new_track.feature.norm());
+			double motion_affinity = exp( -0.1 * (
+				  pow( double(track.bbox.x - new_track.bbox.x)/ new_track.bbox.width, 2 )
+				+ pow( double(track.bbox.y - new_track.bbox.y)/ new_track.bbox.height , 2)
+				) );
+			double shape_affinity = exp( -0.1 * ( 
+				  (double(abs(track.bbox.height - new_track.bbox.height))/abs(track.bbox.height + new_track.bbox.height) ) 
+				+ (double(abs(track.bbox.width - new_track.bbox.width))/abs(track.bbox.width + new_track.bbox.width)) ) );
+			cost_matrix[i][j] = 100 * appearance_affinity * motion_affinity * shape_affinity;
+			//cout << "app_aff: " << appearance_affinity << " | mot_aff: " << motion_affinity << " | sh_aff: " << shape_affinity << endl;
+		}
+	}
+	return cost_matrix;
+}
+
 int** Utils::compute_overlap_matrix(vector<Target> tracks, vector<Target> new_tracks){
 	int** cost_matrix = new int*[tracks.size()];
 	for(size_t i = 0; i < tracks.size(); i++){

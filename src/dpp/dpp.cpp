@@ -185,7 +185,7 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 		double maxObj = prodQ * maxObj_;
 		//cout << (maxObj / oldObj) << endl;
 		
-		if ( (maxObj / oldObj) > (1 + epsilon) )
+		if ( (maxObj / oldObj) > (epsilon) )
 		{
 			top.push_back(remained(selected));
 			oldObj = maxObj;
@@ -200,6 +200,38 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 	return top;
 }
 
+MatrixXd DPP::affinity_kernel(vector<Target> tracks){
+	MatrixXd kernel = MatrixXd(tracks.size(), tracks.size());
+	for(size_t i = 0; i < tracks.size(); i++){
+		Target track = tracks.at(i);
+		for(size_t j = 0; j < tracks.size(); j++){
+			Target track2 = tracks.at(j);
+			double appearance_affinity = track.feature.dot(track2.feature) / (track.feature.norm() * track2.feature.norm());
+			double motion_affinity = exp( -0.5 * (
+				  pow( double(track.bbox.x - track2.bbox.x)/ track2.bbox.width, 2 )
+				+ pow( double(track.bbox.y - track2.bbox.y)/ track2.bbox.height , 2)
+				) );
+			double shape_affinity = exp( -0.5 * ( 
+				  (double(abs(track.bbox.height - track2.bbox.height))/abs(track.bbox.height + track2.bbox.height) ) 
+				+ (double(abs(track.bbox.width - track2.bbox.width))/abs(track.bbox.width + track2.bbox.width)) ) );
+			kernel(i,j) = appearance_affinity * motion_affinity * shape_affinity;
+		}
+	}
+	return kernel;
+}
 
+vector<Target> DPP::run(vector<Target> tracks, double epsilon){
+	vector<Target> results;
 
+	if(tracks.size() > 0){
+		VectorXd weights(tracks.size());
+		for (size_t i = 0; i < tracks.size(); ++i) weights(i) = tracks.at(i).score;
+		
+		MatrixXd kernel = affinity_kernel(tracks);
 
+		vector<int> top = solve(weights, kernel, epsilon);
+		for (size_t i = 0; i < top.size(); ++i) results.push_back(tracks.at(top.at(i)));
+	}
+
+	return results;
+}

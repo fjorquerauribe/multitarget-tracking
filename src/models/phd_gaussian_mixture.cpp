@@ -215,7 +215,8 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
         }
         else if(WITH_DPP){
             DPP dpp = DPP();
-            this->tracks = dpp.run(new_tracks, 0.1, 0.5, 0.1);
+            //this->tracks = dpp.run(new_tracks, 0.1, 0.5, 0.1);
+            this->tracks = dpp.run(new_tracks, 0.5);
         }
         else {
             this->tracks.swap(new_tracks);
