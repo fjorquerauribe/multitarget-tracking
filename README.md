@@ -8,7 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- CMake 2.8 or older
+- CMake 2.8 or newer
 - OpenCV 3.0
 - Eigen 3.2
 
