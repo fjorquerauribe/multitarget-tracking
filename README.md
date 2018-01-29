@@ -22,7 +22,7 @@ git clone https://github.com/fjorquerauribe/multitarget-tracking.git
 Build the project:
 ```
 cd multitarget-tracking
-mkdir build
+mkdir build && cd build
 cmake ..
 make
 ```
@@ -45,6 +45,10 @@ Example: run Gaussian Mixture PHD filter over MOT16-02 sequence with public dete
 ```
 ./start_gm_phd.sh MOT16 train MOT16-02 public 1
 ```
+
+## Demo
+
+Demo video https://www.youtube.com/watch?v=yVi9aQtO6fU
 
 ## Authors
 

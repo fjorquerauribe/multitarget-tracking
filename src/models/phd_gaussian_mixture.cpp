@@ -236,9 +236,9 @@ vector <Target> PHDGaussianMixture::estimate(Mat& image, bool draw)
             rectangle( image, Point(current_estimate.x, current_estimate.y - 10),
                 Point(current_estimate.x + current_estimate.width, current_estimate.y + 20),
                 this->tracks.at(i).color, -1, 8, 0 );
-            string disp=to_string(this->tracks.at(i).label)+","+to_string( this->tracks.at(i).survival_rate).substr(0,3);
-            //putText(image,to_string( this->tracks.at(i).label), Point(current_estimate.x + 5,current_estimate.y + 12), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 255, 255), 1 );
-            putText(image,disp,Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.3,Scalar(255,255,255),1);
+            //string disp=to_string(this->tracks.at(i).label)+","+to_string( this->tracks.at(i).survival_rate).substr(0,3);
+            putText(image,to_string( this->tracks.at(i).label), Point(current_estimate.x + 5,current_estimate.y + 12), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(255, 255, 255), 1 );
+            //putText(image,disp,Point(current_estimate.x+5,current_estimate.y+12),FONT_HERSHEY_SIMPLEX,0.3,Scalar(255,255,255),1);
         }
     }
     return this->tracks;
