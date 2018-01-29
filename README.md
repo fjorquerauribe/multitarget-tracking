@@ -15,26 +15,36 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installating
 
 Download the project:
+```
 - git clone https://github.com/fjorquerauribe/multitarget-tracking.git
+```
 
 Build the project:
+```
 - cd multitarget-tracking
 - mkdir build
 - cmake ..
 - make
+```
 
 ## Running the test
 
 Download the MOT Challenge datasets https://motchallenge.net/
 
 Create a symbolic link to the MOT Challenge datasets folder:
+```
 - ln -s path/to/datasets/ data
+```
 
 Copy script to run Gaussian Mixture PHD filter:
+```
 - cp ../scripts/start_gm_phd.sh .
+```
 
 Example: run Gaussian Mixture PHD filter over MOT16-02 sequence with public detections:
+```
 - ./start_gm_phd.sh MOT16 train MOT16-02 public 1
+```
 
 ## Authors
 
