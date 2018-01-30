@@ -18,10 +18,10 @@ class TestGMPHDFilter
 public:
 	TestGMPHDFilter();
 	TestGMPHDFilter(string _firstFrameFileName, string _groundTruthFileName,
-	 string _preDetectionFile);
+	 string _detectionFile);
 	void run(bool verbose);
 private:
-	string firstFrameFileName, groundTruthFileName, preDetectionFile;	
+	string firstFrameFileName, groundTruthFileName, detectionFile;	
 	ImageGenerator generator;
 };
 

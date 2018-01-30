@@ -128,9 +128,9 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
 {
     uniform_real_distribution<double> unif(0.0,1.0);
     this->birth_model.clear();
-    //double birth_prob = exp(detections.size() * log(BIRTH_RATE) - lgamma(detections.size() + 1.0) - BIRTH_RATE);
-    //double clutter_prob = exp(detections.size() * log(CLUTTER_RATE) - lgamma(detections.size() + 1.0) - CLUTTER_RATE);
-    //double birth_prob = BIRTH_RATE/detections.size();
+    /*double birth_prob = exp(detections.size() * log(BIRTH_RATE) - lgamma(detections.size() + 1.0) - BIRTH_RATE);
+    double clutter_prob = exp(detections.size() * log(CLUTTER_RATE) - lgamma(detections.size() + 1.0) - CLUTTER_RATE);
+    double birth_prob = BIRTH_RATE/detections.size();*/
     if(this->initialized && detections.size() > 0){
         vector<Target> new_detections;
         vector<Target> new_tracks;
@@ -144,7 +144,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
             target.survival_rate = SURVIVAL_RATE;
             target.feature = features.row(j);
             target.score = detectionsWeights(j);
-            /*while( this->labels.find(label)!=this->labels.end() ) label++;
+            /*while( this->labels.find(label)!= this->labels.end() ) label++;
             target.label = label;
             this->labels.insert(label);*/
             new_detections.push_back(target);
@@ -216,12 +216,11 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
         else if(WITH_DPP){
             DPP dpp = DPP();
             //this->tracks = dpp.run(new_tracks, 0.1, 0.5, 0.1);
-            this->tracks = dpp.run(new_tracks, 0.5);
+            this->tracks = dpp.run(new_tracks, 0.95); // epsilon: 0.5 | q: score
         }
         else {
             this->tracks.swap(new_tracks);
         }
-        
         new_tracks.clear();
         new_labels.clear();
     }

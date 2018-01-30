@@ -119,7 +119,7 @@ vector<Target> DPP::run(vector<Target> tracks, double epsilon){
 
 	if(tracks.size() > 0){
 		VectorXd weights(tracks.size());
-		for (size_t i = 0; i < tracks.size(); ++i) weights(i) = tracks.at(i).score;
+		for (size_t i = 0; i < tracks.size(); ++i) weights(i) = tracks.at(i).survival_rate;
 		
 		MatrixXd kernel = affinity_kernel(tracks);
 
@@ -234,4 +234,26 @@ MatrixXd DPP::affinity_kernel(vector<Target> tracks){
 		}
 	}
 	return kernel;
+}
+
+MatrixXd DPP::squared_exponential_kernel(MatrixXd X, double nu, double sigma_f){
+    MatrixXd cov;
+    int Xnrow = X.rows();
+    int Xncol = X.cols();
+    cov.resize(Xnrow, Xnrow);
+    for(int i = 0; i < (Xnrow-1); ++i){
+      for(int j = i + 1; j < Xnrow; ++j){
+        double S = 0;
+        for(int k = 0; k < Xncol; ++k){
+          double d = ( X(i,k) - X(j,k));
+          S += exp(nu) * d * d;
+        }
+        cov(i,j) = exp(sigma_f - 0.5 * S);
+        cov(j,i) = cov(i,j);
+      }
+    }
+    for(int i = 0; i < Xnrow; ++i){
+        cov(i,i) =  exp(sigma_f);
+    }
+    return cov;
 }

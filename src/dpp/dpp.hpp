@@ -26,6 +26,7 @@ private:
 	VectorXd getQualityTerm(VectorXd &weights, VectorXd &nPenalty);
 	MatrixXd getSimilarityTerm(MatrixXd &features, MatrixXd &intersection, MatrixXd &sqrtArea, double mu);
 	MatrixXd affinity_kernel(vector<Target> tracks);
+	MatrixXd squared_exponential_kernel(MatrixXd X, double nu, double sigma_f);
 	vector<int> solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double epsilon);
 };
 

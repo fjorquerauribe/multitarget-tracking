@@ -59,4 +59,4 @@ See also the list of [contributors](https://github.com/fjorquerauribe/multitarge
 
 ## License
 
-This project is licensed under the Apache 2 license - see the [LICENSE.txt](LICENSE.txt) file for details
+This project is licensed under the Apache 2 license - see the [LICENSE.txt](LICENSE.txt) file for details.

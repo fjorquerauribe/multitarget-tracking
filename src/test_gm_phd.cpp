@@ -3,20 +3,18 @@
 TestGMPHDFilter::TestGMPHDFilter(){}
 
 TestGMPHDFilter::TestGMPHDFilter(string _firstFrameFileName, 
-	string _groundTruthFileName, string _preDetectionFile)
+	string _groundTruthFileName, string _detectionFile)
 {
 	this->firstFrameFileName = _firstFrameFileName;
 	this->groundTruthFileName = _groundTruthFileName;
-	this->preDetectionFile = _preDetectionFile;
-	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->preDetectionFile);
-
+	this->detectionFile = _detectionFile;
+	this->generator = ImageGenerator(this->firstFrameFileName, this->groundTruthFileName, this->detectionFile);
 }
 
-void TestGMPHDFilter::run(bool verbose=false)
+void TestGMPHDFilter::run(bool verbose = false)
 {
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
-	//bool verbose = false;
 	PHDGaussianMixture filter(verbose);
 	if(verbose) namedWindow("PHD Gaussian Mixture", WINDOW_NORMAL);
 	
@@ -24,7 +22,7 @@ void TestGMPHDFilter::run(bool verbose=false)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
 		vector<Target> gt = this->generator.getGroundTruth(i);
-		vector<Rect> preDetections = this->generator.getDetections(i);
+		vector<Rect> detections = this->generator.getDetections(i);
 		MatrixXd features = this->generator.getDetectionFeatures(i);
 		VectorXd weights = this->generator.getDetectionWeights(i);
 		
@@ -32,14 +30,15 @@ void TestGMPHDFilter::run(bool verbose=false)
 		
 		if(verbose)	cout << "Target number: " << gt.size() << endl;
 
-		if (!filter.is_initialized() &&  preDetections.size()>0)
+		if (!filter.is_initialized() &&  detections.size()>0)
 		{
-			filter.initialize(currentFrame, preDetections, features, weights);
+			filter.initialize(currentFrame, detections, features, weights);
+			estimates = filter.estimate(currentFrame, true);
 		}
 		else
 		{
 			filter.predict();
-			filter.update(currentFrame, preDetections, features, weights);
+			filter.update(currentFrame, detections, features, weights);
 			estimates = filter.estimate(currentFrame, true);
 		}
 
@@ -56,7 +55,7 @@ void TestGMPHDFilter::run(bool verbose=false)
 		if(verbose) {
             cout << "----------------------------------------" << endl;
 			imshow("PHD Gaussian Mixture", currentFrame);
-			imwrite("gm_phd_"+to_string(i)+".png", currentFrame);
+			imwrite("gm_phd_" + to_string(i) + ".png", currentFrame);
 			waitKey(100);
 		}
 	}
@@ -64,8 +63,8 @@ void TestGMPHDFilter::run(bool verbose=false)
 
 int main(int argc, char const *argv[])
 {
-	string _firstFrameFileName, _gtFileName, _preDetectionFile;
-	bool verbose=false;
+	string _firstFrameFileName, _gtFileName, _detectionFile;
+	bool verbose = false;
 	if(argc != 9)
 	{
 		cout << "Incorrect input list" << endl;
@@ -96,7 +95,7 @@ int main(int argc, char const *argv[])
 	  	}
 	  	if(strcmp(argv[5], "-det") == 0)
 	  	{
-	    	_preDetectionFile = argv[6];
+	    	_detectionFile = argv[6];
 	  	}
 	  	else
 	  	{
@@ -106,9 +105,58 @@ int main(int argc, char const *argv[])
 		  }
 		if(strcmp(argv[7], "-verbose") == 0)
 	  	{
-	    	verbose=(stoi(argv[8])==1)? true : false;
+	    	verbose = (stoi(argv[8]) == 1) ? true : false;
 	  	}
-	  	TestGMPHDFilter tracker(_firstFrameFileName, _gtFileName, _preDetectionFile);
+	  	TestGMPHDFilter tracker(_firstFrameFileName, _gtFileName, _detectionFile);
 	  	tracker.run(verbose);
 	}
+	/*
+	string _firstFrameFileName, _gtFileName, _detectionFile;
+	bool verbose = false;
+	if(argc != 11)
+	{
+		cout << "Incorrect input list" << endl;
+		cout << "exiting..." << endl;
+		return EXIT_FAILURE;
+	}
+	else
+	{
+	  	if(strcmp(argv[1], "-img") == 0)
+	  	{
+	    	_firstFrameFileName = argv[2];
+	  	}
+	  	else
+	  	{
+	  		cout << "No images given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if(strcmp(argv[3], "-gt") == 0)
+	  	{
+	    	_gtFileName = argv[4];
+	  	}
+	  	else
+	  	{
+	  		cout << "No ground truth given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+	  	}
+	  	if(strcmp(argv[5], "-det") == 0)
+	  	{
+	    	_detectionFile = argv[6];
+	  	}
+	  	else
+	  	{
+	  		cout << "No detections file given" << endl;
+	  		cout << "exiting..." << endl;
+	  		return EXIT_FAILURE;
+		  }
+		if(strcmp(argv[7], "-verbose") == 0)
+	  	{
+	    	verbose = (stoi(argv[8]) == 1) ? true : false;
+	  	}
+	  	TestGMPHDFilter tracker(_firstFrameFileName, _gtFileName, _detectionFile);
+	  	tracker.run(verbose);
+	}
+	*/
 }
