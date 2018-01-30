@@ -16,8 +16,8 @@
     const float DETECTION_RATE = 0.5;
     const float POSITION_LIKELIHOOD_STD = 30.0;
 
-    const bool WITH_NMS = false;
-    const bool WITH_DPP = true;
+    /*const bool WITH_NMS = false;
+    const bool WITH_DPP = true;*/
 #endif 
 
 PHDGaussianMixture::PHDGaussianMixture() {
@@ -33,7 +33,20 @@ bool PHDGaussianMixture::is_initialized() {
     return this->initialized;
 }
 
-PHDGaussianMixture::PHDGaussianMixture(bool verbose) {
+PHDGaussianMixture::PHDGaussianMixture(bool verbose, double epsilon): PHDGaussianMixture(verbose) {
+    this->pruning_method = "dpp";
+    this->epsilon = epsilon;
+}
+
+PHDGaussianMixture::PHDGaussianMixture(bool verbose, double threshold, 
+    int neighbors, double min_scores_sum): PHDGaussianMixture(verbose){
+    this->pruning_method = "nms";
+    this->threshold = threshold;
+    this->neighbors = neighbors;
+    this->min_scores_sum = min_scores_sum;
+}
+
+PHDGaussianMixture::PHDGaussianMixture(bool verbose){
     this->tracks.clear();
     this->birth_model.clear();
     this->labels.clear();
@@ -209,13 +222,11 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
             cout << "Updated Targets: "<< new_tracks.size() << endl;
         }
 
-
-        if(WITH_NMS){
-            nms4(new_tracks, this->tracks, 0.3);
+        if(this->pruning_method.compare("nms") == 0){
+            nms4(new_tracks, this->tracks, this->threshold, this->neighbors, this->min_scores_sum);
         }
-        else if(WITH_DPP){
+        else if(this->pruning_method.compare("dpp") == 0){
             DPP dpp = DPP();
-            //this->tracks = dpp.run(new_tracks, 0.1, 0.5, 0.1);
             this->tracks = dpp.run(new_tracks, 0.95); // epsilon: 0.5 | q: score
         }
         else {

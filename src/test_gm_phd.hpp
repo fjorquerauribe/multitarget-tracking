@@ -20,8 +20,11 @@ public:
 	TestGMPHDFilter(string _firstFrameFileName, string _groundTruthFileName,
 	 string _detectionFile);
 	void run(bool verbose);
+	void run(bool verbose, PHDGaussianMixture filter);
+	void run(bool verbose, double epsilon);
+	void run(bool verbose, double threshold, int neighbors, double min_scores_num);
 private:
-	string firstFrameFileName, groundTruthFileName, detectionFile;	
+	string firstFrameFileName, groundTruthFileName, detectionFile, pruningMethod;	
 	ImageGenerator generator;
 };
 
