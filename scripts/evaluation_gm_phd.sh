@@ -1,9 +1,9 @@
 declare -a datasets=(MOT16)
 declare -a types=(train)
-OUTPUT_DIRECTORY=$2
+OUTPUT_DIRECTORY=$1
 
 # DPP
-declare -a dpp_features=(frcnn cnn raw)
+declare -a dpp_features=(frcnn cnn)
 declare -a epsilon=(0.1 0.3 0.5 0.7 0.9 0.95)
 
 for dataset in "${datasets[@]}"
@@ -19,7 +19,7 @@ do
                 mkdir -p ../build/results/$OUTPUT_DIRECTORY/dpp/$feat/$eps/$dataset/$type/
                 while read sequence;
                 do
-                    echo $dataset,$type,$feat,$eps,$sequence
+                    echo dpp,$dataset,$type,$feat,$eps,$sequence
                     /bin/bash $PWD/start_gm_phd.sh $dataset $type $sequence $feat dpp $eps 0 > ../build/results/$OUTPUT_DIRECTORY/dpp/$feat/$eps/$dataset/$type/$sequence.txt
                 done <./data/$dataset/$type/sequences.lst
             done
@@ -30,7 +30,7 @@ do
 done
 
 # NMS
-declare -a nms_features=(frcnn cnn raw public)
+declare -a nms_features=(frcnn cnn public)
 declare -a threshold=(0.1 0.3 0.5 0.7 0.9)
 declare -a neighbors=(0 1 2 3 4)
 declare -a min_score_sum=(0.0 0.1 0.3 0.5 0.7 0.9)
@@ -45,14 +45,14 @@ do
         do
             for thold in "${threshold[@]}"
             do
-                for nbr in "${neighbors}"
+                for nbr in "${neighbors[@]}"
                 do
                     for score in "${min_score_sum[@]}"
                     do
                         mkdir -p ../build/results/$OUTPUT_DIRECTORY/nms/$feat/$thold/$nbr/$score/$dataset/$type/
                         while read sequence;
                         do
-                            echo $dataset,$type,$feat,$thold,$nbr,$score,$sequence
+                            echo nms,$dataset,$type,$feat,$thold,$nbr,$score,$sequence
                             /bin/bash $PWD/start_gm_phd.sh $dataset $type $sequence $feat nms $thold $nbr $score 0 > ../build/results/$OUTPUT_DIRECTORY/nms/$feat/$thold/$nbr/$score/$dataset/$type/$sequence.txt
                         done <./data/$dataset/$type/sequences.lst
                     done
@@ -64,7 +64,7 @@ do
 done
 
 # No pruning
-declare -a no_pruning_features=(frcnn cnn raw public)
+declare -a no_pruning_features=(frcnn cnn public)
 
 for dataset in "${datasets[@]}"
 do
@@ -77,8 +77,8 @@ do
             mkdir -p ../build/results/$OUTPUT_DIRECTORY/no_pruning/$feat/$eps/$dataset/$type/
             while read sequence;
             do
-                echo $dataset,$type,$feat,$sequence
-                /bin/bash $PWD/start_gm_phd.sh $dataset $type $sequence $feat no_pruning 0 > ../build/results/$OUTPUT_DIRECTORY/no_pruning/$feat/$dataset/$type/$sequence.txt
+                echo no_pruning,$dataset,$type,$feat,$sequence
+                /bin/bash $PWD/start_gm_phd.sh $dataset $type $sequence $feat 0 > ../build/results/$OUTPUT_DIRECTORY/no_pruning/$feat/$dataset/$type/$sequence.txt
             done <./data/$dataset/$type/sequences.lst
         done
         rm ./data/$dataset/$type/sequences.lst

@@ -41,7 +41,6 @@ void TestGMPHDFilter::run(bool verbose, PHDGaussianMixture filter)
 		vector<Rect> detections = this->generator.getDetections(i);
 		MatrixXd features = this->generator.getDetectionFeatures(i);
 		VectorXd weights = this->generator.getDetectionWeights(i);
-		
 		vector<Target> estimates;
 		
 		if(verbose)	cout << "Target number: " << gt.size() << endl;
