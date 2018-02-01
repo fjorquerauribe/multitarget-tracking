@@ -74,7 +74,7 @@ do
         sed -i '/sequences.lst/d' ./data/$dataset/$type/sequences.lst
         for feat in "${no_pruning_features[@]}"
         do
-            mkdir -p ../build/results/$OUTPUT_DIRECTORY/no_pruning/$feat/$eps/$dataset/$type/
+            mkdir -p ../build/results/$OUTPUT_DIRECTORY/no_pruning/$feat/$dataset/$type/
             while read sequence;
             do
                 echo no_pruning,$dataset,$type,$feat,$sequence

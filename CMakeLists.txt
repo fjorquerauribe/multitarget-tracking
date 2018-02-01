@@ -24,7 +24,6 @@ OPTION(MAKE_DPP "Make DPP" OFF)
 
 SET( COMMON_SOURCES
     src/utils/image_generator.cpp
-    src/utils/sequential_image_generator.cpp
     src/utils/utils.cpp
     src/utils/c_utils.cpp
     src/em.cpp
