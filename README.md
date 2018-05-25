@@ -1,6 +1,6 @@
 # Multitarget tracking
 
-A multi target tracker based on Gaussian Mixture Probability Density Hypothesis Density Filter using Determinantal Point Processes observations.
+A multi target tracker based on Gaussian Mixture Probability Density Hypothesis Density Filter using Determinantal Point Processes pruning.
 
 ## Getting Started
 

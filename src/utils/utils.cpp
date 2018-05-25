@@ -31,6 +31,7 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 		{
 			double x_std =((int)new_tracks.size()>1) ? (cost_matrix[i][j]-min_cost)/(max_cost-min_cost) : cost_matrix[i][j];
 			norm_cost_matrix[i][j] = 100*x_std;
+			//cout << norm_cost_matrix[i][j] << endl;
 		}
 	}
 	return norm_cost_matrix;

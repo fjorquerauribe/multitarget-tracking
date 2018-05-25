@@ -1,5 +1,5 @@
 declare -a datasets=(MOT16)
-declare -a types=(train)
+declare -a types=(train test)
 FEATURE=$1
 OUTPUT_DIRECTORY=$2
 
@@ -13,7 +13,7 @@ do
         while read sequence;
         do
             echo $dataset,$sequence
-            /bin/bash $PWD/start_gm_phd.sh $dataset $type $sequence $FEATURE dpp 0.95 0 > ../build/results/$OUTPUT_DIRECTORY/$dataset/$type/$sequence.txt
+            /bin/bash $PWD/start_gm_phd.sh $dataset $type $sequence $FEATURE dpp 0.1 0 > ../build/results/$OUTPUT_DIRECTORY/$dataset/$type/$sequence.txt
         done <./data/$dataset/$type/sequences.lst
     done
 done

@@ -224,8 +224,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
         }
         else if(this->pruning_method.compare("dpp") == 0){
             DPP dpp = DPP();
-            //if(this->verbose) cout << "epsilon: " << this->epsilon << endl;
-            this->tracks = dpp.run(new_tracks, this->epsilon); // epsilon: 0.5 | q: score
+            this->tracks = dpp.run(new_tracks, this->epsilon, this->img_size); // epsilon: 0.5 | q: score
         }
         else {
             this->tracks.swap(new_tracks);

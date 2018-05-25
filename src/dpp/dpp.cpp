@@ -114,19 +114,16 @@ vector<Target> DPP::run(vector<Target> tracks, double epsilon, double mu, double
 	return results;
 }
 
-vector<Target> DPP::run(vector<Target> tracks, double epsilon){
+vector<Target> DPP::run(vector<Target> tracks, double epsilon, Size img_size){
 	vector<Target> results;
 
 	if(tracks.size() > 0){
-		VectorXd weights(tracks.size());
-		for (size_t i = 0; i < tracks.size(); ++i) weights(i) = tracks.at(i).survival_rate;
-		
-		MatrixXd kernel = affinity_kernel(tracks);
-
-		vector<int> top = solve(weights, kernel, epsilon);
-		for (size_t i = 0; i < top.size(); ++i) results.push_back(tracks.at(top.at(i)));
+		VectorXd quality_term(tracks.size());
+		for (size_t i = 0; i < tracks.size(); ++i) quality_term(i) = sqrt(exp(tracks.at(i).score));
+		MatrixXd similarity_term = affinity_kernel(tracks, img_size);
+		vector<int> top = solve(quality_term, similarity_term, epsilon);
+		for (size_t i = 0; i < top.size(); ++i) results.push_back(tracks.at(top.at(i)));	
 	}
-
 	return results;
 }
 
@@ -216,23 +213,21 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 	return top;
 }
 
-MatrixXd DPP::affinity_kernel(vector<Target> tracks){
+MatrixXd DPP::affinity_kernel(vector<Target> tracks, Size img_size){
 	MatrixXd kernel = MatrixXd(tracks.size(), tracks.size());
+	double diag = sqrt( pow(img_size.height, 2) + pow(img_size.width, 2) );
 	for(size_t i = 0; i < tracks.size(); i++){
-		Target track = tracks.at(i);
-		for(size_t j = 0; j < tracks.size(); j++){
-			Target track2 = tracks.at(j);
-			double appearance_affinity = track.feature.dot(track2.feature) / (track.feature.norm() * track2.feature.norm());
-			double motion_affinity = exp( -10.0 * (
-				  pow( double(track.bbox.x - track2.bbox.x)/ track2.bbox.width, 2 )
-				+ pow( double(track.bbox.y - track2.bbox.y)/ track2.bbox.height , 2)
-				) );
-			double shape_affinity = exp( -10.0 * ( 
-				  (double(abs(track.bbox.height - track2.bbox.height))/abs(track.bbox.height + track2.bbox.height) ) 
-				+ (double(abs(track.bbox.width - track2.bbox.width))/abs(track.bbox.width + track2.bbox.width)) ) );
-			kernel(i,j) = appearance_affinity * motion_affinity * shape_affinity;
+		Rect box1 = tracks.at(i).bbox;
+
+		for(size_t j = i; j < tracks.size(); j++){
+			Rect box2 = tracks.at(j).bbox;
+			double scale = exp( -100.0 * (sqrt(pow(box1.width - box2.width, 2)) + sqrt(pow(box1.height - box2.height, 2)))/diag );
+			double pos = exp( -100.0 * (sqrt(pow(box1.x - box2.x, 2)) + sqrt(pow(box1.y - box2.y, 2)))/diag );
+
+			kernel(i,j) = kernel(j,i) = scale * pos;
 		}
 	}
+	//exit (EXIT_FAILURE);
 	return kernel;
 }
 
