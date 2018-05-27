@@ -30,7 +30,7 @@ public:
 	static int** compute_affinity_matrix(vector<Target> tracks, vector<Target> new_tracks);
 	static int** compute_overlap_matrix(vector<Target> tracks, vector<Target> new_tracks);
 	static void detections_quality(VectorXd &detections_weights, vector<Rect> detections, 
-		vector<Target> tracks, VectorXd &contain, double overlap_threshold, double lambda);
+	vector<Target> tracks, VectorXd &contain, double overlap_threshold, double lambda);
 };
 
 #endif

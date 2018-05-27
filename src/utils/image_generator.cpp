@@ -124,7 +124,7 @@ void ImageGenerator::readDetections(string detFilename){
     Rect rect;
     size_t pos2 = line.find(",");
     size_t pos1 = 0;
-    if(pos2>pos1){
+    if(pos2 > pos1){
       frame_num = stoi(line.substr(pos1, pos2)) - 1;
       pos1 = line.find(",",pos2 + 1);
       pos2 = line.find(",",pos1 + 1);
