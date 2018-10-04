@@ -1,7 +1,9 @@
-#include "yolo_detector.hpp"
+ #include "yolo_detector.hpp"
 
 YOLODetector::YOLODetector(string model_cfg, string model_binary, string class_names, float min_confidence){
     this->net = readNetFromDarknet(model_cfg, model_binary);
+    this->net.setPreferableBackend(DNN_BACKEND_OPENCV);
+    this->net.setPreferableTarget(DNN_TARGET_CPU);
     this->min_confidence = min_confidence;
 
     ifstream class_names_file(class_names);
@@ -19,8 +21,11 @@ vector<Rect> YOLODetector::detect(Mat frame){
     if(frame.channels() == 4) cvtColor(frame, frame, COLOR_BGRA2BGR);
     Mat inputBlob = blobFromImage(frame, 1/255.F, Size(416,416), Scalar(), true, false);
     net.setInput(inputBlob, "data");
-    Mat detectionMat = net.forward("detection_out");
-    
+    Mat detectionMat;
+    vector<Mat> outs;
+    net.forward(outs, getOutputsNames(net));
+    cout << outs.size() << endl;
+    detectionMat=outs[1];
     this->weights.resize(0);
     size_t j = 0;
 
@@ -68,4 +73,23 @@ void YOLODetector::draw(Mat frame, Scalar color){
         rectangle(frame, Rect(rect.tl(), Size(labelSize.width, labelSize.height + baseLine)), color, FILLED);
         putText(frame, label, rect.tl() + Point(0, labelSize.height), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0,0,0));
     }
+}
+
+vector<String> YOLODetector::getOutputsNames(const Net& net)
+{
+    static vector<String> names;
+    if (names.empty())
+    {
+        //Get the indices of the output layers, i.e. the layers with unconnected outputs
+        vector<int> outLayers = net.getUnconnectedOutLayers();
+        
+        //get the names of all the layers in the network
+        vector<String> layersNames = net.getLayerNames();
+        
+        // Get the names of the output layers in names
+        names.resize(outLayers.size());
+        for (size_t i = 0; i < outLayers.size(); ++i)
+        names[i] = layersNames[outLayers[i] - 1];
+    }
+    return names;
 }

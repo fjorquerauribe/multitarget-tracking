@@ -27,6 +27,7 @@ class YOLODetector{
         Net net;
         float min_confidence;
         vector<String> class_names_vec;
+        vector<String> getOutputsNames(const Net& net);
 };
 
 #endif

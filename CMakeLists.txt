@@ -19,8 +19,8 @@ INCLUDE_DIRECTORIES( "src/dpp/")
 
 #add_subdirectory( "src/libs/piotr_fhog/" )
 
-OPTION(MAKE_GM_PHD "Make GM PHD" OFF)
-OPTION(MAKE_DPP "Make DPP" OFF)
+OPTION(MAKE_GM_PHD "Make GM PHD" ON)
+OPTION(MAKE_DPP "Make DPP" ON)
 OPTION(MAKE_YOLO "Make YOLO" ON)
 
 SET( UTIL_SOURCES
