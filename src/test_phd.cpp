@@ -16,7 +16,7 @@ void TestPHDFilter::run()
 {
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
-	bool verbose = true;
+	bool verbose = false;
 	PHDParticleFilter filter(this->npart, verbose);
 	if(verbose) namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
 	
@@ -55,10 +55,8 @@ void TestPHDFilter::run()
 		}
 
 		//cout << "----------------------------------------" << endl;
-		if(verbose) {
-			imshow("MTT", currentFrame);
-			waitKey(1);
-		}
+		imshow("MTT", currentFrame);
+		waitKey(1);
 	}
 }
 

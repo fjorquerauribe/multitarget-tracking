@@ -15,14 +15,14 @@ using namespace std;
 using namespace cv;
 using namespace Eigen;
 
-typedef struct{
+struct Target{
 	int label;
   	Scalar color;
 	Rect bbox;
 	double survival_rate;
 	VectorXd feature;
 	double score;
-} Target;
+};
 
 class Utils{
 public:

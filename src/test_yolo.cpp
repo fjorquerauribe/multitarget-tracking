@@ -23,8 +23,9 @@ void TestYOLODetector::run(bool verbose){
     {
         Mat frame = this->generator.getFrame(i);
         vector<Rect> detections = detector.detect(frame);
+        //vector<Target> gt = this->generator.getGroundTruth(i);
         //detector.draw(frame);
-		vector<Target> estimates;
+		//vector<Target> estimates;
 		
 
 		if (!filter.is_initialized())
@@ -49,6 +50,7 @@ void TestYOLODetector::run(bool verbose){
 			<< "," << estimates.at(j).bbox.height
 			<< ",1,-1,-1,-1" << endl;
 		}*/
+        detector.draw(frame);
         imshow("YOLO Detector", frame);
 		waitKey(1);
     }
