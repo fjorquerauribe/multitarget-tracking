@@ -17,11 +17,10 @@ INCLUDE_DIRECTORIES( "src/libs/libhungarian/" )
 INCLUDE_DIRECTORIES( "src/libs/nms/" )
 INCLUDE_DIRECTORIES( "src/dpp/")
 
-#add_subdirectory( "src/libs/piotr_fhog/" )
-
-OPTION(MAKE_GM_PHD "Make GM PHD" ON)
-OPTION(MAKE_DPP "Make DPP" ON)
+OPTION(MAKE_GM_PHD "Make GM PHD" OFF)
+OPTION(MAKE_DPP "Make DPP" OFF)
 OPTION(MAKE_YOLO "Make YOLO" ON)
+OPTION(MAKE_PHD "Make PHD" ON)
 
 SET( UTIL_SOURCES
     src/utils/utils.cpp
@@ -45,7 +44,12 @@ if(MAKE_DPP)
     target_link_libraries( dpp ${OpenCV_LIBS} -lpthread)
 endif()
 
+if(MAKE_PHD)
+    add_executable( phd src/test_phd.cpp src/models/phd_particle_filter.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
+    target_link_libraries( phd ${OpenCV_LIBS} -lpthread)
+endif()
+
 if(MAKE_YOLO)
-    add_executable( yolo src/test_yolo.cpp src/detectors/yolo_detector.cpp ${UTIL_SOURCES} )
+    add_executable( yolo src/test_yolo.cpp src/models/phd_particle_filter.cpp src/detectors/yolo_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
     target_link_libraries( yolo ${OpenCV_LIBS} -lpthread)
 endif()

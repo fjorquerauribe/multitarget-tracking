@@ -14,6 +14,7 @@ TestYOLODetector::TestYOLODetector(string first_frame_file, string ground_truth_
 }
 
 void TestYOLODetector::run(bool verbose){
+	PHDParticleFilter filter(100, verbose);
     if(verbose) namedWindow("YOLO Detector", WINDOW_NORMAL);
 
     YOLODetector detector(this->model_cfg, this->model_binary, this->class_names, this->min_confidence);
@@ -21,11 +22,33 @@ void TestYOLODetector::run(bool verbose){
     for(size_t i = 0; i < this->generator.getDatasetSize(); i++)
     {
         Mat frame = this->generator.getFrame(i);
-        //vector<Target> gt = this->generator.getGroundTruth(i);
-
         vector<Rect> detections = detector.detect(frame);
-        detector.draw(frame);
+        //detector.draw(frame);
+		vector<Target> estimates;
+		
 
+		if (!filter.is_initialized())
+		{
+			filter.initialize(frame, detections);
+			//estimates = filter.estimate(frame, true);
+			filter.draw_particles(frame, Scalar(255, 255, 255));
+		}
+		else
+		{
+			filter.predict();
+			filter.update(frame, detections);
+			//estimates = filter.estimate(frame, true);
+			filter.draw_particles(frame, Scalar(255, 255, 255));
+		}
+        /*for(size_t j = 0; j < estimates.size(); j++){
+			cout << i + 1
+			<< "," << estimates.at(j).label
+			<< "," << estimates.at(j).bbox.x
+			<< "," << estimates.at(j).bbox.y
+			<< "," << estimates.at(j).bbox.width
+			<< "," << estimates.at(j).bbox.height
+			<< ",1,-1,-1,-1" << endl;
+		}*/
         imshow("YOLO Detector", frame);
 		waitKey(1);
     }

@@ -341,11 +341,13 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
             if (this->tracks.size() > 0)
             {
                 hungarian_problem_t p;
-                int **m = Utils::compute_cost_matrix(this->tracks, new_tracks);
+                double diagonal = sqrt( pow(image.rows,2) + pow(image.cols,2));
+                double area = image.rows * image.cols;
+                int **m = Utils::compute_cost_matrix(this->tracks, new_tracks, diagonal, area);
                 hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MINIMIZE_COST);
-                /*int **m = Utils::compute_overlap_matrix(this->tracks, new_tracks);
-                hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);*/
-                
+                /*int **m = Utils::compute_overlap_matrix(this->tracks, new_detections);
+                hungarian_init(&p, m, this->tracks.size(), new_tracks.size(), HUNGARIAN_MODE_MAXIMIZE_UTIL);*/   
+         
                 hungarian_solve(&p);
                 for (size_t i = 0; i < this->tracks.size(); ++i)
                 {

@@ -16,7 +16,7 @@ void TestPHDFilter::run()
 {
 	RNG rng( 0xFFFFFFFF );
 	map<int,Scalar> color;
-	bool verbose = false;
+	bool verbose = true;
 	PHDParticleFilter filter(this->npart, verbose);
 	if(verbose) namedWindow("MTT", WINDOW_NORMAL);//WINDOW_NORMAL
 	

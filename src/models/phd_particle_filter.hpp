@@ -11,8 +11,8 @@
 #include "../likelihood/multivariate_gaussian.hpp"
 #include "../utils/image_generator.hpp"
 #include "../utils/utils.hpp"
-#include "../em.hpp"
 #include "hungarian.h"
+#include "../em.hpp"
 
 #ifdef WITH_NMS
     #include "../libs/nms/nms.hpp"
