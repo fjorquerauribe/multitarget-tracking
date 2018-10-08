@@ -25,23 +25,23 @@ void TestYOLODetector::run(bool verbose){
         vector<Rect> detections = detector.detect(frame);
         //vector<Target> gt = this->generator.getGroundTruth(i);
         //detector.draw(frame);
-		//vector<Target> estimates;
+		std::vector<MyTarget> estimates;
 		
 
 		if (!filter.is_initialized())
 		{
 			filter.initialize(frame, detections);
-			//estimates = filter.estimate(frame, true);
-			filter.draw_particles(frame, Scalar(255, 255, 255));
+			estimates = filter.estimate(frame, true);
+			//filter.draw_particles(frame, Scalar(255, 255, 255));
 		}
 		else
 		{
 			filter.predict();
 			filter.update(frame, detections);
-			//estimates = filter.estimate(frame, true);
-			filter.draw_particles(frame, Scalar(255, 255, 255));
+			estimates = filter.estimate(frame, true);
+			//filter.draw_particles(frame, Scalar(255, 255, 255));
 		}
-        /*for(size_t j = 0; j < estimates.size(); j++){
+        for(size_t j = 0; j < estimates.size(); j++){
 			cout << i + 1
 			<< "," << estimates.at(j).label
 			<< "," << estimates.at(j).bbox.x
@@ -49,8 +49,8 @@ void TestYOLODetector::run(bool verbose){
 			<< "," << estimates.at(j).bbox.width
 			<< "," << estimates.at(j).bbox.height
 			<< ",1,-1,-1,-1" << endl;
-		}*/
-        detector.draw(frame);
+		}
+        //detector.draw(frame);
         imshow("YOLO Detector", frame);
 		waitKey(1);
     }

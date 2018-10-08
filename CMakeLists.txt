@@ -50,6 +50,6 @@ if(MAKE_PHD)
 endif()
 
 if(MAKE_YOLO)
-    add_executable( yolo src/test_yolo.cpp src/models/phd_particle_filter.cpp src/detectors/yolo_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
+    add_executable( yolo src/test_yolo.cpp  src/detectors/yolo_detector.cpp src/models/phd_particle_filter.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
     target_link_libraries( yolo ${OpenCV_LIBS} -lpthread)
 endif()

@@ -1,6 +1,6 @@
 #include "utils.hpp"
 
-int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_tracks, double Ql, double Qs){
+int** Utils::compute_cost_matrix(vector<MyTarget> tracks, vector<MyTarget> new_tracks, double Ql, double Qs){
 	double** cost_matrix = new double*[tracks.size()];
 	int** norm_cost_matrix = new int*[tracks.size()];
 	double max_cost=0.0f,min_cost=1000000.0f;
@@ -37,13 +37,13 @@ int** Utils::compute_cost_matrix(vector<Target> tracks, vector<Target> new_track
 	return norm_cost_matrix;
 }
 
-int** Utils::compute_affinity_matrix(vector<Target> tracks, vector<Target> new_tracks){
+int** Utils::compute_affinity_matrix(vector<MyTarget> tracks, vector<MyTarget> new_tracks){
 	int** cost_matrix = new int*[tracks.size()];
 	for(size_t i = 0; i < tracks.size(); i++){
 		cost_matrix[i] = new int[new_tracks.size()];
-		Target track = tracks.at(i);
+		MyTarget track = tracks.at(i);
 		for(size_t j = 0; j < new_tracks.size(); j++){
-			Target new_track = new_tracks.at(j);
+			MyTarget new_track = new_tracks.at(j);
 			double appearance_affinity = track.feature.dot(new_track.feature) / (track.feature.norm() * new_track.feature.norm());
 			double motion_affinity = exp( -0.1 * (
 				  pow( double(track.bbox.x - new_track.bbox.x)/ new_track.bbox.width, 2 )
@@ -59,7 +59,7 @@ int** Utils::compute_affinity_matrix(vector<Target> tracks, vector<Target> new_t
 	return cost_matrix;
 }
 
-int** Utils::compute_overlap_matrix(vector<Target> tracks, vector<Target> new_tracks){
+int** Utils::compute_overlap_matrix(vector<MyTarget> tracks, vector<MyTarget> new_tracks){
 	int** cost_matrix = new int*[tracks.size()];
 	for(size_t i = 0; i < tracks.size(); i++){
 		cost_matrix[i] = new int[new_tracks.size()];
@@ -75,7 +75,7 @@ int** Utils::compute_overlap_matrix(vector<Target> tracks, vector<Target> new_tr
 	return cost_matrix;
 }
 
-void Utils::detections_quality(VectorXd &detections_weights, vector<Rect> detections, vector<Target> tracks, 
+void Utils::detections_quality(VectorXd &detections_weights, vector<Rect> detections, vector<MyTarget> tracks, 
 	VectorXd &contain, double overlap_threshold, double lambda)
 {
 	contain = VectorXd::Zero(detections.size());

@@ -64,7 +64,7 @@ VectorXd ImageGenerator::getDetectionWeights(int frame_num){
   return this->detection_weights[frame_num];
 }
 
-vector<Target> ImageGenerator::getGroundTruth(int frame_num){
+vector<MyTarget> ImageGenerator::getGroundTruth(int frame_num){
   return this->ground_truth[frame_num];
 }
 
@@ -173,7 +173,7 @@ void ImageGenerator::readGroundTruth(string gtFilename){
   int frame_num;
   
   while (getline(gt_file, line)) {
-    Target target; 
+    MyTarget target; 
     Rect rect;
     size_t pos2 = line.find(",");
     size_t pos1 = 0;

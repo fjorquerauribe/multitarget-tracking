@@ -88,7 +88,7 @@ void PHDParticleFilter::initialize(Mat& current_frame, vector<Rect> detections) 
         
         for (size_t i = 0; i < detections.size(); ++i)
         {
-                Target target;
+                MyTarget target;
                 target.label = i;
                 target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
                 target.bbox = detections.at(i);
@@ -299,11 +299,11 @@ void PHDParticleFilter::resample(){
     squared_normalized_weights.clear();
 }
 
-vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
+vector<MyTarget> PHDParticleFilter::estimate(Mat& image, bool draw){
     if(this->initialized){
         Scalar phd_estimate = sum(this->weights);
         int num_targets = cvRound(phd_estimate[0]);
-        vector<Target> new_tracks;
+        vector<MyTarget> new_tracks;
         if(num_targets > 0)
         {
             /********************** EM **********************/
@@ -325,7 +325,7 @@ vector<Target> PHDParticleFilter::estimate(Mat& image, bool draw){
             int label = 0;
             for (int i = 0; i < emMeans.rows; ++i)
             {
-                Target target;
+                MyTarget target;
                 target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
                 target.bbox = Rect(emMeans.at<double>(i,0), emMeans.at<double>(i,1), emMeans.at<double>(i,2), emMeans.at<double>(i,3));
                 

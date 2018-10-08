@@ -54,7 +54,7 @@ public:
     PHDParticleFilter();
     void initialize(Mat& current_frame, vector<Rect> detections);
     void update(Mat& image, vector<Rect> detections);
-    vector<Target> estimate(Mat& image, bool draw = false);
+    vector<MyTarget> estimate(Mat& image, bool draw = false);
     void predict();
     void resample();
     void draw_particles(Mat& image, Scalar color);
@@ -70,7 +70,7 @@ protected:
     int max_height, max_width, min_height, min_width;
     int max_x, max_y, min_x, min_y;
     int particles_batch;
-    vector<Target> tracks;
+    vector<MyTarget> tracks;
     vector<Rect> birth_model;
     RNG rng;
     vector<int> labels, current_labels;

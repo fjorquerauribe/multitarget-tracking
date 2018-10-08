@@ -23,10 +23,10 @@ void TestPHDFilter::run()
 	for (size_t i = 0; i < this->generator.getDatasetSize(); ++i)
 	{
 		Mat currentFrame = this->generator.getFrame(i);
-		vector<Target> gt = this->generator.getGroundTruth(i);
+		vector<MyTarget> gt = this->generator.getGroundTruth(i);
 		vector<Rect> preDetections = this->generator.getDetections(i);
 		//VectorXd weights = this->generator.getDetectionWeights(i);
-		vector<Target> estimates;
+		vector<MyTarget> estimates;
 		
 		if(verbose)	cout << "Target number: " << gt.size() << endl;
 
