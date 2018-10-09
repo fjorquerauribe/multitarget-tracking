@@ -8,7 +8,7 @@
 #include <opencv2/opencv.hpp>
 #include "utils/image_generator.hpp"
 #include "utils/utils.hpp"
-#include "models/phd_particle_filter.hpp"
+#include "models/phd_gaussian_mixture.hpp"
 #include "detectors/yolo_detector.hpp"
 
 using namespace std;

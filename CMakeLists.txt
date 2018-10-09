@@ -20,7 +20,8 @@ INCLUDE_DIRECTORIES( "src/dpp/")
 OPTION(MAKE_GM_PHD "Make GM PHD" OFF)
 OPTION(MAKE_DPP "Make DPP" OFF)
 OPTION(MAKE_YOLO "Make YOLO" ON)
-OPTION(MAKE_PHD "Make PHD" ON)
+OPTION(MAKE_YOLO_WEBCAM "Make YOLO" ON)
+OPTION(MAKE_PHD "Make PHD" OFFs)
 
 SET( UTIL_SOURCES
     src/utils/utils.cpp
@@ -50,6 +51,11 @@ if(MAKE_PHD)
 endif()
 
 if(MAKE_YOLO)
-    add_executable( yolo src/test_yolo.cpp  src/detectors/yolo_detector.cpp src/models/phd_particle_filter.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
+    add_executable( yolo src/test_yolo.cpp  src/dpp/dpp.cpp src/detectors/yolo_detector.cpp src/models/phd_gaussian_mixture.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
     target_link_libraries( yolo ${OpenCV_LIBS} -lpthread)
+endif()
+
+if(MAKE_YOLO_WEBCAM)
+    add_executable( yolo_webcam src/test_yolo_webcam.cpp  src/dpp/dpp.cpp src/detectors/yolo_detector.cpp src/models/phd_gaussian_mixture.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
+    target_link_libraries( yolo_webcam ${OpenCV_LIBS} -lpthread)
 endif()

@@ -158,8 +158,8 @@ inline void nms2(
  * @param neighbors
  */
 inline void nms3(
-        const std::vector<Target>& srcRects,
-        std::vector<Target>& resRects,
+        const std::vector<MyTarget>& srcRects,
+        std::vector<MyTarget>& resRects,
         float thresh,
         int neighbors = 0
     )
@@ -184,7 +184,7 @@ inline void nms3(
     {
         // grab the last rectangle
         auto lastElem = --std::end(idxs);
-        Target rect1 = srcRects[lastElem->second];
+        MyTarget rect1 = srcRects[lastElem->second];
 
         int neigborsCount = 0;
 
@@ -193,7 +193,7 @@ inline void nms3(
         for (auto pos = std::begin(idxs); pos != std::end(idxs); )
         {
             // grab the current rectangle
-            Target rect2 = srcRects[pos->second];
+            MyTarget rect2 = srcRects[pos->second];
 
             float intArea = (rect1.bbox & rect2.bbox).area();
             float unionArea = rect1.bbox.area() + rect2.bbox.area() - intArea;
@@ -227,8 +227,8 @@ inline void nms3(
  * @param neighbors
  */
 inline void nms4(
-        const std::vector<Target>& srcRects,
-        std::vector<Target>& resRects,
+        const std::vector<MyTarget>& srcRects,
+        std::vector<MyTarget>& resRects,
         float thresh,
         int neighbors = 0,
         float minScoresSum = 0.f
@@ -256,7 +256,7 @@ inline void nms4(
     {
         // grab the last rectangle
         auto lastElem = --std::end(idxs);
-        Target rect1 = srcRects[lastElem->second];
+        MyTarget rect1 = srcRects[lastElem->second];
 
         int neigborsCount = 0;
         float scoresSum = lastElem->first;
@@ -266,7 +266,7 @@ inline void nms4(
         for (auto pos = std::begin(idxs); pos != std::end(idxs); )
         {
             // grab the current rectangle
-            Target rect2 = srcRects[pos->second];
+            MyTarget rect2 = srcRects[pos->second];
 
             float intArea = (rect1.bbox & rect2.bbox).area();
             float unionArea = rect1.bbox.area() + rect2.bbox.area() - intArea;

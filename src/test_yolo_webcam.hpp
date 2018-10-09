@@ -4,24 +4,24 @@
 #include <time.h>
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 #include <opencv2/opencv.hpp>
-
-#include "utils/image_generator.hpp"
 #include "utils/utils.hpp"
+#include "models/phd_gaussian_mixture.hpp"
 #include "detectors/yolo_detector.hpp"
 
 using namespace std;
 using namespace cv;
 
-class TestYOLODetector{
+class TestYOLOWebcam{
     public:
-        TestYOLODetector();
-        TestYOLODetector(string first_frame_file, string ground_truth_filename, string model_cfg, string model_binary, string class_names, float min_confidence); 
+        TestYOLOWebcam();
+        TestYOLOWebcam(string model_cfg, string model_binary, string class_names, float min_confidence,int video); 
         void run(bool verbose);
     private:
-        string first_frame_file, ground_truth_filename, model_cfg, model_binary, class_names;
+        string model_cfg, model_binary, class_names;
         float min_confidence;
-        ImageGenerator generator;
+        VideoCapture cap;
 };
 
 #endif

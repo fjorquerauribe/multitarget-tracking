@@ -31,7 +31,7 @@ bool PHDGaussianMixture::is_initialized() {
 }
 
 PHDGaussianMixture::PHDGaussianMixture(bool verbose, double epsilon): PHDGaussianMixture(verbose) {
-    this->pruning_method = "dpp";
+    this->pruning_method = "nms";
     this->epsilon = epsilon;
 }
 
@@ -61,7 +61,7 @@ PHDGaussianMixture::PHDGaussianMixture(bool verbose){
     this->initialized = false;
 }
 
-void PHDGaussianMixture::initialize(Mat& current_frame, vector<Rect> detections, MatrixXd features, VectorXd detectionsWeights) {
+void PHDGaussianMixture::initialize(Mat& current_frame, vector<Rect> detections, VectorXd detectionsWeights) {
     if(detections.size() > 0){
         this->img_size = current_frame.size();
         this->tracks.clear();
@@ -70,12 +70,11 @@ void PHDGaussianMixture::initialize(Mat& current_frame, vector<Rect> detections,
 
         for (size_t i = 0; i < detections.size(); ++i)
         {
-                Target target;
+                MyTarget target;
                 target.label = i;
                 target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
                 target.bbox = detections.at(i);
                 target.survival_rate = SURVIVAL_RATE;
-                target.feature = features.row(i);
                 target.score = detectionsWeights(i);
                 this->tracks.push_back(target);
                 this->labels.insert(i);
@@ -92,10 +91,10 @@ void PHDGaussianMixture::predict(){
     uniform_real_distribution<double> unif(0.0,1.0);
 
     if(this->initialized == true){
-        vector<Target> tmp_new_tracks;
+        vector<MyTarget> tmp_new_tracks;
         
         for (size_t i = 0; i < this->tracks.size(); i++){
-            Target track = this->tracks[i];
+            MyTarget track = this->tracks[i];
             float _x, _y, _width, _height;
             float _dx = position_random_x(this->generator);
             float _dy = position_random_y(this->generator);
@@ -123,7 +122,7 @@ void PHDGaussianMixture::predict(){
             }
         }
         for (size_t j = 0; j < this->birth_model.size(); j++){
-            Target track = this->birth_model[j];
+            MyTarget track = this->birth_model[j];
             tmp_new_tracks.push_back(track);
         }
         this->birth_model.clear();
@@ -134,7 +133,7 @@ void PHDGaussianMixture::predict(){
 }
 
 
-void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd features, VectorXd detectionsWeights)
+void PHDGaussianMixture::update(Mat& image, vector<Rect> detections,  VectorXd detectionsWeights)
 {
     uniform_real_distribution<double> unif(0.0,1.0);
     this->birth_model.clear();
@@ -142,17 +141,16 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
     double clutter_prob = exp(detections.size() * log(CLUTTER_RATE) - lgamma(detections.size() + 1.0) - CLUTTER_RATE);
     double birth_prob = BIRTH_RATE/detections.size();*/
     if(this->initialized && detections.size() > 0){
-        vector<Target> new_detections;
-        vector<Target> new_tracks;
+        vector<MyTarget> new_detections;
+        vector<MyTarget> new_tracks;
         set<int> new_labels;
         vector<double> tmp_weights;
         int label = 0;
         for (size_t j = 0; j < detections.size(); j++){
-            Target target;
+            MyTarget target;
             target.color = Scalar(this->rng.uniform(0,255), this->rng.uniform(0,255), this->rng.uniform(0,255));
             target.bbox = detections[j];
             target.survival_rate = SURVIVAL_RATE;
-            target.feature = features.row(j);
             target.score = detectionsWeights(j);
             /*while( this->labels.find(label)!= this->labels.end() ) label++;
             target.label = label;
@@ -234,7 +232,7 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, MatrixXd fe
     }
 }
 
-vector <Target> PHDGaussianMixture::estimate(Mat& image, bool draw)
+vector <MyTarget> PHDGaussianMixture::estimate(Mat& image, bool draw)
 {
     if (draw){
         for (size_t i = 0; i < this->tracks.size(); ++i){

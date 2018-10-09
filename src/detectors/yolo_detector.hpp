@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <Eigen/Core>
+#include "../models/phd_gaussian_mixture.hpp"
 
 using namespace std;
 using namespace cv;
@@ -19,10 +20,10 @@ class YOLODetector{
         YOLODetector(string model_cfg, string model_binary, string class_names, float min_confidence);
         vector<Rect> detect(Mat frame);
         void draw(Mat frame, Scalar color = Scalar(0, 255, 0));
+        VectorXd weights;
 
     private:
         vector<Rect> detections;
-        VectorXd weights;
         vector<String> classes;
         Net net;
         float min_confidence;

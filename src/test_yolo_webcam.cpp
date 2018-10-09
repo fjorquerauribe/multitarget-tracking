@@ -1,27 +1,28 @@
-#include "test_yolo.hpp"
+#include "test_yolo_webcam.hpp"
 
-TestYOLODetector::TestYOLODetector(){}
+TestYOLOWebcam::TestYOLOWebcam(){}
 
-TestYOLODetector::TestYOLODetector(string first_frame_file, string ground_truth_filename, 
-    string model_cfg, string model_binary, string class_names, float min_confidence){
-    this->first_frame_file = first_frame_file;
-    this->ground_truth_filename = ground_truth_filename;
+TestYOLOWebcam::TestYOLOWebcam(string model_cfg, string model_binary, string class_names, float min_confidence,int cameraDevice){
     this->model_cfg = model_cfg;
     this->model_binary = model_binary;
     this->class_names = class_names;
     this->min_confidence = min_confidence;
-    this->generator = ImageGenerator(this->first_frame_file, this->ground_truth_filename);
+    this->cap = VideoCapture(cameraDevice);
+    if(!this->cap.isOpened()){
+        cout << "Couldn't find camera: " << cameraDevice << endl;
+    }
 }
 
-void TestYOLODetector::run(bool verbose){
+void TestYOLOWebcam::run(bool verbose){
 	PHDGaussianMixture filter(verbose);
     if(verbose) namedWindow("YOLO Detector", WINDOW_NORMAL);
 
     YOLODetector detector(this->model_cfg, this->model_binary, this->class_names, this->min_confidence);
 
-    for(size_t i = 0; i < this->generator.getDatasetSize(); i++)
+    for(;;)
     {
-        Mat frame = this->generator.getFrame(i);
+        Mat frame;
+        cap >> frame;
         vector<Rect> detections = detector.detect(frame);
         //vector<Target> gt = this->generator.getGroundTruth(i);
         //detector.draw(frame);
@@ -42,8 +43,7 @@ void TestYOLODetector::run(bool verbose){
 			//filter.draw_particles(frame, Scalar(255, 255, 255));
 		}
         for(size_t j = 0; j < estimates.size(); j++){
-			cout << i + 1
-			<< "," << estimates.at(j).label
+			cout << estimates.at(j).label
 			<< "," << estimates.at(j).bbox.x
 			<< "," << estimates.at(j).bbox.y
 			<< "," << estimates.at(j).bbox.width
@@ -52,16 +52,16 @@ void TestYOLODetector::run(bool verbose){
 		}
         //detector.draw(frame);
         imshow("YOLO Detector", frame);
-		waitKey(1);
+		if (waitKey(1) >= 0) break;
     }
 }
 
 int main(int argc, char const *argv[]){
     string first_frame_file, ground_truth_filename, model_cfg, model_binary, class_names;
     float min_confidence;
-    bool verbose;
+    int video;
 
-    if(argc != 15)
+    if(argc != 11)
     {
 		cout << "Incorrect input list" << endl;
 		cout << "exiting..." << endl;
@@ -69,26 +69,8 @@ int main(int argc, char const *argv[]){
     }
     else
     {
-        if(strcmp(argv[1], "-img") == 0){
-            first_frame_file = argv[2];
-        }
-        else
-        {
-            cout << "No images given" << endl;
-            cout << "exiting..." << endl;
-            return EXIT_FAILURE;
-        }
-        if(strcmp(argv[3], "-gt") == 0){
-            ground_truth_filename = argv[4];
-        }
-        else
-        {
-            cout << "No groundtruth given" << endl;
-            cout << "exiting..." << endl;
-            return EXIT_FAILURE;
-        }
-        if(strcmp(argv[5], "-config") == 0){
-            model_cfg = argv[6];
+        if(strcmp(argv[1], "-config") == 0){
+            model_cfg = argv[2];
         }
         else
         {
@@ -96,8 +78,8 @@ int main(int argc, char const *argv[]){
             cout << "exiting..." << endl;
             return EXIT_FAILURE;
         }
-        if(strcmp(argv[7], "-model") == 0){
-            model_binary = argv[8];
+        if(strcmp(argv[3], "-model") == 0){
+            model_binary = argv[4];
         }
         else
         {
@@ -105,8 +87,8 @@ int main(int argc, char const *argv[]){
             cout << "exiting..." << endl;
             return EXIT_FAILURE;
         }
-        if(strcmp(argv[9], "-classes") == 0){
-            class_names = argv[10];
+        if(strcmp(argv[5], "-classes") == 0){
+            class_names = argv[6];
         }
         else
         {
@@ -114,8 +96,8 @@ int main(int argc, char const *argv[]){
             cout << "exiting..." << endl;
             return EXIT_FAILURE;
         }
-        if(strcmp(argv[11], "-min_confidence") == 0){
-            min_confidence = stod(argv[12]);
+        if(strcmp(argv[7], "-min_confidence") == 0){
+            min_confidence = stod(argv[8]);
         }
         else
         {
@@ -123,11 +105,11 @@ int main(int argc, char const *argv[]){
             cout << "exiting..." << endl;
             return EXIT_FAILURE;
         }
-        if (strcmp(argv[13], "-verbose") == 0)
+        if (strcmp(argv[9], "-video") == 0)
 	  	{
-	  		verbose = (stoi(argv[14]) == 1) ? true : false;
+	  		video = stoi(argv[10]);
 		}
-        TestYOLODetector detector(first_frame_file, ground_truth_filename, model_cfg, model_binary, class_names, min_confidence);
-        detector.run(verbose);
+        TestYOLOWebcam detector(model_cfg, model_binary, class_names, min_confidence,video);
+        detector.run(false);
     }
 }

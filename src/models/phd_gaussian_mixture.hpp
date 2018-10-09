@@ -36,11 +36,11 @@ public:
     PHDGaussianMixture(bool verbose, double epsilon);
     PHDGaussianMixture(bool verbose, double threshold, int neighbors, double min_scores_sum);
     PHDGaussianMixture();
-    void initialize(Mat& current_frame, vector<Rect> detections, MatrixXd features, VectorXd detectionsWeights);
-    void update(Mat& image, vector<Rect> detections, MatrixXd features, VectorXd detectionsWeights);
+    void initialize(Mat& current_frame, vector<Rect> detections,VectorXd detectionsWeights);
+    void update(Mat& image, vector<Rect> detections, VectorXd detectionsWeights);
     void predict();
     bool is_initialized();
-    vector<Target> estimate(Mat& image, bool draw = false);
+    vector<MyTarget> estimate(Mat& image, bool draw = false);
     
 protected:
     mt19937 generator;
@@ -48,8 +48,8 @@ protected:
     bool initialized;
     normal_distribution<double> position_random_walk, velocity_random_walk, scale_random_walk;
     Size img_size;
-    vector<Target> tracks;
-    vector<Target> birth_model;
+    vector<MyTarget> tracks;
+    vector<MyTarget> birth_model;
     RNG rng;
     set<int> labels;
     bool verbose;

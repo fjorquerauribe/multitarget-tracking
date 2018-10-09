@@ -64,9 +64,9 @@ vector<Rect> DPP::run(vector<Rect> raw_detections, VectorXd &weights, MatrixXd &
 	return results;
 }
 
-vector<Target> DPP::run(vector<Target> tracks, double epsilon, double mu, double lambda)
+vector<MyTarget> DPP::run(vector<MyTarget> tracks, double epsilon, double mu, double lambda)
 {
-	vector<Target> results;
+	vector<MyTarget> results;
 
 	if(tracks.size() > 0){
 		VectorXd area(tracks.size());
@@ -114,8 +114,8 @@ vector<Target> DPP::run(vector<Target> tracks, double epsilon, double mu, double
 	return results;
 }
 
-vector<Target> DPP::run(vector<Target> tracks, double epsilon, Size img_size){
-	vector<Target> results;
+vector<MyTarget> DPP::run(vector<MyTarget> tracks, double epsilon, Size img_size){
+	vector<MyTarget> results;
 
 	if(tracks.size() > 0){
 		VectorXd quality_term(tracks.size());
@@ -213,7 +213,7 @@ vector<int> DPP::solve(VectorXd &qualityTerm, MatrixXd &similarityTerm, double e
 	return top;
 }
 
-MatrixXd DPP::affinity_kernel(vector<Target> tracks, Size img_size){
+MatrixXd DPP::affinity_kernel(vector<MyTarget> tracks, Size img_size){
 	MatrixXd kernel = MatrixXd(tracks.size(), tracks.size());
 	double diag = sqrt( pow(img_size.height, 2) + pow(img_size.width, 2) );
 	for(size_t i = 0; i < tracks.size(); i++){
