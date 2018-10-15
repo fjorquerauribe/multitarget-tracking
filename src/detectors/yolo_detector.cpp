@@ -1,4 +1,8 @@
- #include "yolo_detector.hpp"
+#include "yolo_detector.hpp"
+
+YOLODetector::YOLODetector(){
+    this->initialized = false;
+}
 
 YOLODetector::YOLODetector(string model_cfg, string model_binary, string class_names, float min_confidence){
     this->net = readNetFromDarknet(model_cfg, model_binary);
@@ -13,6 +17,11 @@ YOLODetector::YOLODetector(string model_cfg, string model_binary, string class_n
         while(getline(class_names_file, class_name))
             this->class_names_vec.push_back(class_name);
     }
+    this->initialized = true;
+}
+
+bool YOLODetector::is_initialized(){
+    return this->initialized;
 }
 
 vector<Rect> YOLODetector::detect(Mat frame){

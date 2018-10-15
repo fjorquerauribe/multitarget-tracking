@@ -14,9 +14,6 @@
 #include "hungarian.h"
 #include "../em.hpp"
 
-#ifdef WITH_NMS
-    #include "../libs/nms/nms.hpp"
-#endif
 
 #include <time.h>
 #include <float.h>
