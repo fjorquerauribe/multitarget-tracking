@@ -19,9 +19,9 @@ INCLUDE_DIRECTORIES( "src/dpp/")
 
 OPTION(MAKE_GM_PHD "Make GM PHD" OFF)
 OPTION(MAKE_DPP "Make DPP" OFF)
-OPTION(MAKE_YOLO "Make YOLO" ON)
-OPTION(MAKE_YOLO_WEBCAM "Make YOLO" ON)
-OPTION(MAKE_PHD "Make PHD" OFFs)
+OPTION(MAKE_YOLO "Make YOLO" OFF)
+OPTION(MAKE_YOLO_WEBCAM "Make YOLO" OFF)
+OPTION(MAKE_PHD "Make PHD" ON)
 
 SET( UTIL_SOURCES
     src/utils/utils.cpp
@@ -46,7 +46,7 @@ if(MAKE_DPP)
 endif()
 
 if(MAKE_PHD)
-    add_executable( phd src/test_phd.cpp src/models/phd_particle_filter.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
+    add_executable( phd src/test_phd.cpp src/models/phd_particle_filter.cpp src/detectors/yolo_detector.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
     target_link_libraries( phd ${OpenCV_LIBS} -lpthread)
 endif()
 

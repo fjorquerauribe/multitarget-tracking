@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 
 - CMake 2.8 or newer
-- OpenCV 3.0
+- OpenCV 3.4 (DNN library is required)
 - Eigen 3.2
 
 ### Installating
@@ -44,6 +44,11 @@ cp ../scripts/start_gm_phd.sh .
 Example: run Gaussian Mixture PHD filter over MOT16-02 sequence with public detections:
 ```
 ./start_gm_phd.sh MOT16 train MOT16-02 public 1
+```
+
+Example 2: run PHD filter and YOLO detector over MOT16-02 sequence (we assume YOLO .cfg, .weights and .names files are into data/yolo folder) 
+```
+./start_phd.sh MOT16 train MOT16-02 100 yolo 0.5
 ```
 
 ## Demo

@@ -17,12 +17,15 @@ using namespace Eigen;
 
 class YOLODetector{
     public:
+        YOLODetector();      
         YOLODetector(string model_cfg, string model_binary, string class_names, float min_confidence);
+        bool is_initialized();
         vector<Rect> detect(Mat frame);
         void draw(Mat frame, Scalar color = Scalar(0, 255, 0));
         VectorXd weights;
 
     private:
+        bool initialized;
         vector<Rect> detections;
         vector<String> classes;
         Net net;
