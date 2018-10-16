@@ -18,7 +18,7 @@ class TestYOLOWebcam{
     public:
         TestYOLOWebcam();
         TestYOLOWebcam(string model_cfg, string model_binary, string class_names, float min_confidence,int video); 
-        void run(bool verbose,queue<Mat> &frame_buffer);
+        void run(queue<Mat> &frame_buffer);
         void video_capture_buffer(queue<Mat> &frame_buffer);
 
     private:
