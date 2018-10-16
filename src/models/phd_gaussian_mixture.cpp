@@ -100,10 +100,10 @@ void PHDGaussianMixture::predict(){
             float _dy = position_random_y(this->generator);
             float _dw = scale_random_width(this->generator);
             float _dh = scale_random_height(this->generator);
-            _x = MIN(MAX(cvRound(track.bbox.x + _dx), 0), this->img_size.width);
-            _y = MIN(MAX(cvRound(track.bbox.y + _dy), 0), this->img_size.height);
-            _width = MIN(MAX(cvRound(track.bbox.width + _dw), 0), this->img_size.width);
-            _height = MIN(MAX(cvRound(track.bbox.height + _dh), 0), this->img_size.height);
+            _x = MIN(MAX(cvRound(track.bbox.x), 0), this->img_size.width);
+            _y = MIN(MAX(cvRound(track.bbox.y  ), 0), this->img_size.height);
+            _width = MIN(MAX(cvRound(track.bbox.width), 0), this->img_size.width);
+            _height = MIN(MAX(cvRound(track.bbox.height ), 0), this->img_size.height);
             
             if((_x + _width) < this->img_size.width 
                 && _x > 0 

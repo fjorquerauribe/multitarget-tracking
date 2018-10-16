@@ -4,7 +4,8 @@
 #include <time.h>
 #include <iostream>
 #include <cstdlib>
-#include <vector>
+#include <queue>
+#include <thread> 
 #include <opencv2/opencv.hpp>
 #include "utils/utils.hpp"
 #include "models/phd_gaussian_mixture.hpp"
@@ -17,7 +18,9 @@ class TestYOLOWebcam{
     public:
         TestYOLOWebcam();
         TestYOLOWebcam(string model_cfg, string model_binary, string class_names, float min_confidence,int video); 
-        void run(bool verbose);
+        void run(bool verbose,queue<Mat> &frame_buffer);
+        void video_capture_buffer(queue<Mat> &frame_buffer);
+
     private:
         string model_cfg, model_binary, class_names;
         float min_confidence;
