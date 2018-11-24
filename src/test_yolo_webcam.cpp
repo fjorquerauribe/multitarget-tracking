@@ -13,45 +13,63 @@ TestYOLOWebcam::TestYOLOWebcam(string model_cfg, string model_binary, string cla
     }
 }
 
-void TestYOLOWebcam::run(bool verbose){
+void TestYOLOWebcam::video_capture_buffer(queue<Mat> &frame_buffer){
+    Mat frame;
+    for (;;)
+    {
+        cap.read(frame);
+        if (frame.empty()) {
+            cerr << "ERROR! blank frame grabbed\n";
+            break;
+        }
+        else{
+            frame_buffer.push(frame);
+        }
+    }
+}
+
+void TestYOLOWebcam::run(queue<Mat> &frame_buffer){
+    bool verbose=true;
 	PHDGaussianMixture filter(verbose);
     if(verbose) namedWindow("YOLO Detector", WINDOW_NORMAL);
 
     YOLODetector detector(this->model_cfg, this->model_binary, this->class_names, this->min_confidence);
-
+    Mat frame;
     for(;;)
     {
-        Mat frame;
-        cap >> frame;
-        vector<Rect> detections = detector.detect(frame);
-        //vector<Target> gt = this->generator.getGroundTruth(i);
-        //detector.draw(frame);
-		std::vector<MyTarget> estimates;
-		
 
-		if (!filter.is_initialized())
-		{
-			filter.initialize(frame, detections, detector.weights);
-			estimates = filter.estimate(frame, true);
-			//filter.draw_particles(frame, Scalar(255, 255, 255));
-		}
-		else
-		{
-			filter.predict();
-			filter.update(frame, detections, detector.weights);
-			estimates = filter.estimate(frame, true);
-			//filter.draw_particles(frame, Scalar(255, 255, 255));
-		}
-        for(size_t j = 0; j < estimates.size(); j++){
-			cout << estimates.at(j).label
-			<< "," << estimates.at(j).bbox.x
-			<< "," << estimates.at(j).bbox.y
-			<< "," << estimates.at(j).bbox.width
-			<< "," << estimates.at(j).bbox.height
-			<< ",1,-1,-1,-1" << endl;
-		}
-        //detector.draw(frame);
-        imshow("YOLO Detector", frame);
+        if (!frame_buffer.empty()) {
+            frame=frame_buffer.back();
+            frame_buffer.pop();
+            vector<Rect> detections = detector.detect(frame);
+            std::vector<MyTarget> estimates;
+            
+
+            if (!filter.is_initialized())
+            {
+                filter.initialize(frame, detections, detector.weights);
+                estimates = filter.estimate(frame, true);
+                //filter.draw_particles(frame, Scalar(255, 255, 255));
+            }
+            else
+            {
+                filter.predict();
+                filter.update(frame, detections, detector.weights);
+                estimates = filter.estimate(frame, true);
+                //filter.draw_particles(frame, Scalar(255, 255, 255));
+            }
+            /*for(size_t j = 0; j < estimates.size(); j++){
+                cout << estimates.at(j).label
+                << "," << estimates.at(j).bbox.x
+                << "," << estimates.at(j).bbox.y
+                << "," << estimates.at(j).bbox.width
+                << "," << estimates.at(j).bbox.height
+                << ",1,-1,-1,-1" << endl;
+            }*/
+            //detector.draw(frame);
+            imshow("YOLO Detector", frame);
+        } 
+        
 		if (waitKey(1) >= 0) break;
     }
 }
@@ -109,7 +127,12 @@ int main(int argc, char const *argv[]){
 	  	{
 	  		video = stoi(argv[10]);
 		}
+        queue<Mat> frame_buffer;
         TestYOLOWebcam detector(model_cfg, model_binary, class_names, min_confidence,video);
-        detector.run(false);
+        thread th1(&TestYOLOWebcam::video_capture_buffer,detector,ref(frame_buffer)); 
+        thread th2(&TestYOLOWebcam::run,detector,ref(frame_buffer)); 
+        //detector.run(true,frame_buffer);
+        th1.join();
+        th2.join();
     }
 }

@@ -57,5 +57,5 @@ endif()
 
 if(MAKE_YOLO_WEBCAM)
     add_executable( yolo_webcam src/test_yolo_webcam.cpp  src/dpp/dpp.cpp src/detectors/yolo_detector.cpp src/models/phd_gaussian_mixture.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
-    target_link_libraries( yolo_webcam ${OpenCV_LIBS} -lpthread)
+    target_link_libraries( yolo_webcam ${OpenCV_LIBS} -pthread)
 endif()
