@@ -13,8 +13,8 @@ TestYOLODetector::TestYOLODetector(string first_frame_file, string ground_truth_
     this->generator = ImageGenerator(this->first_frame_file, this->ground_truth_filename);
 }
 
-void TestYOLODetector::run(bool verbose){
-	PHDGaussianMixture filter(verbose);
+void TestYOLODetector::run(bool verbose, float dpp_epsilon){
+	PHDGaussianMixture filter(verbose, dpp_epsilon);
     if(verbose) namedWindow("YOLO Detector", WINDOW_NORMAL);
 
     YOLODetector detector(this->model_cfg, this->model_binary, this->class_names, this->min_confidence);
@@ -36,7 +36,7 @@ void TestYOLODetector::run(bool verbose){
 		}
 		else
 		{
-			filter.predict();
+            filter.predict();
 			filter.update(frame, detections, detector.weights);
 			estimates = filter.estimate(frame, true);
 			//filter.draw_particles(frame, Scalar(255, 255, 255));
@@ -51,17 +51,21 @@ void TestYOLODetector::run(bool verbose){
 			<< ",1,-1,-1,-1" << endl;
 		}
         //detector.draw(frame);
-        imshow("YOLO Detector", frame);
-		waitKey(1);
+        
+        if (verbose) {
+            imshow("YOLO Detector", frame);
+		    waitKey(1);
+        }
+        
     }
 }
 
 int main(int argc, char const *argv[]){
     string first_frame_file, ground_truth_filename, model_cfg, model_binary, class_names;
-    float min_confidence;
+    float min_confidence, dpp_epsilon;
     bool verbose;
 
-    if(argc != 15)
+    if(argc != 17)
     {
 		cout << "Incorrect input list" << endl;
 		cout << "exiting..." << endl;
@@ -123,11 +127,20 @@ int main(int argc, char const *argv[]){
             cout << "exiting..." << endl;
             return EXIT_FAILURE;
         }
-        if (strcmp(argv[13], "-verbose") == 0)
-	  	{
-	  		verbose = (stoi(argv[14]) == 1) ? true : false;
+
+        if(strcmp(argv[13], "-epsilon") == 0){
+            dpp_epsilon = stod(argv[14]);
+        }
+        else{
+            cout << "No dpp epsilon value given" << endl;
+            cout << "exiting..." << endl;
+            return EXIT_FAILURE;
 		}
+        if (strcmp(argv[15], "-verbose") == 0)
+        {
+            verbose = (stoi(argv[16]) == 1) ? true : false;
+        }
         TestYOLODetector detector(first_frame_file, ground_truth_filename, model_cfg, model_binary, class_names, min_confidence);
-        detector.run(verbose);
+        detector.run(verbose, dpp_epsilon);
     }
 }

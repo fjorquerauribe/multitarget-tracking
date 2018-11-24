@@ -1,0 +1,22 @@
+declare -a datasets=(MOT16)
+declare -a types=(train test)
+declare -a epsilon=(0.1 0.3 0.5 0.7)
+OUTPUT_DIRECTORY=$1
+
+for dataset in "${datasets[@]}"
+do
+    for type in "${types[@]}"
+    do
+        for e in "${epsilon[@]}"
+        do
+            mkdir -p ../build/results/$OUTPUT_DIRECTORY/$dataset/$type/$e/
+            ls ./data/$dataset/$type/ > ./data/$dataset/$type/sequences.lst
+            sed -i '/sequences.lst/d' ./data/$dataset/$type/sequences.lst
+            while read sequence;
+            do
+                echo $dataset,$sequence,$e
+                /bin/bash $PWD/start_yolo.sh $dataset $type $sequence $e 0 > ../build/results/$OUTPUT_DIRECTORY/$dataset/$type/$e/$sequence.txt
+            done <./data/$dataset/$type/sequences.lst
+        done
+    done
+done

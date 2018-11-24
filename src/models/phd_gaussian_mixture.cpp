@@ -31,7 +31,7 @@ bool PHDGaussianMixture::is_initialized() {
 }
 
 PHDGaussianMixture::PHDGaussianMixture(bool verbose, double epsilon): PHDGaussianMixture(verbose) {
-    this->pruning_method = "nms";
+    this->pruning_method = "dpp";
     this->epsilon = epsilon;
 }
 
@@ -133,7 +133,7 @@ void PHDGaussianMixture::predict(){
 }
 
 
-void PHDGaussianMixture::update(Mat& image, vector<Rect> detections,  VectorXd detectionsWeights)
+void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, VectorXd detectionsWeights)
 {
     uniform_real_distribution<double> unif(0.0,1.0);
     this->birth_model.clear();

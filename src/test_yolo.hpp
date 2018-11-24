@@ -18,7 +18,7 @@ class TestYOLODetector{
     public:
         TestYOLODetector();
         TestYOLODetector(string first_frame_file, string ground_truth_filename, string model_cfg, string model_binary, string class_names, float min_confidence); 
-        void run(bool verbose);
+        void run(bool verbose, float dpp_epsilon);
     private:
         string first_frame_file, ground_truth_filename, model_cfg, model_binary, class_names;
         float min_confidence;
