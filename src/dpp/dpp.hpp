@@ -17,7 +17,7 @@ class DPP
 {
 public:
 	DPP();
-	vector<Rect> run(vector<Rect> raw_detections, VectorXd &weights, MatrixXd &features, double epsilon = 0.1, double mu = 0.7, double lambda = 0.1);
+	vector<MyTarget> run(vector<MyTarget> raw_detections, VectorXd &weights, MatrixXd &features, double epsilon = 0.1, double mu = 0.7, double lambda = 0.1);
 	vector<MyTarget> run(vector<MyTarget> tracks, double epsilon, double mu, double lambda);
 	vector<MyTarget> run(vector<MyTarget> tracks, double epsilon, Size img_size);
 	//vector<MyTarget> run(vector<MyTarget> tracks, double epsilon);

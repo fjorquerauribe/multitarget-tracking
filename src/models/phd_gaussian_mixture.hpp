@@ -10,6 +10,7 @@
 #include "../likelihood/multivariate_gaussian.hpp"
 #include "../utils/image_generator.hpp"
 #include "../utils/utils.hpp"
+#include "../detectors/hog_detector.hpp"
 #include "hungarian.h"
 #include "nms.hpp"
 #include "dpp.hpp"

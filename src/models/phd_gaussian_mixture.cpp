@@ -98,10 +98,10 @@ void PHDGaussianMixture::predict(){
             float _x, _y, _width, _height;
             float _dx = position_random_x(this->generator);
             float _dy = position_random_y(this->generator);
-            float _dw = scale_random_width(this->generator);
-            float _dh = scale_random_height(this->generator);
-            _x = MIN(MAX(cvRound(track.bbox.x), 0), this->img_size.width);
-            _y = MIN(MAX(cvRound(track.bbox.y  ), 0), this->img_size.height);
+            //float _dw = scale_random_width(this->generator);
+            //float _dh = scale_random_height(this->generator);
+            _x = MIN(MAX(cvRound(track.bbox.x+_dx), 0), this->img_size.width);
+            _y = MIN(MAX(cvRound(track.bbox.y+_dy), 0), this->img_size.height);
             _width = MIN(MAX(cvRound(track.bbox.width), 0), this->img_size.width);
             _height = MIN(MAX(cvRound(track.bbox.height ), 0), this->img_size.height);
             
@@ -221,8 +221,11 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, VectorXd de
             nms4(new_tracks, this->tracks, this->threshold, this->neighbors, this->min_scores_sum);
         }
         else if(this->pruning_method.compare("dpp") == 0){
+            HOGDetector hog=HOGDetector();
+            MatrixXd features=hog.getFeatureValues(image,new_tracks);
             DPP dpp = DPP();
-            this->tracks = dpp.run(new_tracks, this->epsilon, this->img_size); // epsilon: 0.5 | q: score
+            this->tracks = dpp.run(new_tracks,detectionsWeights,features, this->epsilon,0.7,0.1);
+            //this->tracks = dpp.run(new_tracks, this->epsilon, this->img_size); // epsilon: 0.5 | q: score
         }
         else {
             this->tracks.swap(new_tracks);

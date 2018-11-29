@@ -39,18 +39,18 @@ void HOGDetector::draw()
     }
 }
 
-MatrixXd HOGDetector::getFeatureValues()
+MatrixXd HOGDetector::getFeatureValues(Mat &frame, vector<MyTarget> detections)
 {
-	MatrixXd hogFeatures(this->detections.size(), 3780);
+	MatrixXd hogFeatures(detections.size(), 3780);
 	this->hog.winSize = Size(64,128);
 	//this->hog.nbins = 32;
 	Mat subImage;
 	vector<float> features;
 
-	for (size_t i = 0; i < this->detections.size(); ++i)
+	for (size_t i = 0; i < detections.size(); ++i)
 	{
-		subImage = this->frame(this->detections.at(i));
-		if(this->frame.rows > 0 && this->frame.cols > 0)
+		subImage = frame(detections.at(i).bbox);
+		if(frame.rows > 0 && frame.cols > 0)
 		{
 			resize(subImage, subImage, this->hog.winSize, 0, 0, INTER_LINEAR);
 			cvtColor(subImage, subImage, COLOR_RGB2GRAY);

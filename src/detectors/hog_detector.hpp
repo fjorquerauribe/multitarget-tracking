@@ -5,7 +5,7 @@
 #include <opencv2/imgproc.hpp>
 #include <Eigen/Core>
 #include <iostream>
-
+#include "utils.hpp"
 using namespace cv;
 using namespace std;
 using namespace Eigen;
@@ -18,7 +18,7 @@ public:
 	vector<Rect> detect(Mat &frame);
 	void draw();
 	//vector<Rect> getDetections();
-	MatrixXd getFeatureValues();
+	MatrixXd getFeatureValues(Mat &frame, vector<MyTarget> detections);
 	VectorXd getDetectionWeights();
 
 private:

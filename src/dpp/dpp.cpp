@@ -7,9 +7,9 @@
 
 DPP::DPP(){}
 
-vector<Rect> DPP::run(vector<Rect> raw_detections, VectorXd &weights, MatrixXd &features, double epsilon, double mu, double lambda)
+vector<MyTarget> DPP::run(vector<MyTarget> raw_detections, VectorXd &weights, MatrixXd &features, double epsilon, double mu, double lambda)
 {
-	vector<Rect> results;
+	vector<MyTarget> results;
 
 	if(raw_detections.size() > 0){
 		VectorXd area(raw_detections.size());
@@ -17,11 +17,11 @@ vector<Rect> DPP::run(vector<Rect> raw_detections, VectorXd &weights, MatrixXd &
 
 		for (size_t i = 0; i < raw_detections.size(); ++i)
 		{
-			Rect bbox = raw_detections.at(i);
+			Rect bbox = raw_detections.at(i).bbox;
 			area(i) = bbox.width * bbox.height;
 			for (size_t j = i; j < raw_detections.size(); ++j)
 			{	
-				Rect bbox2 = raw_detections.at(j);
+				Rect bbox2 = raw_detections.at(j).bbox;
 				intersection(i,j) = intersection(j,i) = double((bbox & bbox2).area());
 			}
 		}
