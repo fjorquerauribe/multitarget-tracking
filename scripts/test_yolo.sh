@@ -1,4 +1,4 @@
-declare -a datasets=(MOT16)
+declare -a datasets=(2DMOT2015 MOT16)
 declare -a types=(train test)
 declare -a epsilon=(0.1 0.3 0.5 0.7)
 OUTPUT_DIRECTORY=$1
