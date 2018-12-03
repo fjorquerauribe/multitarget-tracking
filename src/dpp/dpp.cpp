@@ -46,12 +46,12 @@ vector<MyTarget> DPP::run(vector<MyTarget> raw_detections, VectorXd &weights, Ma
 					nContain(i) += 1;
 			}
 		}
-
+		
 		nContain = nContain.array() - 1;
 		//cout << "nContain: " << nContain.transpose() << endl;
 		
 		VectorXd nPenalty = nContain.array().exp().pow(-lambda);
-		VectorXd qualityTerm = getQualityTerm(weights, nPenalty);
+		VectorXd qualityTerm = weights;//getQualityTerm(weights, nPenalty);
 		MatrixXd similarityTerm = getSimilarityTerm(features, intersection, sqrtArea, mu);
 		vector<int> top = solve(qualityTerm, similarityTerm, epsilon);
 

@@ -221,10 +221,26 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, VectorXd de
             nms4(new_tracks, this->tracks, this->threshold, this->neighbors, this->min_scores_sum);
         }
         else if(this->pruning_method.compare("dpp") == 0){
-            HOGDetector hog=HOGDetector();
-            MatrixXd features=hog.getFeatureValues(image,new_tracks);
+            for(size_t i = 0; i < new_tracks.size(); i++)
+            {
+                if (new_tracks[i].bbox.x < 0) 
+                    new_tracks[i].bbox.x = 0;
+                if (new_tracks[i].bbox.y < 0)
+                    new_tracks[i].bbox.y = 0; 
+                if (new_tracks[i].bbox.x + new_tracks[i].bbox.width > image.cols) 
+                    new_tracks[i].bbox.width = image.cols - new_tracks[i].bbox.x;
+                if (new_tracks[i].bbox.y + new_tracks[i].bbox.height > image.rows) 
+                    new_tracks[i].bbox.height = image.rows - new_tracks[i].bbox.y;
+            }
+
+            HOGDetector hog = HOGDetector();
+            MatrixXd features = hog.getFeatureValues(image, new_tracks);
             DPP dpp = DPP();
-            this->tracks = dpp.run(new_tracks,detectionsWeights,features, this->epsilon,0.7,0.1);
+
+            VectorXd new_detections_weights = VectorXd(new_tracks.size());
+            for(size_t i = 0; i < new_tracks.size(); i++) new_detections_weights[i] = new_tracks[i].score;
+            
+            this->tracks = dpp.run(new_tracks, new_detections_weights, features, this->epsilon, 0.0, 0.1);
             //this->tracks = dpp.run(new_tracks, this->epsilon, this->img_size); // epsilon: 0.5 | q: score
         }
         else {
