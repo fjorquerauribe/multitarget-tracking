@@ -240,8 +240,8 @@ void PHDGaussianMixture::update(Mat& image, vector<Rect> detections, VectorXd de
             VectorXd new_detections_weights = VectorXd(new_tracks.size());
             for(size_t i = 0; i < new_tracks.size(); i++) new_detections_weights[i] = new_tracks[i].score;
             
-            this->tracks = dpp.run(new_tracks, new_detections_weights, features, this->epsilon, 0.0, 0.1);
-            //this->tracks = dpp.run(new_tracks, this->epsilon, this->img_size); // epsilon: 0.5 | q: score
+            //this->tracks = dpp.run(new_tracks, new_detections_weights, features, this->epsilon, 0.0, 0.1); //similarity_term
+            this->tracks = dpp.run(new_tracks, this->epsilon, this->img_size); // affinity_kernel
         }
         else {
             this->tracks.swap(new_tracks);
