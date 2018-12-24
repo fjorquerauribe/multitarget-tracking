@@ -13,10 +13,10 @@ TestYOLODetector::TestYOLODetector(string first_frame_file, string ground_truth_
     this->generator = ImageGenerator(this->first_frame_file, this->ground_truth_filename);
 }
 
-void TestYOLODetector::run(bool verbose, float dpp_epsilon){
+void TestYOLODetector::run(bool verbose, float threshold){
 	//PHDGaussianMixture filter(verbose, dpp_epsilon);
-    PHDGaussianMixture filter(verbose);
-    //PHDGaussianMixture filter(verbose, 0.7,1, 0.1);
+    //PHDGaussianMixture filter(verbose);
+    PHDGaussianMixture filter(threshold, 0.7,1, 0.1);
     if(verbose) namedWindow("YOLO Detector", WINDOW_NORMAL);
 
     YOLODetector detector(this->model_cfg, this->model_binary, this->class_names, this->min_confidence);
@@ -64,7 +64,7 @@ void TestYOLODetector::run(bool verbose, float dpp_epsilon){
 
 int main(int argc, char const *argv[]){
     string first_frame_file, ground_truth_filename, model_cfg, model_binary, class_names;
-    float min_confidence, dpp_epsilon;
+    float min_confidence, nms_epsilon;
     bool verbose;
 
     if(argc != 17)
@@ -131,7 +131,7 @@ int main(int argc, char const *argv[]){
         }
 
         if(strcmp(argv[13], "-epsilon") == 0){
-            dpp_epsilon = stod(argv[14]);
+            nms_epsilon = stod(argv[14]);
         }
         else{
             cout << "No dpp epsilon value given" << endl;
@@ -143,6 +143,6 @@ int main(int argc, char const *argv[]){
             verbose = (stoi(argv[16]) == 1) ? true : false;
         }
         TestYOLODetector detector(first_frame_file, ground_truth_filename, model_cfg, model_binary, class_names, min_confidence);
-        detector.run(verbose, dpp_epsilon);
+        detector.run(verbose, nms_epsilon);
     }
 }

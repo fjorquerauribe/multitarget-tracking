@@ -1,1 +1,0 @@
-../build/lr_detector -img data/$1/$2/$3/img1/000001.jpg -gt data/$1/$2/$3/gt/gt.txt -model ../data/$4/ -group $5 -hit $6

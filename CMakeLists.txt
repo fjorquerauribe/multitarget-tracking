@@ -54,6 +54,12 @@ endif()
 if(MAKE_YOLO)
     add_executable( yolo src/test_yolo.cpp  src/dpp/dpp.cpp src/detectors/yolo_detector.cpp src/detectors/hog_detector.cpp src/models/phd_gaussian_mixture.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
     target_link_libraries( yolo ${OpenCV_LIBS} -lpthread)
+
+    add_executable( yolo_dpp src/test_yolo_dpp.cpp  src/dpp/dpp.cpp src/detectors/yolo_detector.cpp src/detectors/hog_detector.cpp src/models/phd_gaussian_mixture.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
+    target_link_libraries( yolo_dpp ${OpenCV_LIBS} -lpthread)
+
+    add_executable( yolo_nms src/test_yolo_nms.cpp  src/dpp/dpp.cpp src/detectors/yolo_detector.cpp src/detectors/hog_detector.cpp src/models/phd_gaussian_mixture.cpp src/likelihood/gaussian.cpp src/likelihood/multivariate_gaussian.cpp ${COMMON_SOURCES} )
+    target_link_libraries( yolo_nms ${OpenCV_LIBS} -lpthread)
 endif()
 
 if(MAKE_YOLO_WEBCAM)
