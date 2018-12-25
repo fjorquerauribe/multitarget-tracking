@@ -16,7 +16,7 @@ TestYOLODetector::TestYOLODetector(string first_frame_file, string ground_truth_
 void TestYOLODetector::run(bool verbose, float threshold){
 	//PHDGaussianMixture filter(verbose, dpp_epsilon);
     //PHDGaussianMixture filter(verbose);
-    PHDGaussianMixture filter(verbose,threshold,1, 0.1);
+    PHDGaussianMixture filter(verbose,threshold,0, 0.1);
     if(verbose) namedWindow("YOLO Detector", WINDOW_NORMAL);
 
     YOLODetector detector(this->model_cfg, this->model_binary, this->class_names, this->min_confidence);
