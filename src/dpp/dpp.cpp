@@ -221,8 +221,8 @@ MatrixXd DPP::affinity_kernel(vector<MyTarget> tracks, Size img_size){
 
 		for(size_t j = i; j < tracks.size(); j++){
 			Rect box2 = tracks.at(j).bbox;
-			double scale = exp( -100.0 * (sqrt(pow(box1.width - box2.width, 2)) + sqrt(pow(box1.height - box2.height, 2)))/diag );
-			double pos = exp( -100.0 * (sqrt(pow(box1.x - box2.x, 2)) + sqrt(pow(box1.y - box2.y, 2)))/diag );
+			double scale = exp( - (sqrt(pow(box1.width - box2.width, 2)) + sqrt(pow(box1.height - box2.height, 2)))/diag );
+			double pos = exp( -  (sqrt(pow(box1.x - box2.x, 2)) + sqrt(pow(box1.y - box2.y, 2)))/diag );
 
 			kernel(i,j) = kernel(j,i) = scale * pos;
 		}

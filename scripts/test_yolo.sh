@@ -3,7 +3,7 @@ declare -a datasets=(2DMOT2015)
 declare -a types=(train)
 #declare -a types=(train test)
 declare -a epsilon=(0.9)
-declare -a method=(nms)
+declare -a method=(nms dpp phd)
 OUTPUT_DIRECTORY=$1
 
 for dataset in "${datasets[@]}"

@@ -44,8 +44,12 @@ vector<Rect> YOLODetector::detect(Mat frame){
         float *prob_array_ptr = &detectionMat.at<float>(i, prob_index);
         size_t object_class = max_element(prob_array_ptr, prob_array_ptr + prob_size) - prob_array_ptr;
         float confidence = detectionMat.at<float>(i, (int)object_class + prob_index);
-
-        if (confidence > this->min_confidence &&  (int)object_class==0) {
+        int object_classes[4]={0,1,2,3};
+        bool any_object=(int)object_class==object_classes[0]
+                        ||  (int)object_class==object_classes[1]
+                        ||  (int)object_class==object_classes[2]
+                        ||  (int)object_class==object_classes[3];
+        if (confidence > this->min_confidence &&  any_object) {
                 Rect rect;
                 float x_center = detectionMat.at<float>(i, 0) * frame.cols;
                 float y_center = detectionMat.at<float>(i, 1) * frame.rows;

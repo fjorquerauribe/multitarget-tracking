@@ -6,11 +6,11 @@
 #include "phd_gaussian_mixture.hpp"
     
 #ifndef PARAMS
-    const float POS_STD = 1.0;
+    const float POS_STD = 3.0;
     const float SCALE_STD = 1.0;
-    const float THRESHOLD = 10;
+    const float THRESHOLD = 100;
     const float SURVIVAL_RATE = 1.0;
-    const float SURVIVAL_DECAY = 1.0;
+    const float SURVIVAL_DECAY = 0.9;
     const float CLUTTER_RATE = 2.0;
     const float BIRTH_RATE = 0.1;
     const float DETECTION_RATE = 0.5;
